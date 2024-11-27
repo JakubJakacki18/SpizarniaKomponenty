@@ -20,12 +20,12 @@ export class ProductModel {
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: false })
     price: number;
 
-    @OneToMany(() => Product, (product) => product.productModel)
+    @OneToMany(() => Product, (product) => product.productModel, { cascade: ['remove'] })
     products: Product[];
   
-    @OneToMany(() => Ingredient, (ingredient) => ingredient.productModel)
+    @OneToMany(() => Ingredient, (ingredient) => ingredient.productModel, { cascade: ['remove'] })
     ingredients: Ingredient[];
   
-    @ManyToOne(() => ListOfProductsToBuy, (list) => list.products)
+    @ManyToOne(() => ListOfProductsToBuy, (list) => list.products, {})
     listOfProductsToBuy: ListOfProductsToBuy[];
 }

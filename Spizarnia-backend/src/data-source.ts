@@ -1,13 +1,13 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./entity/User"
-import { Product } from "./entity/Product"
-import { Container } from "./entity/Container"
-import { Shelf } from "./entity/Shelf"
-import { ListOfProductsToBuy } from "./entity/ListOfProductsToBuy"
-import { Ingredient } from "./entity/Ingredient"
-import { ProductModel } from "./entity/ProductModel"
-import { Recipe } from "./entity/Recipe"
+import { User } from "./models/User"
+import { Product } from "./models/Product"
+import { Container } from "./models/Container"
+import { Shelf } from "./models/Shelf"
+import { ListOfProductsToBuy } from "./models/ListOfProductsToBuy"
+import { Ingredient } from "./models/Ingredient"
+import { ProductModel } from "./models/ProductModel"
+import { Recipe } from "./models/Recipe"
 
 export const AppDataSource = new DataSource({
     type: "mysql",

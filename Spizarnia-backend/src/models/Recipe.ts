@@ -11,5 +11,7 @@ export class Recipe {
 
   @ManyToMany(() => Ingredient, (ingredient) => ingredient.recipes)
   ingredients: Ingredient[];
-  
+
+  @Column({ default: true })
+  finished: boolean;
 }
