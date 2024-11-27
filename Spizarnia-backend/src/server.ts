@@ -18,6 +18,7 @@ app.use(cors(
 app.use(express.json());
 
 app.use("/api/productModel",productModelRouter);
+app.use("/products", productRouter)
 // app.use("/api/container",containerRouter);
 
 app.get("/api",(req,res) => 
