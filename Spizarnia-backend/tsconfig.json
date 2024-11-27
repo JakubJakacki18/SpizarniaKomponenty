@@ -1,12 +1,17 @@
 {
-    "compilerOptions": {
+   "compilerOptions": {
+      "lib": [
+         "es5",
+         "es6"
+      ],
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true, 
       "module": "CommonJS",
+      "target": "es5",
       "moduleResolution": "node",
-      "strict": true,
-      "outDir": "./built",
-      "experimentalDecorators": true,
+      "outDir": "./build",
       "emitDecoratorMetadata": true,
-      "esModuleInterop": true
-    },
-    "include": ["src/**/*"],
+      "experimentalDecorators": true,
+      "sourceMap": true
+   }
 }

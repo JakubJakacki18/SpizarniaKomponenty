@@ -1,7 +1,7 @@
 {
   "name": "spizarnia-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "cd src && nodemon server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
+    "mysql2": "^3.11.4",
+    "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
