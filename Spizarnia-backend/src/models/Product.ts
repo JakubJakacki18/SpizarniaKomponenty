@@ -1,13 +1,14 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    ManyToOne,
-    OneToOne,
-    JoinColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
   } from 'typeorm';
-  import { ProductModel } from './ProductModel';
-  import { Container } from './Container';
+
+import { ProductModel } from './ProductModel';
+import { Container } from './Container';
 import { Shelf } from './Shelf';
 
 @Entity()
@@ -21,17 +22,20 @@ export class Product {
     @Column({ type: "date", nullable: false })
     purchaseDate: Date;
 
-
-
-
-
     @ManyToOne(() => ProductModel, (productModel) => productModel.products)
-  productModel: ProductModel;
+    productModel: ProductModel;
 
-  @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
-  container: Container;
-  @ManyToOne(() => Shelf, (shelf) => shelf.products, { onDelete: "SET NULL" })
-  shelf: Shelf;
+    @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
+    container: Container;
+
+    @ManyToOne(() => Shelf, (shelf) => shelf.products, { onDelete: "SET NULL" })
+    shelf: Shelf;
+
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @UpdateDateColumn()
+    updatedAt: Date;
 
   validateRelations() {
     if (this.shelf && this.container) {

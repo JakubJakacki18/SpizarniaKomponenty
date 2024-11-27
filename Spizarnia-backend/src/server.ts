@@ -1,13 +1,14 @@
 import express from "express";
 import cors from "cors";
-import productRouter from "./routers/product.router";
-import containerRouter from "./routers/container.router";
-import productModelRouter from "./routers/container.router"
 import { AppDataSource } from "./data-source";
 import { User } from "./models/User";
 import { Ingredient } from "./models/Ingredient";
 const app = express();
 
+import shelfRouter from "./routers/shelf.router"; 
+import productRouter from "./routers/product.router";
+import containerRouter from "./routers/container.router";
+import productModelRouter from "./routers/container.router"
 
 app.use(cors(
     {
@@ -18,6 +19,9 @@ app.use(cors(
 app.use(express.json());
 
 app.use("/api/productModel",productModelRouter);
+app.use("/products", productRouter)
+app.use("/containers", containerRouter)
+app.use("/shelves", shelfRouter);
 // app.use("/api/container",containerRouter);
 
 app.get("/api",(req,res) => 
