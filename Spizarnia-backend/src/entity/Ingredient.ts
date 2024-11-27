@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import {Container} from "./Container"
 @Entity()
-export class Product {
+export class Ingredient {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -10,15 +10,3 @@ export class Product {
 
     @Column({ type: "date", nullable: false })
     purchaseDate: Date;
-
-
-
-
-
-
-
-
-
-    @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
-    container: Container;
-}
