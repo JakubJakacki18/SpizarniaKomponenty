@@ -13,6 +13,8 @@ app.use(cors(
         origin:["http://localhost:4200"]
     }));
 
+app.use(express.json());
+
 app.use("/api/product",productRouter);
 app.use("/api/container",containerRouter);
 
