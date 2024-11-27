@@ -1,17 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Product } from "./Product";
-
-@Entity()
-export class Container {
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToOne,
+    ManyToOne,
+    OneToMany,
+  } from 'typeorm';
+  import { Product } from './Product';
+  import { Shelf } from './Shelf';
+  
+  @Entity()
+  export class Container {
     @PrimaryGeneratedColumn()
-    id!: number;
-
+    id: number;
+  
     @Column()
-    name!: string;
-
-    @Column("int")
-    maxQuantity!: number;
-
+    name: string;
+  
+    @Column()
+    maxQuantity: number;
+  
     @OneToMany(() => Product, (product) => product.container, { onDelete: "SET NULL" })
-    products!: Product[];
-}
+    products: Product[];
+
+  
+    @ManyToOne(() => Shelf, (shelf) => shelf.containers)
+    shelf: Shelf;
+    
+  }

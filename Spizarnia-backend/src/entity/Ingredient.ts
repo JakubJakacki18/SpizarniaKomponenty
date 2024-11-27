@@ -1,12 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import {Container} from "./Container"
+import { ProductModel } from "./ProductModel";
+import {Recipe} from "./Recipe"
+
 @Entity()
 export class Ingredient {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: "date", nullable: false })
-    expirationDate: Date;
-
-    @Column({ type: "date", nullable: false })
-    purchaseDate: Date;
+    @ManyToOne(() => ProductModel, (productModel) => productModel.ingredients)
+    productModel: ProductModel;
+  
+    @Column()
+    quantity: number;
+  
+    @ManyToMany(() => Recipe, (recipe) => recipe.ingredients)
+    @JoinTable() 
+    recipes: Recipe[];
+}

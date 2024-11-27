@@ -1,5 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import {Container} from "./Container"
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    OneToOne,
+    JoinColumn,
+  } from 'typeorm';
+  import { ProductModel } from './ProductModel';
+  import { Container } from './Container';
+import { Shelf } from './Shelf';
+
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
@@ -15,10 +25,17 @@ export class Product {
 
 
 
+    @ManyToOne(() => ProductModel, (productModel) => productModel.products)
+  productModel: ProductModel;
 
+  @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
+  container: Container;
+  @ManyToOne(() => Shelf, (shelf) => shelf.products, { onDelete: "SET NULL" })
+  shelf: Shelf;
 
-
-
-    @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
-    container: Container;
+  validateRelations() {
+    if (this.shelf && this.container) {
+      throw new Error('Produkt nie może być jednocześnie na półce i w pojemniku.');
+    }
+}
 }

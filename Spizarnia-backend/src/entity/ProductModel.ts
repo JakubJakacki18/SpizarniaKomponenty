@@ -1,5 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import {Container} from "./Container"
+import { Product } from "./Product";
+import { Ingredient } from "./Ingredient";
+import { ListOfProductsToBuy } from "./ListOfProductsToBuy";
 @Entity()
 export class ProductModel {
     @PrimaryGeneratedColumn()
@@ -17,5 +20,12 @@ export class ProductModel {
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: false })
     price: number;
 
-
+    @OneToMany(() => Product, (product) => product.productModel)
+    products: Product[];
+  
+    @OneToMany(() => Ingredient, (ingredient) => ingredient.productModel)
+    ingredients: Ingredient[];
+  
+    @ManyToOne(() => ListOfProductsToBuy, (list) => list.products)
+    listOfProductsToBuy: ListOfProductsToBuy[];
 }
