@@ -3,3 +3,7 @@ Link do worda z angulara:
 
 Link do worda z js'a:
     
+
+Wymagane do działa projektu:
+    -serwer MySql (Polecam XAMPP) - domyślne ustawienia użytkownika, stworzona baza pantry,
+    

@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import {Container} from "./Container"
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
@@ -19,4 +19,7 @@ export class Product {
 
     @Column({ type: "date", nullable: false })
     expirationDate: Date;
+
+    @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
+    container: Container;
 }
