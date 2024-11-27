@@ -12,26 +12,29 @@
   </div>
 
   <!-- Sekcja treści -->
-  <div class="content-container">
-      <div class="body">
-        <!-- Spiżarnia -->
-        <div class="content-section" *ngIf="isPantryVisible">
-          <h3>Rzeczy w spiżarni</h3>
-          <p>Lista produktów w spiżarni...</p>
-        </div>
+  <div class="body">
+    <!-- Sekcja: Spiżarnia -->
+    <div class="content-section">
+      <h3>Rzeczy w Spiżarni</h3>
+      <p>Lista produktów w spiżarni...</p>
+    
+      <h3>Lista Zakupów</h3>
+      <form>
+        <label for="newItem">Dodaj element:</label>
+        <input id="newItem"
+               type="text"
+               placeholder="Wpisz produkt"
+               required />
+        <button type="button">Dodaj</button>
+      </form>
 
-        <!-- Lista zakupów -->
-        <div class="content-section" *ngIf="isShoppingListVisible">
-          <h3>Lista zakupów</h3>
-          <p>Lista rzeczy do kupienia...</p>
-        </div>
-
-        <!-- Przykładowy tekst do wypełnienia strony -->
-        <div class="content-section">
-          <h3>Przykładowy tekst</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris condimentum nisi sit amet efficitur cursus. Nulla facilisi. Duis in venenatis erat. Suspendisse potenti. Proin eget massa vel ligula dictum suscipit non non sapien.</p>
-          <p>Aliquam vitae ligula eros. Phasellus ac orci quis velit consequat faucibus. Etiam nec ante tortor. Curabitur suscipit purus id mi mollis, in ultricies neque interdum. Fusce mollis pretium felis, id aliquet nunc feugiat ut. Curabitur viverra ultricies velit et efficitur. Donec ac odio dui. Aenean ut risus malesuada, dictum ante eget, volutpat erat.</p>
-        </div>
-      </div>
+      <!-- Wyświetlanie statycznej listy zakupów -->
+      <ul>
+        <li>Produkt 1 <button> Usuń </button></li>
+        <li>Produkt 2 <button> Usuń </button></li>
+        <li>Produkt 3 <button> Usuń </button></li>
+      </ul>
+   
     </div>
+  </div>
 </div>
