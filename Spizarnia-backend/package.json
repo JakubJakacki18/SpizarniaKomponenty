@@ -9,13 +9,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Uruchomienie serwera: npm start,\r Konfiguracja: package.json,\r Główny plik: src/server.ts",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "mysql2": "^3.11.4",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
+    "typeorm": "^0.3.20",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
