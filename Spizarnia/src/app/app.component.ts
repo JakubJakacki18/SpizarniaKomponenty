@@ -5,7 +5,7 @@ import { ProductModelComponent } from './components/pages/manage/product-model/p
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent,ProductModelComponent ],
+  imports: [RouterOutlet, HeaderComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
