@@ -15,6 +15,8 @@ export class ProductModelService {
   {
     return this.http.get<ProductModel[]>(PRODUCT_MODELS);
   }
-
+  createProduct(productData: { name: string, unit: string, price: number, quantity: number }): Observable<any> {
+    return this.http.post(PRODUCT_MODELS, productData);
+  }
 
 }

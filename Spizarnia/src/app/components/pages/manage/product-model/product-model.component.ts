@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ProductModel } from '../../../../shared/models/ProductModel';
 import { ProductModelService } from '../../../../services/product-model.service';
 import { CommonModule } from '@angular/common';
+import { ProductModelFormComponent } from './product-model-form/product-model-form.component';
 
 
 
 @Component({
   selector: 'app-product-model',
-  imports: [CommonModule],
+  imports: [CommonModule,ProductModelFormComponent],
   templateUrl: './product-model.component.html',
   styleUrl: './product-model.component.css',
 })
