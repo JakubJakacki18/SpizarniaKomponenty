@@ -1,31 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './components/partials/header/header.component';
+import { ProductModelComponent } from './components/pages/manage/product-model/product-model.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent,ProductModelComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'Spizarnia';
-  isPantryVisible = false;
-  isShoppingListVisible = false;
 
-  toggleSection(section: string): void {
-    if (section === 'pantry') {
-      this.isPantryVisible = !this.isPantryVisible;
-    } else if (section === 'shoppingList') {
-      this.isShoppingListVisible = !this.isShoppingListVisible;
-    }
-  }
-  managePantry(): void {
-    console.log('Zarządzaj funkcja kliknięta');
-    // Dodaj logikę do zarządzania spiżarnią.
-  }
-
-  browsePantry(): void {
-    console.log('Przeglądaj funkcja kliknięta');
-    // Dodaj logikę do przeglądania spiżarni.
-  }
 }
