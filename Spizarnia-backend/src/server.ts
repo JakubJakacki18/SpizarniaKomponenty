@@ -8,7 +8,7 @@ const app = express();
 import shelfRouter from "./routers/shelf.router"; 
 import productRouter from "./routers/product.router";
 import containerRouter from "./routers/container.router";
-import productModelRouter from "./routers/container.router"
+import productModelRouter from "./routers/productModel.router"
 
 app.use(cors(
     {
@@ -19,9 +19,9 @@ app.use(cors(
 app.use(express.json());
 
 app.use("/api/productModel",productModelRouter);
-app.use("/products", productRouter)
-app.use("/containers", containerRouter)
-app.use("/shelves", shelfRouter);
+app.use("/api/products", productRouter)
+app.use("/api/containers", containerRouter)
+app.use("/api/shelves", shelfRouter);
 // app.use("/api/container",containerRouter);
 
 app.get("/api",(req,res) => 
