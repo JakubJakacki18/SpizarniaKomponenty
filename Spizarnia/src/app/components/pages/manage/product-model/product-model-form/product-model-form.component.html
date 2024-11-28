@@ -1,28 +1,27 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <label for="name">Nazwa:</label>
-    <input id="name" formControlName="name" />
-    <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
-      Nazwa jest wymagana
-    </div>
-  
-    <label for="unit">Jednostka:</label>
-    <input id="unit" formControlName="unit" />
-    <div *ngIf="productForm.get('unit')?.invalid && productForm.get('unit')?.touched">
-      Jednostka jest wymagana
-    </div>
-  
-    <label for="price">Cena:</label>
-    <input id="price" type="number" formControlName="price" />
-    <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
-      Cena musi być liczbą większą od 0
-    </div>
-  
-    <label for="quantity">Ilość:</label>
-    <input id="quantity" type="number" formControlName="quantity" />
-    <div *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched">
-      Ilość musi być liczbą większą od 0
-    </div>
-  
-    <button type="submit" [disabled]="productForm.invalid">Wyślij</button>
-  </form>
-  
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+  <label for="name">Nazwa:</label>
+  <input id="name" formControlName="name" class="form-input" />
+  <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error-message">
+    Nazwa jest wymagana
+  </div>
+
+  <label for="unit">Jednostka:</label>
+  <input id="unit" formControlName="unit" class="form-input" />
+  <div *ngIf="productForm.get('unit')?.invalid && productForm.get('unit')?.touched" class="error-message">
+    Jednostka jest wymagana
+  </div>
+
+  <label for="price">Cena:</label>
+  <input id="price" type="number" formControlName="price" class="form-input" />
+  <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="error-message">
+    Cena musi być liczbą większą od 0
+  </div>
+
+  <label for="quantity">Ilość:</label>
+  <input id="quantity" type="number" formControlName="quantity" class="form-input" />
+  <div *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" class="error-message">
+    Ilość musi być liczbą większą od 0
+  </div>
+
+  <button type="submit" [disabled]="productForm.invalid" class="form-button">Wyślij</button>
+</form>
