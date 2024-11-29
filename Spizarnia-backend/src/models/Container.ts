@@ -5,26 +5,21 @@ import {
     OneToOne,
     ManyToOne,
     OneToMany,
+    JoinColumn,
   } from 'typeorm';
   import { Product } from './Product';
-  import { Shelf } from './Shelf';
+import { Category } from './Category';
   
   @Entity()
   export class Container {
     @PrimaryGeneratedColumn()
     id: number;
   
-    @Column()
-    name: string;
-  
-    @Column()
-    maxQuantity: number;
+    @OneToOne(() => Category, (category) => category.container)
+    @JoinColumn() // Klucz obcy w tabeli Container wskazuje na Category
+    category: Category;
   
     @OneToMany(() => Product, (product) => product.container, { onDelete: "SET NULL" })
     products: Product[];
-
-  
-    @ManyToOne(() => Shelf, (shelf) => shelf.containers)
-    shelf: Shelf;
     
   }
