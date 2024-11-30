@@ -12,7 +12,7 @@ export class Ingredient {
     @ManyToOne(() => ProductModel, (productModel) => productModel.ingredients)
     productModel: ProductModel;
   
-    @Column()
+    @Column("decimal")
     quantity: number;
   
     @ManyToMany(() => Recipe, (recipe) => recipe.ingredients)
