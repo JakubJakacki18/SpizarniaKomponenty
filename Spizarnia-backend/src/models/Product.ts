@@ -31,12 +31,6 @@ export class Product {
     @ManyToOne(() => Shelf, (shelf) => shelf.products, { onDelete: "SET NULL" })
     shelf: Shelf;
 
-    @CreateDateColumn()
-    createdAt: Date;
-  
-    @UpdateDateColumn()
-    updatedAt: Date;
-
   validateRelations() {
     if (this.shelf && this.container) {
       throw new Error('Produkt nie może być jednocześnie na półce i w pojemniku.');

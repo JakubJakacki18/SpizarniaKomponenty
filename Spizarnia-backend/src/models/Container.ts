@@ -23,7 +23,6 @@ import {
     @OneToMany(() => Product, (product) => product.container, { onDelete: "SET NULL" })
     products: Product[];
 
-  
     @ManyToOne(() => Shelf, (shelf) => shelf.containers)
     shelf: Shelf;
     

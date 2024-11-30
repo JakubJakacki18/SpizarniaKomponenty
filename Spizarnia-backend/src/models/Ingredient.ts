@@ -18,9 +18,6 @@ export class Ingredient {
     @ManyToMany(() => Recipe, (recipe) => recipe.ingredients)
     @JoinTable() 
     recipes: Recipe[];
-    
-    
-    
 
     @BeforeRemove()
     async updateRecipesBeforeRemove() {
