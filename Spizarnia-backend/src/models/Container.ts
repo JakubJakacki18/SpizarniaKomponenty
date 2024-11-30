@@ -19,7 +19,7 @@ import { Category } from './Category';
     @JoinColumn() // Klucz obcy w tabeli Container wskazuje na Category
     category: Category;
   
-    @OneToMany(() => Product, (product) => product.container, { onDelete: "SET NULL" })
+    @OneToMany(() => Product, (product) => product.container, { cascade : true })
     products: Product[];
     
   }

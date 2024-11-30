@@ -9,7 +9,6 @@ import {
 
 import { ProductModel } from './ProductModel';
 import { Container } from './Container';
-import { Shelf } from './Shelf';
 
 @Entity()
 export class Product {
@@ -25,11 +24,8 @@ export class Product {
     @ManyToOne(() => ProductModel, (productModel) => productModel.products)
     productModel: ProductModel;
 
-    @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
+    @ManyToOne(() => Container, (container) => container.products, { onDelete: "CASCADE" })
     container: Container;
-
-    @ManyToOne(() => Shelf, (shelf) => shelf.products, { onDelete: "SET NULL" })
-    shelf: Shelf;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -37,9 +33,4 @@ export class Product {
     @UpdateDateColumn()
     updatedAt: Date;
 
-  validateRelations() {
-    if (this.shelf && this.container) {
-      throw new Error('Produkt nie może być jednocześnie na półce i w pojemniku.');
-    }
-}
 }
