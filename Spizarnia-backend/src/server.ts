@@ -5,7 +5,7 @@ import { User } from "./models/User";
 import { Ingredient } from "./models/Ingredient";
 const app = express();
 
-import shelfRouter from "./routers/shelf.router"; 
+import categoryRouter from './routers/category.router';
 import productRouter from "./routers/product.router";
 import containerRouter from "./routers/container.router";
 import productModelRouter from "./routers/productModel.router";
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use("/api/productModel",productModelRouter);
 app.use("/api/products", productRouter);
 app.use("/api/containers", containerRouter);
-app.use("/api/shelves", shelfRouter);
+app.use('/api/categories', categoryRouter);
 app.use("/api/ingredients", ingredientRouter);
 app.use("/api/recipes", recipeRouter);
 // app.use("/api/container",containerRouter);

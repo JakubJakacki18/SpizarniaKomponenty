@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Repository } from "typeorm";
 import { ProductModel } from "../models/ProductModel";
 import { AppDataSource } from "../data-source"; 
+import { Category } from "../models/Category";
 
 
 const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
@@ -36,14 +37,16 @@ export const ProductModelController = {
   },
 
   async create(req: Request, res: Response) {
-    const { name, quantity, unit, price } = req.body;
+    const { name, quantity, unit, price, categoryId } = req.body;
 
     try {
+      const category = await AppDataSource.getRepository(Category).findOne({ where: { id: categoryId } });
       const newProductModel = productModelRepository.create({
         name,
         quantity,
         unit,
         price,
+        category,
       });
 
       await productModelRepository.save(newProductModel);
@@ -55,7 +58,7 @@ export const ProductModelController = {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, quantity, unit, price } = req.body;
+    const { name, quantity, unit, price, categoryId } = req.body;
 
     try {
       const productModel = await productModelRepository.findOneBy({ id: parseInt(id) });
@@ -63,6 +66,13 @@ export const ProductModelController = {
       if (!productModel) {
         res.status(404).json({ error: `ProductModel with id: ${id} was not found` });
         return;
+      }
+
+      if (categoryId) {
+        const category = await AppDataSource.getRepository(Category).findOne({ where: { id: categoryId } });
+        if (category) {
+          productModel.category = category;  // Assign new category
+        }
       }
 
       productModel.name = name;
