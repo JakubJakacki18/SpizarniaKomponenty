@@ -3,13 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
   } from 'typeorm';
 
 import { ProductModel } from './ProductModel';
 import { Container } from './Container';
-import { Shelf } from './Shelf';
 
 @Entity()
 export class Product {
@@ -28,18 +25,4 @@ export class Product {
     @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
     container: Container;
 
-    @ManyToOne(() => Shelf, (shelf) => shelf.products, { onDelete: "SET NULL" })
-    shelf: Shelf;
-
-    @CreateDateColumn()
-    createdAt: Date;
-  
-    @UpdateDateColumn()
-    updatedAt: Date;
-
-  validateRelations() {
-    if (this.shelf && this.container) {
-      throw new Error('Produkt nie może być jednocześnie na półce i w pojemniku.');
-    }
-}
 }

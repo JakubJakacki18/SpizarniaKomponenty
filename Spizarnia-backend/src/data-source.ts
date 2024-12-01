@@ -3,7 +3,7 @@ import { DataSource } from "typeorm"
 import { User } from "./models/User"
 import { Product } from "./models/Product"
 import { Container } from "./models/Container"
-import { Shelf } from "./models/Shelf"
+import { Category } from "./models/Category"
 import { ListOfProductsToBuy } from "./models/ListOfProductsToBuy"
 import { Ingredient } from "./models/Ingredient"
 import { ProductModel } from "./models/ProductModel"
@@ -18,7 +18,7 @@ export const AppDataSource = new DataSource({
     database: "pantry",
     synchronize: true,
     logging: false,
-    entities: [User, Product, Container,Shelf,ListOfProductsToBuy,Ingredient,ProductModel,Recipe],
+    entities: [User, Product, Container,Category,ListOfProductsToBuy,Ingredient,ProductModel,Recipe],
     migrations: [],
     subscribers: [],
 })

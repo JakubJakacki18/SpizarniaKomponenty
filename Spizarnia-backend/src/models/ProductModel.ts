@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "ty
 import {Container} from "./Container"
 import { Product } from "./Product";
 import { Ingredient } from "./Ingredient";
+import { Category } from "./Category";
 import { ListOfProductsToBuy } from "./ListOfProductsToBuy";
 @Entity()
 export class ProductModel {
@@ -25,7 +26,11 @@ export class ProductModel {
   
     @OneToMany(() => Ingredient, (ingredient) => ingredient.productModel, { cascade: ['remove'] })
     ingredients: Ingredient[];
-  
+
+    @ManyToOne(() => Category, (category) => category.productModels)
+    category: Category;
+
     @ManyToOne(() => ListOfProductsToBuy, (list) => list.products, {})
     listOfProductsToBuy: ListOfProductsToBuy[];
+    
 }

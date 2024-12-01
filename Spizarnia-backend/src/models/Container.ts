@@ -7,24 +7,21 @@ import {
     OneToMany,
   } from 'typeorm';
   import { Product } from './Product';
-  import { Shelf } from './Shelf';
+  import { Category } from './Category';
   
   @Entity()
   export class Container {
     @PrimaryGeneratedColumn()
     id: number;
   
+    //Na razie zostawiam, wydaje mi sie ze przyda sie przy wyswietlaniu.
     @Column()
     name: string;
   
-    @Column()
-    maxQuantity: number;
-  
-    @OneToMany(() => Product, (product) => product.container, { onDelete: "SET NULL" })
+    @OneToOne(() => Product, (product) => product.container, { onDelete: "SET NULL" })
     products: Product[];
 
-  
-    @ManyToOne(() => Shelf, (shelf) => shelf.containers)
-    shelf: Shelf;
+    @ManyToOne(() => Category, (category) => category.containers)
+    category: Category
     
   }

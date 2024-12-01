@@ -41,8 +41,6 @@ export const ContainerController = {
     try {
       const newContainer = containerRepository.create({
         name,
-        maxQuantity,
-        shelf: shelfId ? { id: shelfId } : null,
       });
 
       await containerRepository.save(newContainer);
@@ -65,9 +63,6 @@ export const ContainerController = {
       }
 
       container.name = name;
-      container.maxQuantity = maxQuantity;
-      //TODO: SHELF id 
-      //container.shelf = shelfId ? { id: shelfId } : null;
 
       await containerRepository.save(container);
       res.json(container);
