@@ -3,7 +3,7 @@ import {Container} from "./Container"
 import { Product } from "./Product";
 import { Ingredient } from "./Ingredient";
 import { Category } from "./Category";
-//import { ListOfProductsToBuy } from "./ListOfProductsToBuy";
+import { ListOfProductsToBuy } from "./ListOfProductsToBuy";
 @Entity()
 export class ProductModel {
     @PrimaryGeneratedColumn()
@@ -30,7 +30,7 @@ export class ProductModel {
     @ManyToOne(() => Category, (category) => category.productModels)
     category: Category;
 
-    /*@ManyToOne(() => ListOfProductsToBuy, (list) => list.products, {})
+    @ManyToOne(() => ListOfProductsToBuy, (list) => list.products, {})
     listOfProductsToBuy: ListOfProductsToBuy[];
-    `*/
+    
 }

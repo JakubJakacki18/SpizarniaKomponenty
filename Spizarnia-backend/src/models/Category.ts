@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Container } from './Container';
+import {ProductModel} from './ProductModel'
 
 @Entity()
 export class Category {
