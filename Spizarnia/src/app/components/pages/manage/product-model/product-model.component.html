@@ -1,0 +1,12 @@
+<div class="content-container">
+  <!-- Product Models -->
+  <div class="content-section">
+    <div class="title">Product Models</div>
+      <ul>
+        <li *ngFor="let product of productModels">
+          {{ product.name }} - {{ product.quantity }} {{ product.unit }} - ${{ product.price }}
+        </li>
+      </ul>
+      <app-product-model-form (productCreated)="fetchProductModels()"></app-product-model-form>
+    </div>
+  </div>
