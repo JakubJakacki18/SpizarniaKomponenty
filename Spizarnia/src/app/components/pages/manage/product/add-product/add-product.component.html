@@ -1,10 +1,14 @@
-<!-- <form [formGroup]="form">
-    <mat-selection-list #shoesList [formControl]="shoesControl" name="shoes" [multiple]="false">
-      @for (shoe of shoes; track shoe) {
-        <mat-list-option [value]="shoe.value">{{shoe.name}}</mat-list-option>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+  <label>Wybierz kategorię:</label>
+
+    <mat-selection-list #shoesList [formControl]="categoriesControl" name="category" [multiple]="false">
+      @for (category of categories; track categories) {
+        <mat-list-option [value]="category.id">{{category.categoryName}}</mat-list-option>
       }
     </mat-selection-list>
     <p>
-       Option selected: {{shoesControl.value ? shoesControl.value[0] : 'None'}} 
+       Option selected: {{categoriesControl.value ? categoriesControl.value[0] : 'None'}} 
     </p>
-  </form>  -->
+  </form>
+
+  
