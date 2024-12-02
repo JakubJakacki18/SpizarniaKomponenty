@@ -1,1 +1,31 @@
-<p>all-products works!</p>
+<div class="all-products-container">
+  <div class="header-container">
+    <div class="title">Moja Spiżarnia</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Wpisz coś..." disabled />
+      <button>Wyszukaj</button>
+    </div>
+  </div>
+
+  <!-- Tabela z produktami -->
+  <div class="all-products-section">
+    <table>
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+          <th>Ilość</th>
+          <th>Data Zakupu</th>
+          <th>Data Ważności</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ formatDate(product.purchaseDate) }}</td>
+          <td>{{ formatDate(product.expirationDate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
