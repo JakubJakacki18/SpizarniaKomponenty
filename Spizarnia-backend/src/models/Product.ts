@@ -22,7 +22,6 @@ export class Product {
     @ManyToOne(() => ProductModel, (productModel) => productModel.products)
     productModel: ProductModel;
 
-    @ManyToOne(() => Container, (container) => container.products, { onDelete: "SET NULL" })
+    @ManyToOne(() => Container, (container) => container.products, { onDelete: "CASCADE" })
     container: Container;
-
 }

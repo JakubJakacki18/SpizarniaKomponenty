@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToOne,
+    ManyToOne,
+    OneToMany,
+  } from 'typeorm';
 import { Container } from './Container';
 import {ProductModel} from './ProductModel'
 
@@ -10,8 +17,8 @@ export class Category {
   @Column({ type: 'varchar', length: 255 })
   categoryName: string;
 
-  @OneToMany(() => Container, (container) => container.category)
-  containers: Container[];
+  @OneToOne(() => Container, (container) => container.category, { cascade: true, onDelete: 'CASCADE' })
+  container: Container;
 
   @OneToMany(() => ProductModel, (productModel) => productModel.category)
   productModels: ProductModel[];

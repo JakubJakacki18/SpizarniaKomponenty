@@ -1,9 +1,9 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { User } from "./models/User"
+import { Category } from './models/Category';
 import { Product } from "./models/Product"
 import { Container } from "./models/Container"
-import { Category } from "./models/Category"
 import { ListOfProductsToBuy } from "./models/ListOfProductsToBuy"
 import { Ingredient } from "./models/Ingredient"
 import { ProductModel } from "./models/ProductModel"
