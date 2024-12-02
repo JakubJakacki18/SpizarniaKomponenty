@@ -1,12 +1,13 @@
 <header>
   <div class="header-container">
     <div class="title-section">
-      <button class="toggle-button" (click)="toggleSection('pantry')">Pokaż Spiżarnię</button>
-      <button class="action-button" (click)="managePantry()">Zarządzaj</button>
-
+      <!-- Przycisk z routerLink -->
+      <button class="action-button" routerLink="/all-products">Moja Spizarnia</button>
+      <button class="action-button" routerLink="/manage">Zarządzaj</button>
       <div class="title">Spiżarnia domowa</div>
-      <button class="action-button" (click)="browsePantry()">Przeglądaj</button>
-      <button class="toggle-button" (click)="toggleSection('shoppingList')">Pokaż Listę Zakupów</button>
+      <button class="action-button" routerLink="/browse">Przepisy</button>
+      <button class="action-button" routerLink="/grocery-list">Lista Zakupów</button>
+
     </div>
   </div>
 </header>
