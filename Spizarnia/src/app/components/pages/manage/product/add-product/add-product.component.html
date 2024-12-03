@@ -1,10 +1,28 @@
-<!-- <form [formGroup]="form">
-    <mat-selection-list #shoesList [formControl]="shoesControl" name="shoes" [multiple]="false">
-      @for (shoe of shoes; track shoe) {
-        <mat-list-option [value]="shoe.value">{{shoe.name}}</mat-list-option>
-      }
-    </mat-selection-list>
-    <p>
-       Option selected: {{shoesControl.value ? shoesControl.value[0] : 'None'}} 
-    </p>
-  </form>  -->
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+  <label>Wybierz kategorię:</label>
+  <mat-accordion>
+    @for (category of categories; track category) {
+      <mat-expansion-panel>      
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ category.categoryName }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list  
+        [multiple]=false 
+        formControlName="selectedProduct"  
+        #selectionList
+        (selectionChange)="onSelectionChange($event, selectionList)">
+            @for (product of category.productModels; track product){
+            <mat-list-option [value]="product">
+              {{ product.name }}
+            </mat-list-option>
+          }
+        </mat-selection-list>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</form>
+    <div *ngIf="productForm.value.selectedProduct">
+      <p>Wybrany produkt: {{ productForm.value.selectedProduct | json }}</p>
+    </div>
