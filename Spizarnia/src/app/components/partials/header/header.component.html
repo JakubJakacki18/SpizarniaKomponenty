@@ -2,11 +2,12 @@
   <div class="header-container">
     <div class="title-section">
       <!-- Przycisk z routerLink -->
-      <button class="action-button" routerLink="/all-products">Moja Spizarnia</button>
-      <button class="action-button" routerLink="/manage">Zarządzaj</button>
-      <div class="title">Spiżarnia domowa</div>
-      <button class="action-button" routerLink="/browse">Przepisy</button>
-      <button class="action-button" routerLink="/grocery-list">Lista Zakupów</button>
+      <a [routerLink]="['/all-products']" class="action-button">Moja Spizarnia</a>
+      <a [routerLink]="['/manage']"class="action-button" >Zarządzaj</a>
+      <div class="title"><a [routerLink]="['/home']">Spiżarnia domowa</a></div>
+
+      <a [routerLink]="['/recipes']" class="action-button" >Przepisy</a>
+      <a [routerLink]="['/grocery-list']" class="action-button">Lista Zakupów</a>
 
     </div>
   </div>
