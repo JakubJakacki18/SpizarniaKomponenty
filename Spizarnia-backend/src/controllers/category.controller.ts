@@ -7,7 +7,7 @@ const categoryRepository = AppDataSource.getRepository(Category);
 export const CategoryController = {
   async getAll(req: Request, res: Response) {
     try {
-      const categories = await categoryRepository.find();
+      const categories = await categoryRepository.find({ relations: ["productModels"] });
       res.json(categories);
     } catch (error) {
       res.status(500).json({ error: 'Internal error: Cannot get all categories' });
