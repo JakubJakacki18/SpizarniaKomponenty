@@ -22,6 +22,15 @@
       </mat-expansion-panel>
     }
   </mat-accordion>
+
+  <mat-form-field>
+    <mat-label>Wybierz datę ważności:</mat-label>
+    <input matInput [min]="minDate" [matDatepicker]="picker" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button mat-raised-button (ngSubmit)="onSubmit()">Dodaj produkt</button>
 </form>
     <div *ngIf="productForm.value.selectedProduct">
       <p>Wybrany produkt: {{ productForm.value.selectedProduct | json }}</p>
