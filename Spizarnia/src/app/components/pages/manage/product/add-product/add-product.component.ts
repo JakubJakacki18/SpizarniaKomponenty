@@ -41,7 +41,7 @@ onSubmit() {
     this.productService.createProduct(this.productForm.value).subscribe(
     (response) => {
       console.log('Produkt został utworzony:', response);
-      //this.productCreated.emit();
+      this.productForm.reset();
     },
     (error) => {
       console.error('Błąd podczas tworzenia produktu:', error);
@@ -73,7 +73,7 @@ onSubmit() {
     const expirationDate = group.get('expirationDate')?.value;
 
     if (purchaseDate && expirationDate) {
-      if (new Date(purchaseDate) >= new Date(expirationDate)) {
+      if (new Date(purchaseDate) > new Date(expirationDate)) {
         return { invalidDateRange: true }; // Błąd: data zakupu nie może być większa lub równa dacie ważności
       }
     }
