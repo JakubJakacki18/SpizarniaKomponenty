@@ -1,14 +1,21 @@
+import { ProductService } from './../../../../../services/product.service';
 import { CategoryService } from './../../../../../services/category.service';
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatListModule, MatSelectionList, MatSelectionListChange} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion'
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {provideNativeDateAdapter} from '@angular/material/core';
 import { Category } from '../../../../../shared/models/Category';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-product',
-  imports: [MatListModule,FormsModule,ReactiveFormsModule,MatExpansionModule,CommonModule],
+  providers:[provideNativeDateAdapter()],
+  imports: [MatListModule,FormsModule,ReactiveFormsModule,MatExpansionModule,MatDatepickerModule,MatButtonModule,MatFormFieldModule,MatInputModule,CommonModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css'
 })
@@ -27,24 +34,57 @@ export class AddProductComponent {
 }}
   @ViewChildren(MatSelectionList) selectionLists!: QueryList<MatSelectionList>;
 selectedProduct: any;
+selectedDate: any;
 onSubmit() {
-throw new Error('Method not implemented.');
+  if (this.productForm.valid) {
+    // Wywołanie metody serwisu do wysyłania danych
+    this.productService.createProduct(this.productForm.value).subscribe(
+    (response) => {
+      console.log('Produkt został utworzony:', response);
+      //this.productCreated.emit();
+    },
+    (error) => {
+      console.error('Błąd podczas tworzenia produktu:', error);
+    }
+   );
+   } else {
+      console.log('Formularz jest nieprawidłowy');
+   }
 }
+
   productForm: FormGroup;
-  
+  minDate : Date;
   categories: Category[] =[];
   ngOnInit()
   {  
     this.fetchCategories();
     this.productForm = this.fb.group({
+      expirationDate: ['',Validators.required],
+      purchaseDate: ['',Validators.required],
       selectedProduct: ['', Validators.required],
+      },{
+        validators: this.dateValidator, // Dodanie walidatora na poziomie grupy
       });
   }
   categoriesControl = new FormControl();
-  constructor(private fb: FormBuilder, private categoryService: CategoryService) {
+  dateValidator(group: AbstractControl)
+  {
+    const purchaseDate = group.get('purchaseDate')?.value;
+    const expirationDate = group.get('expirationDate')?.value;
+
+    if (purchaseDate && expirationDate) {
+      if (new Date(purchaseDate) >= new Date(expirationDate)) {
+        return { invalidDateRange: true }; // Błąd: data zakupu nie może być większa lub równa dacie ważności
+      }
+    }
+    return null; // Brak błędów
+  }
+  constructor(private fb: FormBuilder, private categoryService: CategoryService, private productService:ProductService) {
     this.productForm = new FormGroup({
       categories: this.categoriesControl,
-    });}
+    });
+    this.minDate = new Date();
+  }
 
     fetchCategories(): void {
       this.categoryService.getAllCategories().subscribe({

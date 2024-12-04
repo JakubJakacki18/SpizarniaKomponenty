@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { Repository } from "typeorm";
 import { Product } from "../models/Product";
 import { AppDataSource } from "../data-source";
+import { ProductModel } from "../models/ProductModel";
 
 const productRepository: Repository<Product> = AppDataSource.getRepository(Product);
-
+const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
 export const ProductController = {
   async getAll(req: Request, res: Response) {
     try {
@@ -37,14 +38,17 @@ export const ProductController = {
   },
 
   async create(req: Request, res: Response) {
-    const { expirationDate, purchaseDate, productModelId, containerId, shelfId } = req.body;
-
+    const { expirationDate, purchaseDate, selectedProduct } = req.body;
+    console.log([[selectedProduct[0].id]]);
     try {
+      //const selectedProductModel = productModelRepository.findOne({where: { id: parseInt(selectedProduct.id) }})
       const newProduct = productRepository.create({
         expirationDate: new Date(expirationDate),
         purchaseDate: new Date(purchaseDate),
+        //productModelId : selectedProduct.id
+        //containerId: selectedProduct.cate
+        productModel: selectedProduct[0],
         /* TODO: podłaczyc z pozostałymi tabelami.
-        productModel: { id: productModelId },
         container: containerId ? { id: containerId } : null,
         shelf: shelfId ? { id: shelfId } : null,
         */
