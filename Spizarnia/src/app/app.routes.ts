@@ -6,12 +6,14 @@ import { RecipesComponent } from './components/pages/recipes/recipes.component';
 import { GroceryListComponent } from './components/pages/grocery-list/grocery-list.component';
 import { ProductModelComponent } from './components/pages/manage/product-model/product-model.component';
 import { ProductModelFormComponent } from './components/pages/manage/product-model/product-model-form/product-model-form.component';
+import { ProductComponent } from './components/pages/manage/product/product.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, 
   { path: 'home', component: HomeComponent },
   { path: 'all-products', component: AllProductsComponent },
   { path: 'manage', component: ManageComponent },
+  { path: 'manage/product', component: ProductComponent },
   { path: 'recipes', component: RecipesComponent },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'product-model-form', component: ProductModelFormComponent },
