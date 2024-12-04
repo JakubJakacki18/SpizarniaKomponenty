@@ -11,13 +11,26 @@ import {MatInputModule} from '@angular/material/input';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { Category } from '../../../../../shared/models/Category';
 import { CommonModule } from '@angular/common';
+import { SimpleDialogComponent } from '../../../../partials/simple-dialog/simple-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { title } from 'process';
 
 @Component({
   selector: 'app-add-product',
   providers:[provideNativeDateAdapter()],
-  imports: [MatListModule,FormsModule,ReactiveFormsModule,MatExpansionModule,MatDatepickerModule,MatButtonModule,MatFormFieldModule,MatInputModule,CommonModule],
+  imports: [MatListModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CommonModule,
+    MatDialogModule
+  ],
   templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css'
+  styleUrl: './add-product.component.css',
 })
 export class AddProductComponent {
   onSelectionChange(event: MatSelectionListChange,selectionList: MatSelectionList) :void  {
@@ -36,20 +49,34 @@ export class AddProductComponent {
 selectedProduct: any;
 selectedDate: any;
 onSubmit() {
+  let dataDialog : {title : string, message : string};
+  dataDialog = {title : "Błąd", message:"Wartość wiadomości nie została przypisana"};
   if (this.productForm.valid) {
-    // Wywołanie metody serwisu do wysyłania danych
     this.productService.createProduct(this.productForm.value).subscribe(
     (response) => {
       console.log('Produkt został utworzony:', response);
+      dataDialog = {
+        title: 'Sukces',
+        message: 'Produkt został pomyślnie utworzony!'
+      }
       this.productForm.reset();
     },
     (error) => {
       console.error('Błąd podczas tworzenia produktu:', error);
+      dataDialog= {
+        title: 'Błąd',
+        message: 'Wystąpił błąd podczas tworzenia produktu. Spróbuj ponownie.'
+      }
     }
    );
    } else {
+      dataDialog = {
+        title: 'Nieprawidłowy formularz',
+        message: 'Formularz jest nieprawidłowy. Uzupełnij wszystkie pola poprawnymi wartościami.'
+      }
       console.log('Formularz jest nieprawidłowy');
    }
+   this.dialog.open(SimpleDialogComponent, {data: dataDialog});
 }
 
   productForm: FormGroup;
@@ -79,7 +106,7 @@ onSubmit() {
     }
     return null; // Brak błędów
   }
-  constructor(private fb: FormBuilder, private categoryService: CategoryService, private productService:ProductService) {
+  constructor(private fb: FormBuilder, private categoryService: CategoryService, private productService:ProductService,  private dialog: MatDialog) {
     this.productForm = new FormGroup({
       categories: this.categoriesControl,
     });
