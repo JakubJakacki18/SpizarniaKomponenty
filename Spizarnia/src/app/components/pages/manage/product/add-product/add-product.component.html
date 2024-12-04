@@ -22,14 +22,23 @@
       </mat-expansion-panel>
     }
   </mat-accordion>
-
+  <mat-form-field>
+    <mat-label>Wybierz datę zakupu:</mat-label>
+    <input matInput [min]="minDate" [matDatepicker]="dateOfPurchase" formControlName="purchaseDate" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="dateOfPurchase"></mat-datepicker-toggle>
+    <mat-datepicker #dateOfPurchase></mat-datepicker>
+  </mat-form-field>
   <mat-form-field>
     <mat-label>Wybierz datę ważności:</mat-label>
-    <input matInput [min]="minDate" [matDatepicker]="picker" />
+    <input matInput [min]="minDate" [matDatepicker]="dateOfExpiration" formControlName="expirationDate" />
     <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker-toggle matIconSuffix [for]="dateOfExpiration"></mat-datepicker-toggle>
+    <mat-datepicker #dateOfExpiration></mat-datepicker>
   </mat-form-field>
+  <div *ngIf="productForm.hasError('invalidDateRange')">
+    <p class="error">Data zakupu musi być mniejsza niż data ważności.</p>
+  </div>
   <button mat-raised-button (ngSubmit)="onSubmit()">Dodaj produkt</button>
 </form>
     <div *ngIf="productForm.value.selectedProduct">
