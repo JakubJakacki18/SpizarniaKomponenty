@@ -11,17 +11,17 @@ import { Container } from './Container';
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column({ type: "date", nullable: false })
-    expirationDate: Date;
+    expirationDate!: Date;
 
     @Column({ type: "date", nullable: false })
-    purchaseDate: Date;
+    purchaseDate!: Date;
 
     @ManyToOne(() => ProductModel, (productModel) => productModel.products)
-    productModel: ProductModel;
+    productModel?: ProductModel;
 
     @ManyToOne(() => Container, (container) => container.products, { onDelete: "CASCADE" })
-    container: Container;
+    container?: Container;
 }

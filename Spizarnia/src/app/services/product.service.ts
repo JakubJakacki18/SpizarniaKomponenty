@@ -18,8 +18,12 @@ export class ProductService {
   getAllProductModels():Observable<Product[]>
   {
      return this.http.get<Product[]>(PRODUCTS);
-   }
-
+  }
+  getProductByName(name : string):Observable<Product[]>
+  {
+     return this.http.get<Product[]>(PRODUCTS+"/name");
+  }
+  
 }
 
 

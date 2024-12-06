@@ -12,6 +12,10 @@ export class CategoryService {
   {
     return this.http.get<Category[]>(CATEGORIES);
   }
+  createNewCategory(category : {categoryName : string}): Observable<any>
+  {
+    return this.http.post(CATEGORIES, category);
+  }
   constructor(private http: HttpClient)
   {
 

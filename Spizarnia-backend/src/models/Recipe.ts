@@ -4,14 +4,14 @@ import { Ingredient } from './Ingredient';
 @Entity()
 export class Recipe {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @ManyToMany(() => Ingredient, (ingredient) => ingredient.recipes)
-  ingredients: Ingredient[];
+  ingredients?: Ingredient[];
 
   @Column({ default: true })
-  finished: boolean;
+  finished!: boolean;
 }
