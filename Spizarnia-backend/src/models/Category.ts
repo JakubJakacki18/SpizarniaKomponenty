@@ -12,14 +12,14 @@ import {ProductModel} from './ProductModel'
 @Entity()
 export class Category {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar', length: 255 })
-  categoryName: string;
+  categoryName!: string;
 
   @OneToOne(() => Container, (container) => container.category, { cascade: true, onDelete: 'CASCADE' })
-  container: Container;
+  container!: Container;
 
   @OneToMany(() => ProductModel, (productModel) => productModel.category)
-  productModels: ProductModel[];
+  productModels?: ProductModel[];
 }

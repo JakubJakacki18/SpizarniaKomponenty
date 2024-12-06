@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ContainerService } from '../../../../services/container.service';
 
 @Component({
   selector: 'app-containers',
@@ -6,20 +7,18 @@ import { Component } from '@angular/core';
   templateUrl: './containers.component.html',
   styleUrl: './containers.component.css'
 })
-export class ContainersComponent {
-  containers = [
-    { name: 'Kontener 1' },
-    { name: 'Kontener 2' },
-    { name: 'Kontener 3' },
-    { name: 'Kontener 4' },
-    { name: 'Kontener 5' },
-    { name: 'Kontener 6' },
-    { name: 'Kontener 7' },
-    { name: 'Kontener 8' },
+export class ContainersComponent implements OnInit{
+  containers : any;
+  constructor(private containerService: ContainerService){}
+  ngOnInit()
+  {  
+    this.fetchContainers();
+  }
 
-
-    
-
-
-  ];
+  fetchContainers(): void {
+    this.containerService.getAllContainers().subscribe({
+      next: (data) => (this.containers = data),
+      error: (err) => console.error('Error fetching Containers:', err),
+    });
+  }
 }

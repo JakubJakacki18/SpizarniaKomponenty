@@ -13,7 +13,6 @@ import { Category } from '../../../../../shared/models/Category';
 import { CommonModule } from '@angular/common';
 import { SimpleDialogComponent } from '../../../../partials/simple-dialog/simple-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { title } from 'process';
 
 @Component({
   selector: 'app-add-product',
