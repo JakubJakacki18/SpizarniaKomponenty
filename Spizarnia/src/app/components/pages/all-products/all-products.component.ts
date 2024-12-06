@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
   providers: [DatePipe]  // Zapewniamy dostęp do DatePipe
 })
 export class AllProductsComponent {
-
   products: any[] = [];
   filteredProducts: any[] = [];
   searchTerm: string = '';
