@@ -1,8 +1,15 @@
-<!-- <div class="containers">
-    @for (item of ; track item.name) {
-        
-        <li>{{ item.name }}</li>
-        } @empty {
+
+<div class="container-grid">
+    @for (container of containers; track container)
+    {
+        <a ro>
+            <div class="container-box"> 
+                <p>{{ container.name }}</p>
+            </div>
+        </a>
+    } 
+    @empty 
+    {
         <div class="emptyWarning">Nie ma kontenerów do wyświetlenia</div>
-        }
-</div> -->
+    }
+</div>
