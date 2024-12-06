@@ -6,12 +6,11 @@ import { ProductModel } from "../models/ProductModel";
 
 const productRepository: Repository<Product> = AppDataSource.getRepository(Product);
 const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
-
 export const ProductController = {
   async getAll(req: Request, res: Response) {
     try {
       const products = await productRepository.find({
-        relations: ["productModel", "container"],
+        relations: ["productModel", "container", "shelf"],
       });
 
       //podpinanie nazwy i ilosci z productmodel
@@ -70,11 +69,15 @@ export const ProductController = {
     }
 
     try {
+
       const newProduct = productRepository.create({
         expirationDate: new Date(expirationDate),
         purchaseDate: new Date(purchaseDate),
+        //productModelId : selectedProduct.id
+        //containerId: selectedProduct.cate
         productModel: selectedProduct[0],
       });
+
 
       await productRepository.save(newProduct);
       res.status(201).json(newProduct);
@@ -82,7 +85,7 @@ export const ProductController = {
       res.status(500).json({ error: "Internal error: Product was not created" });
     }
   },
-  
+
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { expirationDate, purchaseDate, productModelId, containerId } = req.body;
