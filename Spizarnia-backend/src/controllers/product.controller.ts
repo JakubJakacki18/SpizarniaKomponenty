@@ -105,6 +105,8 @@ export const ProductController = {
     }
   },
 
+  //?
+
   async delete(req: Request, res: Response) {
     const { id } = req.params;
 
