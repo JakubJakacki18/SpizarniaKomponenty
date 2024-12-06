@@ -13,7 +13,19 @@ export const ProductController = {
       const products = await productRepository.find({
         relations: ["productModel", "container"],
       });
-      res.json(products);
+
+      //podpinanie nazwy i ilosci z productmodel
+      const result = products.map((product) =>({
+
+        id: product.id,
+        expirationDate: product.expirationDate,
+        purchaseDate: product.purchaseDate,
+        name: product.productModel.name,
+        quantity: product.productModel.quantity,
+        unit: product.productModel.unit
+      }))
+
+      res.json(result);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot get all products" });
     }
@@ -32,7 +44,18 @@ export const ProductController = {
         return
       }
 
-      res.json(product);
+            //podpinanie nazwy i ilosci z productmodel
+      const result = {
+
+        id: product.id,
+        expirationDate: product.expirationDate,
+        purchaseDate: product.purchaseDate,
+        name: product.productModel.name,
+        quantity: product.productModel.quantity,
+        unit: product.productModel.unit
+      }
+
+      res.json(result);
     } catch (error) {
       res.status(500).json({ error: 'Internal error: Cannot get product' });
     }
