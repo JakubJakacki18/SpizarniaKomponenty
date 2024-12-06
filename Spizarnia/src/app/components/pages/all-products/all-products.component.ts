@@ -43,7 +43,7 @@ export class AllProductsComponent {
   }
 
   searchProducts(name: string): Observable<any>{
-    return this.http.get<any[]>(`http://localhost:5000/api/productModel?name=${name}`)
+    return this.http.get<any[]>(`http://localhost:5000/api/product?name=${name}`)
   }
 
   formatDate(date: Date): string {
