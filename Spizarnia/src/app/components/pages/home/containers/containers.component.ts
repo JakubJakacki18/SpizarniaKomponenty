@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ContainerService } from '../../../../services/container.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-containers',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './containers.component.html',
   styleUrl: './containers.component.css'
 })
