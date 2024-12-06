@@ -6,11 +6,12 @@ import { ProductModel } from "../models/ProductModel";
 
 const productRepository: Repository<Product> = AppDataSource.getRepository(Product);
 const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
+
 export const ProductController = {
   async getAll(req: Request, res: Response) {
     try {
       const products = await productRepository.find({
-        relations: ["productModel", "container", "shelf"],
+        relations: ["productModel", "container"],
       });
       res.json(products);
     } catch (error) {
@@ -23,7 +24,7 @@ export const ProductController = {
     try {
       const product = await productRepository.findOne({
         where: { id: parseInt(id) },
-        relations: ["productModel", "container", "shelf"],
+        relations: ["productModel", "container"],
       });
 
       if (!product) {
@@ -38,29 +39,21 @@ export const ProductController = {
   },
 
   async create(req: Request, res: Response) {
-    const { expirationDate, purchaseDate, selectedProduct } = req.body;
-    console.log([[selectedProduct[0].id]]);
     try {
-      //const selectedProductModel = productModelRepository.findOne({where: { id: parseInt(selectedProduct.id) }})
+      const { expirationDate, purchaseDate, selectedProduct } = req.body;
       const newProduct = productRepository.create({
         expirationDate: new Date(expirationDate),
         purchaseDate: new Date(purchaseDate),
-        //productModelId : selectedProduct.id
-        //containerId: selectedProduct.cate
         productModel: selectedProduct[0],
-        /* TODO: podłaczyc z pozostałymi tabelami.
-        container: containerId ? { id: containerId } : null,
-        shelf: shelfId ? { id: shelfId } : null,
-        */
-    });
-
+      });
+  
       await productRepository.save(newProduct);
       res.status(201).json(newProduct);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Product was not created" });
     }
   },
-
+  
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { expirationDate, purchaseDate, productModelId, containerId, shelfId } = req.body;
