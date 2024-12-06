@@ -24,14 +24,14 @@
   </mat-accordion>
   <mat-form-field>
     <mat-label>Wybierz datę zakupu:</mat-label>
-    <input matInput [min]="minDate" [matDatepicker]="dateOfPurchase" formControlName="purchaseDate" />
+    <input matInput [max]="todayDate" [matDatepicker]="dateOfPurchase" formControlName="purchaseDate" />
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="dateOfPurchase"></mat-datepicker-toggle>
     <mat-datepicker #dateOfPurchase></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Wybierz datę ważności:</mat-label>
-    <input matInput [min]="minDate" [matDatepicker]="dateOfExpiration" formControlName="expirationDate" />
+    <input matInput [min]="todayDate" [matDatepicker]="dateOfExpiration" formControlName="expirationDate" />
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="dateOfExpiration"></mat-datepicker-toggle>
     <mat-datepicker #dateOfExpiration></mat-datepicker>
