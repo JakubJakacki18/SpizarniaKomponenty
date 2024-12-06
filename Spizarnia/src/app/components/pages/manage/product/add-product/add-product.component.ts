@@ -13,7 +13,6 @@ import { Category } from '../../../../../shared/models/Category';
 import { CommonModule } from '@angular/common';
 import { SimpleDialogComponent } from '../../../../partials/simple-dialog/simple-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { title } from 'process';
 
 @Component({
   selector: 'app-add-product',
@@ -50,7 +49,7 @@ selectedProduct: any;
 selectedDate: any;
 onSubmit() {
   let dataDialog : {title : string, message : string};
-  dataDialog = {title : "Błąd", message:"Wartość wiadomości nie została przypisana"};
+  //dataDialog = {title : "Błąd", message:"Wartość wiadomości nie została przypisana"};
   if (this.productForm.valid) {
     this.productService.createProduct(this.productForm.value).subscribe(
     (response) => {
@@ -59,6 +58,7 @@ onSubmit() {
         title: 'Sukces',
         message: 'Produkt został pomyślnie utworzony!'
       }
+      this.dialog.open(SimpleDialogComponent, {data: dataDialog});
       this.productForm.reset();
     },
     (error) => {
@@ -67,20 +67,22 @@ onSubmit() {
         title: 'Błąd',
         message: 'Wystąpił błąd podczas tworzenia produktu. Spróbuj ponownie.'
       }
+      this.dialog.open(SimpleDialogComponent, {data: dataDialog});
+
     }
    );
    } else {
-      dataDialog = {
-        title: 'Nieprawidłowy formularz',
-        message: 'Formularz jest nieprawidłowy. Uzupełnij wszystkie pola poprawnymi wartościami.'
+     dataDialog = {
+       title: 'Nieprawidłowy formularz',
+       message: 'Formularz jest nieprawidłowy. Uzupełnij wszystkie pola poprawnymi wartościami.'
       }
+      this.dialog.open(SimpleDialogComponent, {data: dataDialog});
       console.log('Formularz jest nieprawidłowy');
    }
-   this.dialog.open(SimpleDialogComponent, {data: dataDialog});
 }
 
   productForm: FormGroup;
-  minDate : Date;
+  todayDate : Date;
   categories: Category[] =[];
   ngOnInit()
   {  
@@ -110,7 +112,7 @@ onSubmit() {
     this.productForm = new FormGroup({
       categories: this.categoriesControl,
     });
-    this.minDate = new Date();
+    this.todayDate = new Date();
   }
 
     fetchCategories(): void {

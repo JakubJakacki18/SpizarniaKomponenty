@@ -13,19 +13,7 @@ export const ProductController = {
       const products = await productRepository.find({
         relations: ["productModel", "container"],
       });
-
-      //podpinanie nazwy i ilosci z productmodel
-      const result = products.map((product) =>({
-
-        id: product.id,
-        expirationDate: product.expirationDate,
-        purchaseDate: product.purchaseDate,
-        name: product.productModel.name,
-        quantity: product.productModel.quantity,
-        unit: product.productModel.unit
-      }))
-
-      res.json(result);
+      res.json(products);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot get all products" });
     }
@@ -36,46 +24,29 @@ export const ProductController = {
     try {
       const product = await productRepository.findOne({
         where: { id: parseInt(id) },
-        relations: ['productModel', 'container'],
+        relations: ["productModel", "container", "shelf"],
       });
 
       if (!product) {
         res.status(404).json({ error: `Product with id: ${id} was not found` });
-        return
+        return;
       }
 
-            //podpinanie nazwy i ilosci z productmodel
-      const result = {
-
-        id: product.id,
-        expirationDate: product.expirationDate,
-        purchaseDate: product.purchaseDate,
-        name: product.productModel.name,
-        quantity: product.productModel.quantity,
-        unit: product.productModel.unit
-      }
-
-      res.json(result);
+      res.json(product);
     } catch (error) {
-      res.status(500).json({ error: 'Internal error: Cannot get product' });
+      res.status(500).json({ error: "Internal error: Cannot get product" });
     }
   },
 
   async create(req: Request, res: Response) {
     const { expirationDate, purchaseDate, selectedProduct } = req.body;
-
-    if (!expirationDate || !purchaseDate || !selectedProduct || selectedProduct.length === 0) {
-      res.status(400).json({ error: "Missing required fields" });
-      return
-    }
-
+    console.log([[selectedProduct[0].id]]);
     try {
       const newProduct = productRepository.create({
         expirationDate: new Date(expirationDate),
         purchaseDate: new Date(purchaseDate),
         productModel: selectedProduct[0],
       });
-
       await productRepository.save(newProduct);
       res.status(201).json(newProduct);
     } catch (error) {
@@ -85,18 +56,23 @@ export const ProductController = {
   
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { expirationDate, purchaseDate, productModelId, containerId } = req.body;
+    const { expirationDate, purchaseDate, productModelId, containerId, shelfId } = req.body;
 
     try {
       const product = await productRepository.findOneBy({ id: parseInt(id) });
 
       if (!product) {
         res.status(404).json({ error: `Product with id: ${id} was not found` });
-        return
+        return;
       }
 
       product.expirationDate = new Date(expirationDate);
       product.purchaseDate = new Date(purchaseDate);
+      //TODO: podłączyć z productModel? Tak jak rozmawialiśmy na dc?
+      //product.productModel = { id: productModelId }; // Assuming ProductModel relationship
+      //TODO: podłaczyć po stworzeniu
+      //product.container = containerId ? { id: containerId } : null;
+      //product.shelf = shelfId ? { id: shelfId } : null;
 
       await productRepository.save(product);
       res.json(product);
@@ -115,7 +91,7 @@ export const ProductController = {
 
       if (!product) {
         res.status(404).json({ error: `Product with id: ${id} was not found` });
-        return
+        return;
       }
 
       await productRepository.remove(product);

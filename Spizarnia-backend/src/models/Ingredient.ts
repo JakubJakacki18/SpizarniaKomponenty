@@ -7,17 +7,17 @@ import {Recipe} from "./Recipe"
 @Entity()
 export class Ingredient {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @ManyToOne(() => ProductModel, (productModel) => productModel.ingredients)
-    productModel: ProductModel;
+    productModel?: ProductModel;
   
     @Column("decimal")
-    quantity: number;
+    quantity!: number;
   
     @ManyToMany(() => Recipe, (recipe) => recipe.ingredients)
     @JoinTable() 
-    recipes: Recipe[];
+    recipes?: Recipe[];
 
     @BeforeRemove()
     async updateRecipesBeforeRemove() {
@@ -25,6 +25,8 @@ export class Ingredient {
         const recipeRepository = dataSource.getRepository(Recipe);
     
 
+        if(this.recipes===undefined)
+          return
         for (const recipe of this.recipes) {
           recipe.finished = false; 
           await recipeRepository.save(recipe); 

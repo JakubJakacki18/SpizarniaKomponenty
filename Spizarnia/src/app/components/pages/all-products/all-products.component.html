@@ -24,9 +24,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of filteredProducts">
+        <tr *ngFor="let product of products">
           <td>{{ product.name }}</td>
-          <td>{{ product.quantity }} {{ product.unit }} </td>
+          <td>{{ product.quantity }}</td>
           <td>{{ formatDate(product.purchaseDate) }}</td>
           <td>{{ formatDate(product.expirationDate) }}</td>
         </tr>

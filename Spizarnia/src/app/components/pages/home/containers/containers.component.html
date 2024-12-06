@@ -1,0 +1,15 @@
+
+<div class="container-grid">
+    @for (container of containers; track container)
+    {
+        <a [routerLink]="['/manage/container', container.id]">
+            <div class="container-box"> 
+                <p>{{ container.category.categoryName }}</p>
+            </div>
+        </a>
+    } 
+    @empty 
+    {
+        <div class="emptyWarning">Nie ma kontenerów do wyświetlenia</div>
+    }
+</div>

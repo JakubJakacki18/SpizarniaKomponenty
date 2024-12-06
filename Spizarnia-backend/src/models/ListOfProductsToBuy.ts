@@ -10,11 +10,11 @@ import {
   @Entity()
   export class ListOfProductsToBuy {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
   
     @OneToMany(() => ProductModel, (productModel) => productModel.listOfProductsToBuy)
-    products: ProductModel;
+    products?: ProductModel;
   
     @Column()
-    quantity: number;
+    quantity!: number;
   }
