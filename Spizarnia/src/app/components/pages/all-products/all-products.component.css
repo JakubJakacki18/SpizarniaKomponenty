@@ -1,4 +1,4 @@
-html, body {
+ html, body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@ html, body {
 }
 
 /* Sekcja treści */
-.all-products-container {
+/* .all-products-container {
   flex-grow: 1;
   width: 100%;
   height: 90vh;
@@ -26,7 +26,7 @@ html, body {
   justify-content: center;
   flex-direction: column;
   margin-top: 5px;
-}
+} */
 
 .all-products-section {
   padding: 20px;
@@ -59,32 +59,7 @@ html, body {
 }
 
 /* Sekcja nagłówka (z tytułem i wyszukiwarką) */
-.header-container {
-  width: 100%;
-  background-color: #9A7E6F;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
-}
 
-.title {
-  text-align: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  color: #54473F;
-  padding: 10px 20px;
-  background-color: #B7C4CF;
-  border: none;
-  border-radius: 10px; 
-  margin-right: 20px;
-  box-shadow: none;
-  display: inline-block; 
-}
 
 /* Wyszukiwarka */
 .search-bar {
@@ -113,7 +88,6 @@ html, body {
     font-family: 'Playfair Display', serif;
     font-size: 16px;
     text-align: center;
-    cursor: not-allowed;
     text-transform: uppercase;
   }
 
@@ -173,4 +147,4 @@ tbody td {
     font-size: 14px;
     padding: 8px;
   }
-}
+} 

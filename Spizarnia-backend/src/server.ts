@@ -21,11 +21,11 @@ app.use(cors(
 app.use(express.json());
 
 app.use("/api/productModel",productModelRouter);
-app.use("/api/products", productRouter);
-app.use("/api/containers", containerRouter);
-app.use('/api/categories', categoryRouter);
-app.use("/api/ingredients", ingredientRouter);
-app.use("/api/recipes", recipeRouter);
+app.use("/api/product", productRouter);
+app.use("/api/container", containerRouter);
+app.use('/api/category', categoryRouter);
+app.use("/api/ingredient", ingredientRouter);
+app.use("/api/recipe", recipeRouter);
 // app.use("/api/container",containerRouter);
 
 app.get("/api",(req,res) => 

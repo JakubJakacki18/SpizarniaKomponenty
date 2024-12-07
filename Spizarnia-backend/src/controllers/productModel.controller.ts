@@ -3,14 +3,31 @@ import { Repository } from "typeorm";
 import { ProductModel } from "../models/ProductModel";
 import { AppDataSource } from "../data-source"; 
 import { Category } from "../models/Category";
+import { Like } from "typeorm";
 
 
 const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
 
 export const ProductModelController = {
   async getAll(req: Request, res: Response) {
+
+    const {name} = req.query;
+
     try {
-      const productModels = await productModelRepository.find({ relations: ["products", "ingredients"] });
+      let productModels;
+      if (name) {
+        productModels = await productModelRepository.find({
+          where: {
+            name: Like(`%${name}%`),
+          },
+          relations: ["products", "ingredients"],
+        });
+      } else {
+        productModels = await productModelRepository.find({
+          relations: ["products", "ingredients"],
+        });
+      }
+
       res.json(productModels);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot get all productModels" });

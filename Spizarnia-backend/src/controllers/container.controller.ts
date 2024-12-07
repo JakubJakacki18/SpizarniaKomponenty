@@ -3,13 +3,21 @@ import { Request, Response } from "express";
 import { Repository } from "typeorm";
 import { Container } from "../models/Container";
 import { AppDataSource } from "../data-source";
+import { Category } from "../models/Category";
 
 const containerRepository: Repository<Container> = AppDataSource.getRepository(Container);
+const categoryRepository: Repository<Category> = AppDataSource.getRepository(Category);
 
 export const ContainerController = {
   async getAll(req: Request, res: Response) {
     try {
-      const containers = await containerRepository.find({ relations: ["shelf"] });
+      console.log("test");
+      const containers = await containerRepository.find({ relations: ["category"] });
+      if(!containers)
+      {
+        res.status(404).json({ error: "Containers was not found" });
+        return;
+      }
       res.json(containers);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot get all containers" });
@@ -21,7 +29,7 @@ export const ContainerController = {
     try {
       const container = await containerRepository.findOne({
         where: { id: parseInt(id) },
-        relations: ["shelf"],
+        relations: ["category"],
       });
 
       if (!container) {
@@ -36,16 +44,22 @@ export const ContainerController = {
   },
 
   async create(req: Request, res: Response) {
-    const { name, maxQuantity, shelfId } = req.body;
+    const { name} = req.body;
+    try{
+    const newContainer = containerRepository.create();
 
-    try {
-      const newContainer = containerRepository.create({
-        name,
-      });
+    const newCategory = categoryRepository.create({
+      categoryName: name,
+      container: newContainer,
+    });
 
-      await containerRepository.save(newContainer);
-      res.status(201).json(newContainer);
-    } catch (error) {
+
+    await containerRepository.save(newContainer); 
+    await categoryRepository.save(newCategory); 
+
+    res.status(201).json({ container: newContainer, category: newCategory });
+  }
+    catch (error) {
       res.status(500).json({ error: "Internal error: Container was not created" });
     }
   },
