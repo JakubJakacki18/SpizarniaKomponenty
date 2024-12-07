@@ -1,3 +1,4 @@
+<div class="site-content">
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
   <label>Wybierz kategorię:</label>
   <mat-accordion>
@@ -15,12 +16,16 @@
         (selectionChange)="onSelectionChange($event, selectionList)">
             @for (product of category.productModels; track product){
             <mat-list-option [value]="product">
+              <!-- {{product.id}}.{{ product.name }} {{product.quantity}}{{product.unit}}  {{product.price}} -->
               {{ product.name }}
             </mat-list-option>
+          }@empty 
+          {
+              <div class="emptyWarning">Nie ma produktów w tej kategorii</div>
           }
         </mat-selection-list>
       </mat-expansion-panel>
-    }
+    } 
   </mat-accordion>
   <mat-form-field>
     <mat-label>Wybierz datę zakupu:</mat-label>
@@ -44,3 +49,5 @@
     <div *ngIf="productForm.value.selectedProduct">
       <p>Wybrany produkt: {{ productForm.value.selectedProduct | json }}</p>
     </div>
+
+</div>
