@@ -35,6 +35,7 @@ html, body {
     padding: 15px;
     cursor: pointer;
     font-size: 18px;
+    width: 200px;
     color: var(--font-color-hover);
     background-color: var(--secondary-left);
     background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);

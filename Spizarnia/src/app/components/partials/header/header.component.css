@@ -5,78 +5,55 @@
   box-sizing: border-box;
   border-radius: 10px;
   display: flex;
-  justify-content: space-between; /* Wyrównuje elementy do lewego i prawego marginesu */
+  justify-content: space-between; /* Dzieli przestrzeń między tytuł i przyciski */
   align-items: center;
 }
 
 .title-section {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Ustawia tytuł po lewej stronie */
-  width: 100%;
-  max-width: 1200px;
 }
 
 .header-title {
   color: var(--primary-color);
-  text-align: left; /* Wyrównanie tytułu do lewej */
-  font-size: 36px;
+  text-align: center;
+  font-size: 38px;
   padding: 10px 20px;
   border-radius: 10px;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Przyciski */
-.toggle-button, .action-button {
+.button-section {
+  display: flex;
+  justify-content: flex-end; /* Przyciski wyrównane do prawej */
+  gap: 20px; /* Odstęp między przyciskami */
+  margin-right: 40px;
+}
+
+.action-button {
   cursor: pointer;
   font-size: 18px;
   color: var(--font-color);
   padding: 10px;
+  width: 200px;
+  text-align: center;
+  white-space: nowrap;
   background-color: var(--primary-color);
   border-radius: 5px;
   text-transform: uppercase;
-  margin-left: 10px; /* Daje przestrzeń między przyciskami */
 }
 
-  .toggle-button:hover, .action-button:hover {
+  .action-button:hover {
     background-color: var(--secondary-left);
     background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
     color: var(--font-color-hover);
   }
 
-/* Sekcja treści */
-.content-container {
-  flex-grow: 1;
-  width: 100%;
-  height: 90vh;
-  background-color: #9A7E6F;
-  padding: 20px;
-  box-sizing: border-box;
-  border: 5px solid #54473F;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 5px;
-}
-
-/* Kontener jasny w środku sekcji treści który będzie zamieniany na to co ma sie wyświetlać po wciśnięciu przycisku */
-.content-section {
-  padding: 20px;
-  background-color: #d7ccc8;
-  border: 1px solid #54473F;
-  box-sizing: border-box;
-  border-radius: 10px;
-  margin: auto;
-  text-align: center;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 10px;
-  overflow-y: auto;
+.active-link {
+  background-color: var(--secondary-left);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  color: var(--font-color-hover);
 }
 
 /* Responsywność */
@@ -85,9 +62,9 @@
     font-size: 28px;
   }
 
-  .toggle-button,
   .action-button {
     font-size: 14px;
     padding: 8px 15px;
+    width: 150px; /* Zmniejszenie szerokości przycisków na małych ekranach */
   }
 }
