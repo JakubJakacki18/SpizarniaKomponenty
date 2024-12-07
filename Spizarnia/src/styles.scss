@@ -140,11 +140,26 @@ html {
       tertiary: $tertiary-palette,
       theme-type: light,
     ),
-    typography: Roboto,
+    typography: "Arial Black",
     density: 0
   ));
 }
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: "Poppins", "Arial Black" ; 
+  background: var(--background-color);
+  background: linear-gradient(90deg, var(--background-color) 0%, var(--font-color) 100%);
+
+}
+
+:root {
+  --primary-color: #efd3c8; 
+  --secondary-left: #a9ce7f; 
+  --secondary-right: #669f44;
+  --background-color: #61463b;
+  --font-color: #4e3d43;
+  --font-color-hover: #ffffff;
+}

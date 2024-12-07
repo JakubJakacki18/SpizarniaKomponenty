@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';  // Dodajemy ten import
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
+import {MatSort, MatSortModule, SortDirection} from '@angular/material/sort';
 
 @Component({
   selector: 'app-all-products',
   standalone: true,
-  imports: [CommonModule, FormsModule],  // Dodajemy CommonModule do imports
+  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule,],  // Dodajemy CommonModule do imports
   templateUrl: './all-products.component.html',
   styleUrls: ['./all-products.component.css'],
   providers: [DatePipe]  // Zapewniamy dostęp do DatePipe
@@ -16,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 export class AllProductsComponent {
   products: any[] = [];
   filteredProducts: any[] = [];
+  displayedColumns: string[] = ['id', 'name', 'quantity', 'purchaseDate', 'expirationDate'];
   searchTerm: string = '';
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }

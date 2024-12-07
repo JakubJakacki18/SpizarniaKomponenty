@@ -1,4 +1,4 @@
-html, body {
+ html, body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -74,7 +74,6 @@ html, body {
 
 .title {
   text-align: center;
-  font-family: 'Playfair Display', serif;
   font-size: 36px;
   color: #54473F;
   padding: 10px 20px;
@@ -172,4 +171,4 @@ tbody td {
     font-size: 14px;
     padding: 8px;
   }
-}
+} 
