@@ -7,10 +7,6 @@
 */
 
 
-a {
-  text-decoration: none; 
-  color: inherit; 
-}
 
 /* Stylizacja ogólna */
 /* html, body {
@@ -47,7 +43,7 @@ a {
     max-width: 1200px;
   }
   
-  .title {
+  .header-title {
     color: var(--primary-color);
     text-align: center;
     font-size: 36px;

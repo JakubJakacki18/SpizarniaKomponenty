@@ -6,7 +6,7 @@
   }
   
   .container-box {
-    background-color: #4CAF50; /* Zielony */
+    background-color: var(--secondary-left); /* Zielony */
     color: white; /* Biały tekst */
     text-align: center;
     padding: 20px;
