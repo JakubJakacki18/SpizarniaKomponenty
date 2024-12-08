@@ -1,8 +1,13 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User } from "./entity/User"
-import { Product } from "./entity/Product"
-import { Container } from "./entity/Container"
+import { User } from "./models/User"
+import { Category } from './models/Category';
+import { Product } from "./models/Product"
+import { Container } from "./models/Container"
+import { ListOfProductsToBuy } from "./models/ListOfProductsToBuy"
+import { Ingredient } from "./models/Ingredient"
+import { ProductModel } from "./models/ProductModel"
+import { Recipe } from "./models/Recipe"
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -13,7 +18,7 @@ export const AppDataSource = new DataSource({
     database: "pantry",
     synchronize: true,
     logging: false,
-    entities: [User, Product, Container],
+    entities: [User, Product, Container,Category,ListOfProductsToBuy,Ingredient,ProductModel,Recipe],
     migrations: [],
     subscribers: [],
 })

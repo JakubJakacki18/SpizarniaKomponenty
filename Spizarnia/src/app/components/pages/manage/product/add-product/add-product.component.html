@@ -1,0 +1,53 @@
+<div class="site-content">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+  <label>Wybierz kategorię:</label>
+  <mat-accordion>
+    @for (category of categories; track category) {
+      <mat-expansion-panel>      
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ category.categoryName }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list  
+        [multiple]=false 
+        formControlName="selectedProduct"  
+        #selectionList
+        (selectionChange)="onSelectionChange($event, selectionList)">
+            @for (product of category.productModels; track product){
+            <mat-list-option [value]="product">
+              <!-- {{product.id}}.{{ product.name }} {{product.quantity}}{{product.unit}}  {{product.price}} -->
+              {{ product.name }}
+            </mat-list-option>
+          }@empty 
+          {
+              <div class="emptyWarning">Nie ma produktów w tej kategorii</div>
+          }
+        </mat-selection-list>
+      </mat-expansion-panel>
+    } 
+  </mat-accordion>
+  <mat-form-field>
+    <mat-label>Wybierz datę zakupu:</mat-label>
+    <input matInput [max]="todayDate" [matDatepicker]="dateOfPurchase" formControlName="purchaseDate" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="dateOfPurchase"></mat-datepicker-toggle>
+    <mat-datepicker #dateOfPurchase></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Wybierz datę ważności:</mat-label>
+    <input matInput [min]="todayDate" [matDatepicker]="dateOfExpiration" formControlName="expirationDate" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="dateOfExpiration"></mat-datepicker-toggle>
+    <mat-datepicker #dateOfExpiration></mat-datepicker>
+  </mat-form-field>
+  <div *ngIf="productForm.hasError('invalidDateRange')">
+    <p class="error">Data zakupu musi być mniejsza niż data ważności.</p>
+  </div>
+  <button mat-raised-button (ngSubmit)="onSubmit()">Dodaj produkt</button>
+</form>
+    <div *ngIf="productForm.value.selectedProduct">
+      <p>Wybrany produkt: {{ productForm.value.selectedProduct | json }}</p>
+    </div>
+
+</div>

@@ -1,0 +1,70 @@
+/* Sekcja nagłówka */
+.header-container {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between; /* Dzieli przestrzeń między tytuł i przyciski */
+  align-items: center;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  color: var(--primary-color);
+  text-align: center;
+  font-size: 38px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.button-section {
+  display: flex;
+  justify-content: flex-end; /* Przyciski wyrównane do prawej */
+  gap: 20px; /* Odstęp między przyciskami */
+  margin-right: 40px;
+}
+
+.action-button {
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--font-color);
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+  .action-button:hover {
+    background-color: var(--secondary-left);
+    background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+    color: var(--font-color-hover);
+  }
+
+.active-link {
+  background-color: var(--secondary-left);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  color: var(--font-color-hover);
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 28px;
+  }
+
+  .action-button {
+    font-size: 14px;
+    padding: 8px 15px;
+    width: 150px; /* Zmniejszenie szerokości przycisków na małych ekranach */
+  }
+}
