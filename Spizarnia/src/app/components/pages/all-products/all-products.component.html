@@ -1,78 +1,40 @@
 <div class="all-products-container">
+  <!-- Header Section -->
   <div class="header-container">
     <div class="title">Moja Spiżarnia</div>
     <div class="search-bar">
-      <input 
-      type="text" 
-      placeholder="Wpisz coś..." 
-      [(ngModel)]="searchTerm" 
-      (input)="onSearch()"
-    />
-      <button (click)="onSearch()">Wyszukaj</button>
+      <input type="text"
+             placeholder="Wyszukaj pyszności..."
+             [(ngModel)]="searchTerm"
+             (input)="onSearch()" />
+      <button (click)="onSearch()">Szukaj</button>
     </div>
   </div>
 
-  <!-- Tabela z produktami -->
-  <div class="site-content">
-    <table>
+  <!-- Product Table -->
+  <div class="site-content all-products-section">
+    <table class="styled-table">
       <thead>
         <tr>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Data Zakupu</th>
           <th>Data Ważności</th>
+          <th>Kategoria</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let product of filteredProducts">
           <td>{{ product.name }}</td>
-          <td>{{ product.quantity }} {{ product.unit }} </td>
+          <td>{{ product.quantity }} {{ product.unit }}</td>
           <td>{{ formatDate(product.purchaseDate) }}</td>
           <td>{{ formatDate(product.expirationDate) }}</td>
+          <td>{{ product.category}}</td>
+        </tr>
+        <tr class="mat-row" *ngIf="!filteredProducts || !filteredProducts.length">
+          <td colspan="5">Brak produktów w spiżarni.</td>
         </tr>
       </tbody>
     </table>
-
-
-    <div>
-      <table mat-table [dataSource]="filteredProducts" matSort>
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
-          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-        </ng-container>
-      
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilość </th>
-          <td mat-cell *matCellDef="let row"> {{row.quantity}} {{row.unit}} </td>
-        </ng-container>
-      
-        <!-- Purchase Date Column -->
-        <ng-container matColumnDef="purchaseDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zakupu </th>
-          <td mat-cell *matCellDef="let row"> {{row.purchaseDate | date:'yyyy-MM-dd'}} </td>
-        </ng-container>
-      
-        <!-- Expiration Date Column -->
-        <ng-container matColumnDef="expirationDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Data ważności </th>
-          <td mat-cell *matCellDef="let row"> {{row.expirationDate | date:'yyyy-MM-dd'}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="5">Brak produktów w spiżarni.</td>
-        </tr>
-      </table>
-      </div>
   </div>
 </div>
-

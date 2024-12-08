@@ -18,7 +18,7 @@ import {MatSort, MatSortModule, SortDirection} from '@angular/material/sort';
 export class AllProductsComponent {
   products: any[] = [];
   filteredProducts: any[] = [];
-  displayedColumns: string[] = ['id', 'name', 'quantity', 'purchaseDate', 'expirationDate'];
+  displayedColumns: string[] = ['id', 'name', 'quantity', 'category', 'purchaseDate', 'expirationDate'];
   searchTerm: string = '';
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
