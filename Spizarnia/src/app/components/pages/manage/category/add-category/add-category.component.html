@@ -1,7 +1,11 @@
-<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container">
-<mat-form-field>
-    <mat-label>Nazwa kategorii:</mat-label>
-    <input matInput formControlName="categoryName">
-  </mat-form-field>
-  <button mat-raised-button (ngSubmit)="onSubmit()">Dodaj produkt</button>
-</form>
+<div class="category-container">
+  <div class="site-content">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container">
+      <mat-form-field>
+        <mat-label>Nazwa kategorii:</mat-label>
+        <input matInput formControlName="categoryName">
+      </mat-form-field>
+      <button mat-raised-button (ngSubmit)="onSubmit()">Dodaj produkt</button>
+    </form>
+  </div>
+</div>

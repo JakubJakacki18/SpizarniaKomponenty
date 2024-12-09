@@ -8,16 +8,24 @@ import { ProductModelComponent } from './components/pages/manage/product-model/p
 import { ProductComponent } from './components/pages/manage/product/product.component';
 import { ContainerComponent } from './components/pages/manage/container/container.component';
 import { CategoryComponent } from './components/pages/manage/category/category.component';
+import { RecipeComponent } from './components/pages/manage/recipe/recipe.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, 
   { path: 'home', component: HomeComponent },
   { path: 'all-products', component: AllProductsComponent },
-  { path: 'manage', component: ManageComponent },
-  { path: 'manage/product', component: ProductComponent },
-  { path: 'manage/productModel', component: ProductModelComponent },
+    {
+    path: 'manage',
+    component: ManageComponent,
+    children: [
+      { path: 'product', component: ProductComponent },
+      { path: 'category', component: CategoryComponent },
+      { path: 'productModel', component: ProductModelComponent },
+      { path: 'recipe', component: RecipeComponent },
+      { path: 'container/:id', component: ContainerComponent },
+      { path: '', redirectTo: '/manage/product', pathMatch: 'full' } 
+    ]
+  },
   { path: 'recipes', component: RecipesComponent },
   { path: 'grocery-list', component: GroceryListComponent },
-  { path: 'manage/container/:id', component: ContainerComponent },
-  { path: 'manage/category', component: CategoryComponent }
 ];

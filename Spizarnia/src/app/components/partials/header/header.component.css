@@ -24,6 +24,9 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
+  .header-active {
+    color: var(--secondary-left);
+  }
 
 .button-section {
   display: flex;
@@ -32,30 +35,6 @@
   margin-right: 40px;
 }
 
-.action-button {
-  cursor: pointer;
-  font-size: 18px;
-  color: var(--font-color);
-  padding: 10px;
-  width: 200px;
-  text-align: center;
-  white-space: nowrap;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  text-transform: uppercase;
-}
-
-  .action-button:hover {
-    background-color: var(--secondary-left);
-    background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
-    color: var(--font-color-hover);
-  }
-
-.active-link {
-  background-color: var(--secondary-left);
-  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
-  color: var(--font-color-hover);
-}
 
 /* Responsywność */
 @media (max-width: 768px) {
