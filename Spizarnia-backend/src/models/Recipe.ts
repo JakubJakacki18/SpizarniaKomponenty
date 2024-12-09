@@ -1,17 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
-import { Ingredient } from './Ingredient';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { Ingredient } from "./Ingredient";
 
 @Entity()
 export class Recipe {
-  @PrimaryGeneratedColumn()
-  id!: number;
+    @PrimaryGeneratedColumn()
+    id!: number;
 
-  @Column()
-  name!: string;
+    @Column()
+    name!: string;
 
-  @ManyToMany(() => Ingredient, (ingredient) => ingredient.recipes)
-  ingredients?: Ingredient[];
+    @Column({ default: true })
+    finished!: boolean;
 
-  @Column({ default: true })
-  finished!: boolean;
+    @ManyToMany(() => Ingredient, (ingredient) => ingredient.recipes)
+    ingredients!: Ingredient[];
 }

@@ -14,13 +14,12 @@ import ingredientRouter from "./routers/ingredient.router";
 
 app.use(cors(
     {
-        credentials:true,
-        origin:["http://localhost:4200"]
+        credentials: true,
+        origin: ["http://localhost:4200"]
     }));
 
 app.use(express.json());
-
-app.use("/api/productModel",productModelRouter);
+app.use("/api/productModel", productModelRouter);
 app.use("/api/product", productRouter);
 app.use("/api/container", containerRouter);
 app.use('/api/category', categoryRouter);
@@ -28,10 +27,9 @@ app.use("/api/ingredient", ingredientRouter);
 app.use("/api/recipe", recipeRouter);
 // app.use("/api/container",containerRouter);
 
-app.get("/api",(req,res) => 
-    {
-        res.send("Hello!");
-    })
+app.get("/api", (req, res) => {
+    res.send("Hello!");
+})
 const port = 5000;
 
 
@@ -50,11 +48,10 @@ AppDataSource.initialize().then(async () => {
     console.log("Loaded users: ", users)
 
     console.log("Here you can setup and run express / fastify / any other framework.")
-    app.listen(port, () =>
-        {
-            console.log("Website served on http://localhost:"+port);
-    
-        })
+    app.listen(port, () => {
+        console.log("Website served on http://localhost:" + port);
+
+    })
 
 }).catch(error => console.log(error))
 
