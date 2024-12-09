@@ -23,5 +23,20 @@
     Ilość musi być liczbą większą od 0
   </div>
 
+  <label for="selectedCategory">Kategoria:</label>
+  <select id="selectedCategory" formControlName="selectedCategory" class="form-input">
+    <option value="" disabled selected>Wybierz kategorię:</option>
+    @for(category of categories; track category)
+    {
+      <option [value]="category">{{category.categoryName}}</option>
+    }
+  </select>
+  <div *ngIf="productForm.get('selectedCategory')?.invalid && productForm.get('selectedCategory')?.touched" class="error-message">
+    Kategoria musi zostać wybrana
+  </div>
+
+  <label for="type">Podkategoria:</label>
+  <input id="type" formControlName="type" class="form-input" />
+
   <button type="submit" [disabled]="productForm.invalid" class="form-button">Wyślij</button>
 </form>
