@@ -14,7 +14,7 @@ export class Category {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, unique: true })
   categoryName!: string;
 
   @OneToOne(() => Container, (container) => container.category, { cascade: true, onDelete: 'CASCADE' })
