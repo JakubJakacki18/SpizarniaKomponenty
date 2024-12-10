@@ -11,17 +11,17 @@ html, body {
 }
 
 
-/* Tabela z produktami /
+/* Tabela z produktami */
 .styled-table {
   width: calc(100% - 40px);
   border-collapse: collapse;
   border-spacing: 0;
-  background-color: white; / Białe tło tabeli /
+  background-color: white; /* Białe tło tabeli */
   color: var(--font-color);
   overflow: hidden;
   text-transform: uppercase;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 20px auto; / Wyśrodkowanie tabeli /
+  margin: 20px auto; /* Wyśrodkowanie tabeli */
   padding-right: 40px;
 }
 
@@ -53,7 +53,7 @@ html, body {
 
   .styled-table tbody td {
     text-align: center;
-    vertical-align: middle; / Wyśrodkowanie tekstu w pionie /
+    vertical-align: middle; /* Wyśrodkowanie tekstu w pionie */
     padding: 10px;
     font-size: 14px;
     border-left: 1px solid var(--background-color);
@@ -74,7 +74,7 @@ html, body {
     background-color: rgba(0, 0, 0, 0.02);
   }
 
-/ Responsywność dla urządzeń mobilnych */
+/* Responsywność dla urządzeń mobilnych */
 @media (max-width: 768px) {
   .search-bar input {
     font-size: 14px;
