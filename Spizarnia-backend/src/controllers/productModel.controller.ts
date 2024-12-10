@@ -54,7 +54,7 @@ export const ProductModelController = {
   },
 
   async create(req: Request, res: Response) {
-    const { name, quantity, unit, price, categoryId } = req.body;
+    const { name, quantity, unit, price, categoryId, type } = req.body;
 
     try {
       const category = await AppDataSource.getRepository(Category).findOne({ where: { id: categoryId } });
@@ -64,6 +64,7 @@ export const ProductModelController = {
         unit,
         price,
         category,
+        type
       });
 
       await productModelRepository.save(newProductModel);

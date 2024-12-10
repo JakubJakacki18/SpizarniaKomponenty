@@ -191,6 +191,7 @@ a {
   border: none;
   border-radius: 5px;
   margin-right: 30px;
+  margin-left:30px;
   box-shadow: none;
   display: inline-block;
   white-space: nowrap;
@@ -208,4 +209,89 @@ a {
   justify-content: center;
   flex-direction: column;
   margin: 5px 15px px 15px;
+  font-family: "Poppins", "Arial Black";
+}
+//przyciski na headerze
+.action-button {
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--font-color);
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  margin-right: 10px;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+}
+
+.action-button:hover, .action-form-button:hover {
+  background-color: var(--secondary-left);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  color: var(--font-color-hover);
+}
+
+.active-link {
+  background-color: var(--secondary-left);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  color: var(--font-color-hover);
+}
+/* Przycisk wyłączony */
+.action-button:disabled {
+  cursor: not-allowed;
+  font-size: 18px;
+  color: var(--font-color);
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  margin-right: 10px;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: "Poppins", "Arial Black";
+}
+.search-bar {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+  margin-left: 30px;
+  margin-right:20px;  
+}
+
+.search-bar input {
+  padding: 15px;
+  border: 3px solid var(--font-color);
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  font-size: 16px;
+  margin-right: 20px;
+  margin-left: 10px;
+  width: calc(100% - 30px);
+  font-style: italic;
+}
+
+.search-bar button {
+  padding: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 250px;
+  white-space: nowrap;
+  color: var(--font-color-hover);
+  background-color: var(--secondary-left);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.search-bar button:hover {
+  color: var(--font-color);
+  background-color: var(--primary-color);
 }

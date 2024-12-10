@@ -1,27 +1,70 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
-  <label for="name">Nazwa:</label>
-  <input id="name" formControlName="name" class="form-input" />
-  <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error-message">
-    Nazwa jest wymagana
+<div class="site-content">
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-row">
+    <div class="label-input-wrapper">
+      <label for="name">Nazwa:</label>
+      <input id="name" formControlName="name" class="form-input" />
+    </div>
+    <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error-message">
+      Nazwa jest wymagana
+    </div>
   </div>
 
-  <label for="unit">Jednostka:</label>
-  <input id="unit" formControlName="unit" class="form-input" />
-  <div *ngIf="productForm.get('unit')?.invalid && productForm.get('unit')?.touched" class="error-message">
-    Jednostka jest wymagana
+  <div class="form-row">
+    <div class="label-input-wrapper">
+      <label for="unit">Jednostka:</label>
+      <input id="unit" formControlName="unit" class="form-input" />
+    </div>
+    <div *ngIf="productForm.get('unit')?.invalid && productForm.get('unit')?.touched" class="error-message">
+      Jednostka jest wymagana
+    </div>
   </div>
 
-  <label for="price">Cena:</label>
-  <input id="price" type="number" formControlName="price" class="form-input" />
-  <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="error-message">
-    Cena musi być liczbą większą od 0
+  <div class="form-row">
+    <div class="label-input-wrapper">
+      <label for="price">Cena:</label>
+      <input id="price" type="number" formControlName="price" class="form-input" />
+    </div>
+    <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="error-message">
+      Cena musi być liczbą większą od 0
+    </div>
   </div>
 
-  <label for="quantity">Ilość:</label>
-  <input id="quantity" type="number" formControlName="quantity" class="form-input" />
-  <div *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" class="error-message">
-    Ilość musi być liczbą większą od 0
+  <div class="form-row">
+    <div class="label-input-wrapper">
+      <label for="quantity">Ilość:</label>
+      <input id="quantity" type="number" formControlName="quantity" class="form-input" />
+    </div>
+    <div *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" class="error-message">
+      Ilość musi być liczbą większą od 0
+    </div>
   </div>
 
-  <button type="submit" [disabled]="productForm.invalid" class="form-button">Wyślij</button>
+  <div class="form-row">
+    <div class="label-input-wrapper">
+      <label for="selectedCategory">Kategoria:</label>
+      <select id="selectedCategory" formControlName="selectedCategory" class="form-input">
+        <option value="" disabled selected>Wybierz kategorię:</option>
+        @for(category of categories; track category) {
+        <option [value]="category">{{category.categoryName}}</option>
+        }
+      </select>
+    </div>
+    <div *ngIf="productForm.get('selectedCategory')?.invalid && productForm.get('selectedCategory')?.touched" class="error-message">
+      Kategoria musi zostać wybrana
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="label-input-wrapper">
+      <label for="type">Podkategoria:</label>
+      <input id="type" formControlName="type" class="form-input" />
+    </div>
+    <div class="error-message"></div>
+  </div>
+
+  <div class="button-group">
+    <button type="submit" [disabled]="productForm.invalid" class="action-button">Wyślij</button>
+  </div>
 </form>
+  </div>

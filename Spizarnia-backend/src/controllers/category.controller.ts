@@ -42,7 +42,10 @@ export const CategoryController = {
         await categoryRepository.save(newCategory); 
         res.status(201).json({ category: newCategory });
     } catch (error) {
-      res.status(500).json({ error: 'Internal error: Category was not created' });
+      if (error.code === 'ER_DUP_ENTRY') 
+        res.status(409).json({error: "Entry in database existed before"})
+      else
+        res.status(500).json({ error: 'Internal error: Category was not created' });
     }
   },
 

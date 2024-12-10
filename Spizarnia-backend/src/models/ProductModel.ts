@@ -21,6 +21,9 @@ export class ProductModel {
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: false })
     price!: number;
 
+    @Column({ type: "varchar", length: 255})
+    type?: string;
+
     @OneToMany(() => Product, (product) => product.productModel, { cascade: ['remove'] })
     products?: Product[];
   

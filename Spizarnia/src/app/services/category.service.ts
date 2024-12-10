@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category } from '../shared/models/Category';
+import { Category } from '../../../../Spizarnia-backend/src/models/Category';
 import { Observable } from 'rxjs';
 import { CATEGORIES } from '../shared/constances/urls';
 
