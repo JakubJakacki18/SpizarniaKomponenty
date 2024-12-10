@@ -3,12 +3,13 @@ import { ProductModel } from '../../../../shared/models/ProductModel';
 import { ProductModelService } from '../../../../services/product-model.service';
 import { CommonModule } from '@angular/common';
 import { ProductModelFormComponent } from './product-model-form/product-model-form.component';
+import { RouterModule } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-product-model',
-  imports: [CommonModule,ProductModelFormComponent],
+  imports: [CommonModule,ProductModelFormComponent, RouterModule],
   templateUrl: './product-model.component.html',
   styleUrl: './product-model.component.css',
 })

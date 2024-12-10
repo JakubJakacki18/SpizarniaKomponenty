@@ -13,6 +13,8 @@ import { Category } from '../../../../../../../../Spizarnia-backend/src/models/C
 import { CommonModule } from '@angular/common';
 import { SimpleDialogComponent } from '../../../../partials/simple-dialog/simple-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-product',
@@ -20,6 +22,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   imports: [MatListModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     MatExpansionModule,
     MatDatepickerModule,
     MatButtonModule,
