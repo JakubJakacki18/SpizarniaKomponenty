@@ -44,7 +44,7 @@ export const ProductController = {
         return
       }
 
-            //podpinanie nazwy i ilosci z productmodel
+      //podpinanie nazwy i ilosci z productmodel
       const result = {
 
         id: product.id,

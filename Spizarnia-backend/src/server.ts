@@ -7,10 +7,10 @@ const app = express();
 
 import categoryRouter from './routers/category.router';
 import productRouter from "./routers/product.router";
-import containerRouter from "./routers/container.router";
 import productModelRouter from "./routers/productModel.router";
 import recipeRouter from "./routers/recipe.router";
 import ingredientRouter from "./routers/ingredient.router";
+import notificationRouter from './routers/notification.router';
 
 app.use(cors(
     {
@@ -22,11 +22,10 @@ app.use(express.json());
 
 app.use("/api/productModel",productModelRouter);
 app.use("/api/product", productRouter);
-app.use("/api/container", containerRouter);
 app.use('/api/category', categoryRouter);
 app.use("/api/ingredient", ingredientRouter);
 app.use("/api/recipe", recipeRouter);
-// app.use("/api/container",containerRouter);
+app.use('/api', notificationRouter);
 
 app.get("/api",(req,res) => 
     {

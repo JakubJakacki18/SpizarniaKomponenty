@@ -34,6 +34,7 @@
         <tr class="mat-row" *ngIf="!filteredProducts || !filteredProducts.length">
           <td colspan="5">Brak produktów w spiżarni.</td>
         </tr>
+        <button (click)="checkExpirationDates()">Sprawdź datę ważności</button>
       </tbody>
     </table>
   </div>
