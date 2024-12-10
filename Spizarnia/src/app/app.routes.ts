@@ -23,7 +23,7 @@ export const routes: Routes = [
       { path: 'productModel', component: ProductModelComponent },
       { path: 'recipe', component: RecipeComponent },
       { path: 'container/:categoryName', component: ContainerComponent },
-      { path: '', redirectTo: '/manage/productModel', pathMatch: 'full' } 
+      { path: '', redirectTo: '/manage/category', pathMatch: 'full' } 
     ]
   },
   { path: 'recipes', component: RecipesComponent },

@@ -3,8 +3,8 @@ import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatSort, MatSortModule, SortDirection} from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { Product } from '../../../shared/models/Product';
 import { Observable } from 'rxjs';
 
@@ -27,9 +27,9 @@ export class AllProductsComponent implements OnInit {
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
   private checkExpirationInterval: any;
 
-  ngOnInit(){
+  ngOnInit() {
     this.getAllProducts()
-    
+
     this.checkExpirationInterval = setInterval(() => {
       this.checkExpirationDates();
     }, 60000); // 60000 ms = 1 minuta
@@ -90,7 +90,7 @@ export class AllProductsComponent implements OnInit {
       this.sendExpirationNotification(expiringProducts);
     }
   }
-  
+
   sendExpirationNotification(products: any[]) {
     const productNames = products.slice(0, 5).map(product => product.name).join(', ');
     //Jesli jest wiecej niz 5 to nie wyswietlamy.
@@ -113,7 +113,7 @@ export class AllProductsComponent implements OnInit {
     }
   }
 
-  searchProducts(name: string): Observable<any>{
+  searchProducts(name: string): Observable<any> {
     return this.http.get<any[]>(`http://localhost:5000/api/product?name=${name}`);
   }
 

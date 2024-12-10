@@ -1,12 +1,15 @@
-<div class="site-content">
-  <div class="container-wrapper">
+<div class="home-container">
+  <div class="header-container">
+    <div class="title">Strona Główna</div>
+  </div>
+  <div class="site-content container-section">
     <!-- Iteracja przez rzędy kontenerów -->
     <div *ngFor="let row of rows; let i = index" class="container-row">
       <div class="container-grid">
         <!-- Iteracja przez kontenery w danym rzędzie -->
-        <div *ngFor="let container of row" class="container-box">
-          <a [routerLink]="['/manage/container', container.category.categoryName]">
-            <p>{{ container.category.categoryName }}</p>
+        <div *ngFor="let containers of row" class="container-box">
+          <a [routerLink]="['/manage/category', containers.categoryName]">
+            <p>{{ containers.categoryName }}</p>
           </a>
         </div>
       </div>
@@ -14,11 +17,11 @@
       <div class="shelf"></div>
     </div>
     <!-- Komunikat, jeśli brak kontenerów -->
-    <div *ngIf="rows.length === 0">
-    <div class="shelf-container">
-      <div class="shelf-text">Brak kategorii do wyświetlenia!</div> <!-- Tekst nad półką -->
-      <div class="shelf"></div> <!-- Półka -->
+    <div *ngIf="!rows || rows.length === 0">
+      <div class="shelf-container">
+        <div class="shelf-text">Brak kategorii do wyświetlenia!</div>
+        <div class="shelf"></div>
+      </div>
     </div>
-  </div>
   </div>
   </div>
