@@ -5,7 +5,7 @@
       <div class="container-grid">
         <!-- Iteracja przez kontenery w danym rzędzie -->
         <div *ngFor="let container of row" class="container-box">
-          <a [routerLink]="['/manage/container', container.id]">
+          <a [routerLink]="['/manage/container', container.category.categoryName]">
             <p>{{ container.category.categoryName }}</p>
           </a>
         </div>

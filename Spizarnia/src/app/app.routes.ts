@@ -22,8 +22,8 @@ export const routes: Routes = [
       { path: 'category', component: CategoryComponent },
       { path: 'productModel', component: ProductModelComponent },
       { path: 'recipe', component: RecipeComponent },
-      { path: 'container/:id', component: ContainerComponent },
-      { path: '', redirectTo: '/manage/product', pathMatch: 'full' } 
+      { path: 'container/:categoryName', component: ContainerComponent },
+      { path: '', redirectTo: '/manage/productModel', pathMatch: 'full' } 
     ]
   },
   { path: 'recipes', component: RecipesComponent },
