@@ -12,8 +12,8 @@
 
   <!-- Tabela z produktami -->
   <div class="site-content all-products-section">
+    <table mat-table [dataSource]="dataSource" matSort>
 
-    <table mat-table [dataSource]="dataSource" matSort class="styled-table">
       <!-- Kolumna: ID -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>

@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class ContainersComponent implements OnInit {
   containers: any[] = [];
   rows: any[] = [];
+  categoryName: string = ''; // Nowa zmienna na nazwę kategorii
 
   constructor(private containerService: ContainerService) { }
 
@@ -38,5 +39,10 @@ export class ContainersComponent implements OnInit {
     for (let i = 0; i < this.containers.length; i += rowSize) {
       this.rows.push(this.containers.slice(i, i + rowSize));
     }
+  }
+
+  // Ustawienie categoryName na podstawie kategorii
+  setCategoryName(categoryName: string): void {
+    this.categoryName = categoryName;
   }
 }
