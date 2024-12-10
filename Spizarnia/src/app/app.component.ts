@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/partials/header/header.component';
 import { ProductModelComponent } from './components/pages/manage/product-model/product-model.component';
+import { SwPush } from '@angular/service-worker';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,10 @@ import { ProductModelComponent } from './components/pages/manage/product-model/p
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'Spizarnia';
+export class AppComponent implements OnInit {
+  constructor(private pushNotificationService: NotificationService) {}
 
+  ngOnInit(): void {
+    this.pushNotificationService.subscribeToNotifications();
+  }
 }
