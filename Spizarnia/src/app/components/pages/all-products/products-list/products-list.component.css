@@ -1,0 +1,9 @@
+.products-list {
+  width: 100%;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 1.2em;
+  color: gray;
+}

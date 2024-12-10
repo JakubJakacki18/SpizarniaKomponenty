@@ -1,40 +1,40 @@
 
-/* Formularz (zaktualizowany zgodnie z wcześniejszymi ustawieniami) */
 .form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 15px;
-  background-color: var(--font-color); /* Jasnoszary/niebieski */
-  border: 3px solid var(--background-color); /* Ciemnobrązowy */
+  background-color: var(--font-color);
+  border: 3px solid var(--background-color);
   border-radius: 15px;
   padding: 25px;
-  width: 100%;
-  max-width: 500px;
+  width: 200%;
+  height: 80%;
   box-sizing: border-box;
-  font-family: 'Poppins', serif;
-  color: var(--secondary-left);
+  font-family: "Poppins", "Arial Black";
+  color: var(--secondary-right);
   font-weight: bold;
 }
 
   .form-container > label {
     font-size: 19px;
     font-weight: bold;
-    color: var(--secondary-left);
+    color: var(--secondary-right);
   }
 
 /* Akordeon */
 mat-accordion {
-  background-color: var(--background-color); /* Kolor pasujący do akordeonu */
+  background-color: var(--background-color); 
   border-radius: 10px;
   border: 2px solid #54473f;
   overflow: hidden;
+
 }
 
 mat-expansion-panel {
-  background-color: var(--primary-color); /* Tło panelu */
-  border-bottom: 1px solid var(--background-color); /* Separator */
+  background-color: var(--primary-color);
+  border-bottom: 1px solid var(--background-color); 
 }
 
 mat-expansion-panel-header {
@@ -72,8 +72,6 @@ mat-form-field {
   font-size: 16px;
   margin-top: 5px;
 }
-
-/* Styl przycisku */
 .mat-raised-button {
   cursor: pointer;
   font-size: 18px;

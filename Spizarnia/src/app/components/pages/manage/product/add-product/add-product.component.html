@@ -1,5 +1,7 @@
   <div class="site-content">
-    <div class="products-container">
+  <div class="title">Dodaj produkt do spiżarni</div>
+  <div class="background-container">
+
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
       <label>Wybierz kategorię:</label>
       <mat-accordion>
@@ -16,6 +18,7 @@
                               (selectionChange)="onSelectionChange($event, selectionList)">
             @for (product of category.productModels; track product){
             <mat-list-option [value]="product">
+
               <!-- {{product.id}}.{{ product.name }} {{product.quantity}}{{product.unit}}  {{product.price}} -->
               {{ product.name }}
             </mat-list-option>
@@ -44,11 +47,13 @@
       <div *ngIf="productForm.hasError('invalidDateRange')">
         <p class="error">Data zakupu musi być mniejsza niż data ważności.</p>
       </div>
-      <button mat-raised-button (ngSubmit)="onSubmit()">Dodaj produkt</button>
+      <div class="button-group">
+        <button class="action-button" (ngSubmit)="onSubmit()">Dodaj produkt</button>
+      </div>
     </form>
     <div *ngIf="productForm.value.selectedProduct">
       <p>Wybrany produkt: {{ productForm.value.selectedProduct | json }}</p>
     </div>
+    </div>
 
   </div>
-</div>
