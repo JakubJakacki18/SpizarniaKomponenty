@@ -3,9 +3,10 @@ import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, MatSortModule, SortDirection} from '@angular/material/sort';
 import { Product } from '../../../shared/models/Product';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-all-products',
@@ -38,11 +39,6 @@ export class AllProductsComponent implements OnInit {
     if (this.checkExpirationInterval) {
       clearInterval(this.checkExpirationInterval);
     }
-  }
-
-
-  ngOnInit() {
-    this.getAllProducts();
   }
 
   ngAfterViewInit() {
@@ -118,8 +114,7 @@ export class AllProductsComponent implements OnInit {
   }
 
   searchProducts(name: string): Observable<any>{
-    return this.http.get<any[]>(`http://localhost:5000/api/product?name=${name}`)
-    );
+    return this.http.get<any[]>(`http://localhost:5000/api/product?name=${name}`);
   }
 
   formatDate(date: Date): string {
