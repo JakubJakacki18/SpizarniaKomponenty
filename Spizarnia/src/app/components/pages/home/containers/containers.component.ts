@@ -1,42 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { ContainerService } from '../../../../services/container.service';
+import { CategoryService } from '../../../../services/category.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-containers',
-  imports: [RouterModule , CommonModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './containers.component.html',
   styleUrls: ['./containers.component.css']
 })
 export class ContainersComponent implements OnInit {
-  containers: any[] = [];
-  rows: any[] = [];
+  categories: Array<{ categoryName: string }> = [];
+  rows: Array<Array<{ categoryName: string }>> = [];
 
-  constructor(private containerService: ContainerService) { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.fetchContainers();
+    this.fetchCategories();
   }
 
-  fetchContainers(): void {
-    this.containerService.getAllContainers().subscribe({
+  fetchCategories(): void {
+    this.categoryService.getAllCategories().subscribe({
       next: (data) => {
-        this.containers = data;
-        this.splitIntoRows(); // Podział na rzędy
+        console.log('Fetched categories:', data);
+        this.categories = data.map((item: any) => ({
+          categoryName: item.categoryName
+        }));
+        console.log(this.categories);
+        this.splitIntoRows();
       },
-      error: (err) => console.error('Error fetching Containers:', err),
+      error: (err) => {
+        console.error('Error fetching categories:', err);
+      },
     });
   }
 
-  // Funkcja dzieląca kontenery na rzędy
   splitIntoRows(): void {
-    const rowSize = 5; // Maksymalna liczba kontenerów w rzędzie
+    const rowSize = 6;
     this.rows = [];
-
-    for (let i = 0; i < this.containers.length; i += rowSize) {
-      this.rows.push(this.containers.slice(i, i + rowSize));
+    for (let i = 0; i < this.categories.length; i += rowSize) {
+      this.rows.push(this.categories.slice(i, i + rowSize));
     }
   }
 }

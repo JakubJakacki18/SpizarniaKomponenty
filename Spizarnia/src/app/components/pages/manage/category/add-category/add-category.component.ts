@@ -7,10 +7,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatExpansionModule} from '@angular/material/expansion'
 import { SimpleDialogComponent } from '../../../../partials/simple-dialog/simple-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-category',
   imports: [    MatButtonModule,
+    RouterModule,
     MatInputModule,
     MatFormFieldModule,
     FormsModule,

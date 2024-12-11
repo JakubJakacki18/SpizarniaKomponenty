@@ -1,72 +1,65 @@
-/* Kontener formularza */
 .form-container {
   display: flex;
+  justify-content:center;
   flex-direction: column;
-  gap: 10px; /* Odstępy między elementami */
-  background-color: #B7C4CF; /* Jasnoszary/niebieski */
-  border: 3px solid #54473F; /* Ciemnobrązowy */
+  gap: 25px;
+  background: var(--font-color);
+  border: 3px solid var(--background-color);
   border-radius: 10px;
   padding: 20px;
-  font-family: 'Playfair Display', serif;
-  color: #54473F;
+  color: var(--primary-color);
   box-sizing: border-box;
+  width: 250%; 
+  height: 80%;
 }
 
-  /* Etykiety */
-  .form-container label {
-    font-size: 19px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; 
+}
 
-/* Pola tekstowe */
-.form-input {
-  font-family: 'Playfair Display', serif;
+.label-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px; 
+}
+
+label {
   font-size: 19px;
+  font-weight: bold;
+  flex-basis: 20%;
+  text-align: left;
+}
+
+.form-input {
+  width: 100%;
   padding: 10px;
-  border: 2px solid #54473F; /* Obramowanie */
+  border: 3px solid var(--background-color);
   border-radius: 5px;
-  background-color: #f5e6da; /* Kremowe tło */
-  color: #54473F; /* Tekst */
+  background: var(--primary-color);
+  font-size: 16px;
+  color: var(--font-color);
   box-sizing: border-box;
 }
 
-  /* Pola tekstowe podczas focus */
   .form-input:focus {
     outline: none;
-    border-color: #9A7E6F; /* Jasnobrązowy */
+    background: #ffffff;
   }
 
-/* Komunikaty błędów */
 .error-message {
-  font-size: 17px;
-  color: red;
-  margin-top: -8px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--secondary-left);
+  text-align: center; 
 }
 
-/* Przycisk */
-.form-button {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  padding: 10px 20px;
-  color: #54473F; /* Tekst */
-  background-color: #d7ccc8; /* Jasny brązowy */
-  border: 3px solid #54473F;
-  border-radius: 5px;
-  cursor: pointer;
-  text-transform: uppercase;
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
 }
-
-  /* Hover dla przycisku */
-  .form-button:hover {
-    background-color: #9A7E6F; /* Jasnobrązowy */
-  }
-
-  /* Przycisk wyłączony */
-  .form-button:disabled {
-    background-color: #f5e6da;
-    color: #9A7E6F;
-    border-color: #9A7E6F;
-    cursor: not-allowed;
-  }

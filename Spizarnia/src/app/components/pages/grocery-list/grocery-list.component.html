@@ -1,1 +1,17 @@
-<p>grocery-list works!</p>
+<div class="header-container">
+  <div class="title">Lista Zakupów</div>
+  <div class="search-bar">
+    <input type="text"
+           placeholder="Wyszukaj produkt..."
+           [(ngModel)]="searchTerm"
+           (input)="onSearch()" />
+    <button class="action-button" (click)="onSearch()">Szukaj</button>
+    <button class="action-button">Usuń listę zakupów</button>
+
+  </div>
+</div>
+
+<!-- Wyświetlanie dynamicznego widoku -->
+<div class="site-content">
+  <router-outlet></router-outlet>
+</div>

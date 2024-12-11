@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, BeforeRemove, getManager } from "typeorm";
 import { DataSource } from 'typeorm';
-import {Container} from "./Container"
 import { ProductModel } from "./ProductModel";
 import {Recipe} from "./Recipe"
 

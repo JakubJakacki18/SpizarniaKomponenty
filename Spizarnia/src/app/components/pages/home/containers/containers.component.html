@@ -1,24 +1,29 @@
-<div class="site-content">
-  <div class="container-wrapper">
+<div class="home-container">
+  <div class="header-container">
+    <div class="title">Strona Główna</div>
+  </div>
+  <div class="site-content container-section">
     <!-- Iteracja przez rzędy kontenerów -->
-    <div *ngFor="let row of rows; let i = index" class="container-row">
+     @for(row of rows; track row){
+    <div class="container-row">
       <div class="container-grid">
-        <!-- Iteracja przez kontenery w danym rzędzie -->
-        <div *ngFor="let container of row" class="container-box">
-          <a [routerLink]="['/manage/container', container.id]">
-            <p>{{ container.category.categoryName }}</p>
-          </a>
-        </div>
+        <!-- Iteracja przez kategorie w jednym rzędzie -->
+        <a *ngFor="let category of row" [routerLink]="['/manage/container', category.categoryName]">
+          <div class="container-box">
+            <p>{{ category.categoryName }}</p>
+          </div>
+        </a>
       </div>
       <!-- Półka pod rzędem kontenerów -->
       <div class="shelf"></div>
     </div>
+  }
     <!-- Komunikat, jeśli brak kontenerów -->
-    <div *ngIf="rows.length === 0">
-    <div class="shelf-container">
-      <div class="shelf-text">Brak kategorii do wyświetlenia!</div> <!-- Tekst nad półką -->
-      <div class="shelf"></div> <!-- Półka -->
-    </div>
+     @if(!rows || rows.length === 0){
+      <div class="shelf-container">
+        <div class="shelf-text">Brak kategorii do wyświetlenia!</div>
+        <div class="shelf"></div>
+      </div>
+  }
   </div>
-  </div>
-  </div>
+</div>

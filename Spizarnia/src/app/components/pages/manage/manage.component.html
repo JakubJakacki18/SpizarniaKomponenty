@@ -1,1 +1,15 @@
-<p>manage works!</p>
+<div class="header-container">
+  <div class="title">Zarządzaj</div>
+  <div class="button-group">
+    <a [routerLink]="['/manage/productModelView']" class="action-button" routerLinkActive="active-link">Zarządzaj produktami</a>
+    <a [routerLink]="['/manage/category']" class="action-button" routerLinkActive="active-link">Dodaj kategorię</a>
+    <a [routerLink]="['/manage/productModel']" class="action-button" routerLinkActive="active-link">Dodaj produkt</a>
+    <a [routerLink]="['/manage/product']" class="action-button" routerLinkActive="active-link">Dodaj produkt do spiżarni</a>
+    <a [routerLink]="['/manage/recipe']" class="action-button" routerLinkActive="active-link">Dodaj przepis</a>
+  </div>
+</div>
+
+<!-- Wyświetlanie dynamicznego widoku -->
+<div class="site-content">
+  <router-outlet></router-outlet>
+</div>

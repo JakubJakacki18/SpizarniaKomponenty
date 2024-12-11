@@ -1,0 +1,88 @@
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--font-color);
+  border: 3px solid var(--background-color);
+  border-radius: 15px;
+  padding: 25px;
+  width: 200%;
+  height: 80%;
+  box-sizing: border-box;
+  font-family: "Poppins", "Arial Black";
+  color: var(--secondary-right);
+  font-weight: bold;
+}
+
+  .form-container > label {
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--secondary-right);
+  }
+
+/* Akordeon */
+mat-accordion {
+  background-color: var(--background-color); 
+  border-radius: 10px;
+  border: 2px solid #54473f;
+  overflow: hidden;
+
+}
+
+mat-expansion-panel {
+  background-color: var(--primary-color);
+  border-bottom: 1px solid var(--background-color); 
+}
+
+mat-expansion-panel-header {
+  background-color: var(--primary-color); /* Jasny brązowy */
+  color: var(--font-color);
+  font-weight: bold;
+}
+
+mat-list-option {
+  font-size: 18px;
+  padding: 10px;
+  color: var(--font-color);
+  border-radius: 5px;
+  background-color: var(--primary-color); /* Tło listy */
+}
+
+  mat-list-option:hover {
+    background-color: #ffffff; /* Kolor podczas hover */
+  }
+
+.emptyWarning {
+  font-size: 16px;
+  color: var(--secondary-right);
+  margin-left: 15px;
+}
+
+mat-form-field {
+  width: 100%;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+}
+
+.error {
+  color: var(--secondary-left);
+  font-size: 16px;
+  margin-top: 5px;
+}
+.mat-raised-button {
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--font-color);
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  margin-right: 10px;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+}

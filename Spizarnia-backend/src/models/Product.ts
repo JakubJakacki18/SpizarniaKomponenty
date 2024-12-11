@@ -6,7 +6,6 @@ import {
   } from 'typeorm';
 
 import { ProductModel } from './ProductModel';
-import { Container } from './Container';
 
 @Entity()
 export class Product {
@@ -21,7 +20,4 @@ export class Product {
 
     @ManyToOne(() => ProductModel, (productModel) => productModel.products)
     productModel?: ProductModel;
-
-    @ManyToOne(() => Container, (container) => container.products, { onDelete: "CASCADE" })
-    container?: Container;
 }

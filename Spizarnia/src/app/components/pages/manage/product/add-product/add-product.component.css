@@ -1,0 +1,111 @@
+/* Kontener tła, który rozsuwa stronę w dół */
+.background-container {
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 30px 20px;
+}
+
+/* Form container, który będzie trzymany w background-container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--font-color);
+  border: 3px solid var(--background-color);
+  border-radius: 15px;
+  padding: 25px;
+  width: 100%;
+  height: 80%;
+  box-sizing: border-box;
+  font-family: "Poppins", "Arial Black";
+  color: var(--secondary-right);
+  font-weight: bold;
+}
+
+  /* Pozostałe style jak wcześniej */
+  .form-container > label {
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--secondary-left);
+  }
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* Akordeon */
+mat-accordion {
+  background-color: var(--background-color);
+  border-radius: 10px;
+  width: 100%;
+  border: 2px solid #54473f;
+  overflow: hidden;
+}
+
+mat-expansion-panel {
+  width: 100%;
+  background-color: var(--primary-color);
+  border-bottom: 1px solid var(--background-color);
+}
+
+mat-expansion-panel-header {
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  font-weight: bold;
+}
+
+mat-list-option {
+  font-size: 18px;
+  padding: 10px;
+  color: var(--font-color);
+  border-radius: 5px;
+  background-color: var(--primary-color);
+}
+
+  mat-list-option:hover {
+    background-color: #ffffff;
+  }
+
+.emptyWarning {
+  font-size: 16px;
+  color: var(--secondary-right);
+  margin-left: 15px;
+}
+
+mat-form-field {
+  width: 100%;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+}
+
+.error {
+  color: var(--secondary-left);
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.mat-raised-button {
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--font-color);
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  margin-right: 10px;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+}

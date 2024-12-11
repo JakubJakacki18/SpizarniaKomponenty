@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
 import { AppDataSource } from '../data-source';
 import { Category } from '../models/Category';
-import { Container } from '../models/Container';
 import { Repository } from 'typeorm';
 
 const categoryRepository: Repository<Category> = AppDataSource.getRepository(Category);
-const containerRepository: Repository<Container> = AppDataSource.getRepository(Container);
 
 export const CategoryController = {
   async getAll(req: Request, res: Response) {
@@ -34,10 +32,8 @@ export const CategoryController = {
   async create(req: Request, res: Response) {
     const { categoryName } = req.body;
     try {
-        const newContainer = containerRepository.create();
         const newCategory = categoryRepository.create({
           categoryName: categoryName,
-          container: newContainer,
         });
         await categoryRepository.save(newCategory); 
         res.status(201).json({ category: newCategory });

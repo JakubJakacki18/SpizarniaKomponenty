@@ -1,1 +1,46 @@
-<p>container works!</p>
+<div class="site-content">
+  <div class="title">Produkty z kategorii</div>
+  <div class="container-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwa</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ilość</th>
+        <td mat-cell *matCellDef="let element"> {{element.quantity}} {{element.unit}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="purchaseDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Zakupu</th>
+        <td mat-cell *matCellDef="let element"> {{formatDate(element.purchaseDate)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expirationDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Ważności</th>
+        <td mat-cell *matCellDef="let element"> {{formatDate(element.expirationDate)}} </td>
+      </ng-container>
+
+      <!-- Table Header -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <!-- Table Rows -->
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+
+    <!-- Wiadomość, gdy brak produktów -->
+     @if(dataSource.data.length === 0){
+    <div class="no-data">
+      Brak produktów w tej kategorii.
+    </div>
+  }
+  </div>
+</div>
