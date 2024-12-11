@@ -4,7 +4,7 @@
   </div>
   <div class="site-content container-section">
     <!-- Iteracja przez rzędy kontenerów -->
-     @for(let row of rows; let i = index){
+     @for(row of rows; track row){
     <div class="container-row">
       <div class="container-grid">
         @for(category of categories; track category){
