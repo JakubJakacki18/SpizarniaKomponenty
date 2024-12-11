@@ -1,0 +1,17 @@
+.mat-mdc-dialog .mat-mdc-dialog-container {
+  color: var(--font-color); /* Kolor tekstu w dialogu */
+  font-family: "Poppins", "Arial"; /* Czcionka dialogu */
+}
+
+.mat-mdc-dialog-title {
+  color: var(--font-color); /* Kolor tekstu tytułu */
+  font-size: 20px;
+}
+
+.mat-mdc-dialog-content {
+  color: var(--font-color); /* Kolor tekstu w treści dialogu */
+}
+
+.mat-mdc-dialog .mat-mdc-dialog-container {
+  background-color: var(--primary-color); /* Tło kontenera dialogu */
+}

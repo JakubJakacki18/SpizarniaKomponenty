@@ -25,6 +25,7 @@ body {
   @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red));
   @include mat.datepicker-overrides((toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
   @include mat.sort-overrides((arrow-color: var(---secondary-left)));
+  @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px));
 }
 //linki dzięki temu są niepodkreślone, i z oryginalnym kolorem
 a {
