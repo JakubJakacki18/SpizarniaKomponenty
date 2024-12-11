@@ -54,37 +54,30 @@ ngOnInit() {
     this.dataSource.sort = this.sort;
   }
 
-  onSearch() {
-    if (this.searchTerm.length >= 3) {
-      const searchTermLower = this.searchTerm.toLowerCase();
-      this.dataSource.filter = searchTermLower;
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        return data.name.toLowerCase().includes(filter);
-      };
-    } else {
-      this.dataSource.filter = '';
-    }
-  }
 
 getAllProducts() {
   this.http.get<any[]>('http://localhost:5000/api/product').subscribe(
     (data) => {
       console.log('Fetched products:', data);
       
+      // Sprawdzamy struktury kategorii
+      data.forEach(product => {
+      });
+
+      // Jeśli istnieje categoryName, filtrujemy
       if (this.categoryName) {
-        this.products = data.filter(product => 
-          product.category && 
-          product.category.categoryName &&
-          product.category.categoryName.toLowerCase() === this.categoryName.toLowerCase()
-        );
+        this.products = data.filter(product => {
+          const categoryName = product.category?.categoryName?.toLowerCase();
+          return product.categoryName.toLowerCase() === this.categoryName.toLowerCase();
+        });
       } else {
         this.products = data; 
       }
 
-      // Log filtered products to ensure the filtering works
+      // Sprawdzamy, co zostało przefiltrowane
       console.log('Filtered products:', this.products);
 
-      // Update the data source for the table
+      // Ustawiamy dane w źródle tabeli
       this.dataSource.data = this.products;
     },
     (error) => {
@@ -92,6 +85,8 @@ getAllProducts() {
     }
   );
 }
+
+
 
   formatDate(date: Date): string {
     return this.datePipe.transform(date, 'shortDate') ?? '';
