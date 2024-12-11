@@ -4,7 +4,7 @@
   </div>
   <div class="site-content container-section">
     <!-- Iteracja przez rzędy kontenerów -->
-     @for(row of rows; track row){
+    @for(row of rows; track row){
     <div class="container-row">
       <div class="container-grid">
         <!-- Iteracja przez kategorie w jednym rzędzie -->
@@ -17,13 +17,13 @@
       <!-- Półka pod rzędem kontenerów -->
       <div class="shelf"></div>
     </div>
-  }
+    }
     <!-- Komunikat, jeśli brak kontenerów -->
-     @if(!rows || rows.length === 0){
+    @if(!rows || rows.length === 0){
       <div class="shelf-container">
         <div class="shelf-text">Brak kategorii do wyświetlenia!</div>
         <div class="shelf"></div>
       </div>
-  }
+    }
+    </div>
   </div>
-</div>
