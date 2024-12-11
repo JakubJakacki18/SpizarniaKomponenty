@@ -20,7 +20,7 @@ body {
   --background-color: #61463b;
   --font-color: #4e3d43;
   --font-color-hover: #ffffff;
-  @include mat.table-overrides((background-color: var(--background-color), header-headline-color: var(--secondary-left),row-item-outline-color: var(--primary-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
+  @include mat.table-overrides((background-color: var(--background-color), header-headline-color: var(--font-color),row-item-outline-color: var(--font-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
   @include mat.expansion-overrides((container-text-color: var(--font-color), header-text-color: var(--font-color)));
   @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red));
   @include mat.datepicker-overrides((toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
@@ -109,7 +109,6 @@ a {
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
   color: var(--font-color-hover);
 }
-
 .active-link {
   background-color: var(--secondary-left);
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);

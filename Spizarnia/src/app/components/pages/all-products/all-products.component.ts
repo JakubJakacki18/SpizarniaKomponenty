@@ -21,7 +21,6 @@ export class AllProductsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'quantity', 'category', 'purchaseDate', 'expirationDate', 'edit', 'delete'];
   searchTerm: string = '';
   dataSource = new MatTableDataSource<any>([]); // Użycie MatTableDataSource dla sortowania
-
   @ViewChild(MatSort) sort!: MatSort; // Dodanie ViewChild do obsługi sortowania
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
@@ -56,6 +55,36 @@ export class AllProductsComponent implements OnInit {
     } else {
       this.dataSource.filter = ''; // Reset filtra
     }
+  }
+  getRowStyle(product: any): any {
+    const currentDate = new Date();
+    const expirationDate = new Date(product.expirationDate);
+
+    // Obliczenie różnicy dni
+    const timeDifference = expirationDate.getTime() - currentDate.getTime();
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+    // Jeśli data ważności jest mniejsza niż 3 dni, zmieniamy styl wiersza
+    if (daysDifference <= 3 && daysDifference > 0) {
+      return {
+        color: 'red',
+        fontWeight: 'bold'
+      }; // Kolor czerwony dla produktów, których data ważności zbliża się
+    }
+    if (daysDifference < 7 && daysDifference > 3) {
+      return {
+        color: 'yellow',
+        fontWeight: 'bold'
+      };
+    }
+    if (daysDifference <= 0) {
+      return {
+        color: 'gray',
+        textDecoration: 'line-through' 
+      };
+    }
+
+    return {};
   }
 
   getAllProducts() {
