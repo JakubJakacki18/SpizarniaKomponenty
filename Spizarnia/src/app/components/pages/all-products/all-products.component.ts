@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class AllProductsComponent implements OnInit {
   products: any[] = [];
-  displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'purchaseDate', 'expirationDate', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'purchaseDate', 'expirationDate', 'delete'];
   searchTerm: string = '';
   dataSource = new MatTableDataSource<any>([]); // Użycie MatTableDataSource dla sortowania
   @ViewChild(MatSort) sort!: MatSort; // Dodanie ViewChild do obsługi sortowania
@@ -112,11 +112,6 @@ export class AllProductsComponent implements OnInit {
     }
   }
 
-  editProduct(product: any) {
-    // Zaimplementuj logikę edytowania produktu (np. otwarcie formularza edycji)
-    console.log('Edycja produktu', product);
-    // Możesz przekazać dane do formularza edycji lub otworzyć modal
-  }
   checkExpirationDates() {
     const currentDate = new Date();
     const expiringProducts: Product[] = [];

@@ -48,14 +48,6 @@
           <td mat-cell *matCellDef="let product" [ngStyle]="getRowStyle(product)">{{ formatDate(product.expirationDate) }}</td>
         </ng-container>
 
-        <!-- Kolumna: Edytuj -->
-        <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let product">
-            <button class="action-edit-button" (click)="editProduct(product)">EDYTUJ</button>
-          </td>
-        </ng-container>
-
         <!-- Kolumna: Usuń -->
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef></th>
