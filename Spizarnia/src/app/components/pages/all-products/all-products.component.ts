@@ -44,7 +44,7 @@ export class AllProductsComponent implements OnInit {
   }
 
   onSearch() {
-    if (this.searchTerm.length >= 3) {
+    if (this.searchTerm.length >= 2) {
       const searchTermLower = this.searchTerm.toLowerCase();
 
       this.dataSource.filter = searchTermLower; // Użycie wbudowanego filtrowania w MatTableDataSource
