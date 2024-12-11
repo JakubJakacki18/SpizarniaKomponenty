@@ -44,10 +44,10 @@
     <div class="form-row">
       <div class="label-input-wrapper">
         <label for="selectedCategory">Kategoria:</label>
-        <select id="selectedCategory" formControlName="selectedCategory" class="form-input">
+        <select id="selectedCategory" formControlName="categoryId" class="form-input">
           <option value="" disabled selected>Wybierz kategorię:</option>
           @for(category of categories; track category) {
-          <option [value]="category">{{category.categoryName}}</option>
+          <option [value]="category.id">{{category.categoryName}}</option>
           }
         </select>
       </div>
