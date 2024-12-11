@@ -2,7 +2,7 @@
 .background-container {
   position: relative;
   height: 90vh;
-  width: 100%;
+  width: 120%;
   background-color: var(--primary-color);
   overflow: auto;
   padding: 30px 20px;
@@ -14,16 +14,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 25px;
   background-color: var(--font-color);
   border: 3px solid var(--background-color);
   border-radius: 15px;
   padding: 25px;
-  width: 100%;
-  height: 80%;
   box-sizing: border-box;
   font-family: "Poppins", "Arial Black";
-  color: var(--secondary-right);
+  color: var(--secondary-left);
   font-weight: bold;
 }
 
