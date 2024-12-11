@@ -4,7 +4,8 @@
   </div>
   <div class="site-content container-section">
     <!-- Iteracja przez rzędy kontenerów -->
-    <div *ngFor="let row of rows; let i = index" class="container-row">
+     @for(let row of rows; let i = index){
+    <div class="container-row">
       <div class="container-grid">
         @for(category of categories; track category){
           <a [routerLink]="['/manage/container', category.categoryName]">
@@ -19,12 +20,13 @@
       <!-- Półka pod rzędem kontenerów -->
       <div class="shelf"></div>
     </div>
+  }
     <!-- Komunikat, jeśli brak kontenerów -->
-    <div *ngIf="!rows || rows.length === 0">
+     @if(!rows || rows.length === 0){
       <div class="shelf-container">
         <div class="shelf-text">Brak kategorii do wyświetlenia!</div>
         <div class="shelf"></div>
       </div>
-    </div>
+  }
   </div>
   </div>

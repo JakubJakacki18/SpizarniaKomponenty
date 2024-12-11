@@ -28,7 +28,6 @@ export class AllProductsComponent implements OnInit {
 
   ngOnInit() {
     this.getAllProducts()
-
     this.checkExpirationInterval = setInterval(() => {
       this.checkExpirationDates();
     }, 60000); // 60000 ms = 1 minuta
@@ -156,7 +155,7 @@ export class AllProductsComponent implements OnInit {
         })
         .catch((err) => console.error('Błąd podczas wyzwalania powiadomienia:', err));
     } else {
-      console.error('Service Worker nie jest dostępny w tej przeglądarce.');
+      console.warn('Service Worker nie jest dostępny w tej przeglądarce.');
     }
   }
 

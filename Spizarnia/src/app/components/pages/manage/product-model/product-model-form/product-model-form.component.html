@@ -6,9 +6,10 @@
         <label for="name">Nazwa:</label>
         <input id="name" formControlName="name" class="form-input" />
       </div>
-      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error-message">
+      @if(productForm.get('name')?.invalid && productForm.get('name')?.touched){
+      <div class="error-message">
         Nazwa jest wymagana
-      </div>
+      </div>}
     </div>
 
     <div class="form-row">
@@ -16,9 +17,11 @@
         <label for="unit">Jednostka:</label>
         <input id="unit" formControlName="unit" class="form-input" />
       </div>
-      <div *ngIf="productForm.get('unit')?.invalid && productForm.get('unit')?.touched" class="error-message">
+      @if(productForm.get('unit')?.invalid && productForm.get('unit')?.touched){
+      <div class="error-message">
         Jednostka jest wymagana
       </div>
+    }
     </div>
 
     <div class="form-row">
@@ -26,9 +29,11 @@
         <label for="price">Cena:</label>
         <input id="price" type="number" formControlName="price" class="form-input" />
       </div>
-      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="error-message">
+      @if(productForm.get('price')?.invalid && productForm.get('price')?.touched){
+      <div class="error-message">
         Cena musi być liczbą większą od 0
       </div>
+    }
     </div>
 
     <div class="form-row">
@@ -36,9 +41,11 @@
         <label for="quantity">Ilość:</label>
         <input id="quantity" type="number" formControlName="quantity" class="form-input" />
       </div>
-      <div *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" class="error-message">
+      @if(productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched){
+      <div class="error-message">
         Ilość musi być liczbą większą od 0
       </div>
+    }
     </div>
 
     <div class="form-row">
@@ -51,9 +58,11 @@
           }
         </select>
       </div>
-      <div *ngIf="productForm.get('selectedCategory')?.invalid && productForm.get('selectedCategory')?.touched" class="error-message">
+      @if(productForm.get('selectedCategory')?.invalid && productForm.get('selectedCategory')?.touched){
+      <div class="error-message">
         Kategoria musi zostać wybrana
       </div>
+    }
     </div>
 
     <div class="form-row">

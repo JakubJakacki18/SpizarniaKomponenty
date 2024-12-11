@@ -37,8 +37,10 @@
 
 
     <!-- Wiadomość, gdy brak produktów -->
-    <div *ngIf="dataSource.data.length === 0" class="no-data">
+     @if(dataSource.data.length === 0){
+    <div class="no-data">
       Brak produktów w tej kategorii.
     </div>
+  }
   </div>
 </div>
