@@ -2,7 +2,6 @@
 .background-container {
   position: relative;
   height: 90vh;
-  width: 100vh;
   background-color: var(--primary-color);
   overflow: auto;
   padding: 30px 20px;
