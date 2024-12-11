@@ -24,6 +24,7 @@ import { ProductModelService } from './../../../../../services/product-model.ser
 export class ProductModelViewListComponent implements OnInit {
   // Kolumny wyświetlane w tabeli
   displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'type', 'price', 'edit', 'delete'];
+  products: any[] = [];
   dataSource = new MatTableDataSource<any>([]); // Dane do tabeli
   @ViewChild(MatSort) sort!: MatSort; // Obsługa sortowania
 
@@ -51,14 +52,39 @@ export class ProductModelViewListComponent implements OnInit {
     });
   }
 
-  // Usuwanie produktu
-  deleteProduct(product: number): void {
-    console.log('Usuwanie produktu:', product);
+  // Usuwanie produktModel - analogiczne jak product
+  deleteProduct(productId: number) {
+    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
+      this.http.delete(`http://localhost:5000/api/productModel/${productId}`).subscribe(
+        () => {
+          this.products = this.products.filter(product => product.id !== productId);
+          this.dataSource.data = this.products;
+        },
+        (error) => {
+          console.error('Błąd podczas usuwania produktu:', error);
+        }
+      );
+    }
   }
 
-  // Edycja produktu (dostosuj do swoich potrzeb)
+  // Edycja produktu
   editProduct(product: any): void {
-    console.log('Edycja produktu:', product);
-    // Tutaj możesz otworzyć formularz edycji lub przekierować użytkownika
+   //Moze zmienic na jakis formularz?
+    const updatedPrice = prompt('Podaj nową cenę produktu:', product.price.toString());
+    const updatedCategory = prompt('Podaj nową kategorie produktu:', product.category.toString());
+    const updatedType = prompt('Podaj nowy typ produktu:', product.type.toString());
+
+    const updatedProduct = { ...product, price: updatedPrice, type: updatedType, categoryName: updatedCategory };
+  
+      this.http.put(`http://localhost:5000/api/productModel/${product.id}`, updatedProduct).subscribe(
+        (response) => {
+          console.log('Produkt zaktualizowany:', response);
+          this.loadProductModels();
+        },
+        (error) => {
+          console.error('Błąd podczas aktualizacji produktu:', error);
+        }
+      );
   }
+  
 }

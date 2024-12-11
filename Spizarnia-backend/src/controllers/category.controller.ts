@@ -29,6 +29,20 @@ export const CategoryController = {
     }
   },
 
+  async getOneByName(req: Request, res: Response) {
+    const { categoryName } = req.params;
+    try {
+      const category = await categoryRepository.findOne({ where: { categoryName: categoryName } });
+      if (!category) {
+        res.status(404).json({ error: 'Category with name: ${categoryName} was not found' });
+        return;
+      }
+      res.json(category);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal error: Cannot get category' });
+    }
+  },
+
   async create(req: Request, res: Response) {
     const { categoryName } = req.body;
     try {
