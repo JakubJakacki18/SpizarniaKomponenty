@@ -4,65 +4,75 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { HttpClient, HttpClientModule } from '@angular/common/http'; // Dodano HttpClient
 
 @Component({
   selector: 'app-grocery-list-view',
   standalone: true,
-  imports: [MatTableModule, MatSortModule, CommonModule, FormsModule],
+  imports: [MatTableModule, HttpClientModule, MatSortModule, CommonModule, FormsModule],
   templateUrl: './grocery-list-view.component.html',
   styleUrls: ['./grocery-list-view.component.css'],
   providers: [DatePipe],
 })
 export class GroceryListViewComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'price', 'edit', 'delete'];
-  dataSource = new MatTableDataSource<any>([]); // Dane do tabeli
-  @ViewChild(MatSort) sort!: MatSort; // Obsługa sortowania
+  dataSource = new MatTableDataSource<any>([]); // Table data
+  totalPrice: number = 0;  // Variable to hold the total price
 
-  constructor(private datePipe: DatePipe) { }
+  @ViewChild(MatSort) sort!: MatSort; // Sorting functionality
 
-  ngOnInit(): void {
-    this.loadExpiredProducts(); // Pobranie produktów na starcie
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadExpiredProducts();
   }
 
-  ngAfterViewInit(): void {
-    if (this.sort) {
-      this.dataSource.sort = this.sort; // Przypisanie sortowania do tabeli
-    }
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort; // Sorting after view initialization
   }
 
-  // Pobranie i filtrowanie produktów, których data ważności się skończyła
-  loadExpiredProducts(): void {
-    const products = this.getMockProducts(); // Zastąp mock API prawdziwym
-    const today = new Date(); // Dzisiejsza data
+  // Loading expired products and calculating total price
+  loadExpiredProducts() {
+    this.http.get<any[]>(`http://localhost:5000/api/product`).subscribe(
+      (data) => {
+        const currentDate = new Date();
+        const expiredProducts = data.filter((product) => {
+          const expirationDate = new Date(product.expirationDate);
+          return expirationDate.getTime() < currentDate.getTime(); // Filter expired products
+        });
 
-    // Filtruj produkty, których data ważności już minęła
-    const expiredProducts = products.filter((product) => {
-      const expiredDate = new Date(product.expiryDate); // Parsuj datę ważności
-      return expiredDate < today; // Sprawdź, czy data ważności minęła
-    });
+        this.dataSource.data = expiredProducts; // Assign expired products to the dataSource
 
-    // Przypisanie przeterminowanych produktów do tabeli
-    this.dataSource.data = expiredProducts;
-    console.log('Przeterminowane produkty:', expiredProducts); // Logowanie w konsoli
+        // Calculate the total price
+        this.totalPrice = expiredProducts.reduce((sum, product) => sum + (product.price || 0), 0);
+
+        console.log('Przeterminowane produkty:', expiredProducts);
+        console.log('Suma cen produktów:', this.totalPrice);
+      },
+      (error) => {
+        console.error('Błąd podczas pobierania produktów:', error);
+      }
+    );
   }
 
-  // Usuwanie produktu
-  deleteProduct(productId: number): void {
-    console.log('Usuwanie produktu:', productId);
-  }
-
-  // Edycja produktu (dostosuj do swoich potrzeb)
+  // Edit product (for your requirements)
   editProduct(product: any): void {
     console.log('Edycja produktu:', product);
-    // Tutaj możesz otworzyć formularz edycji lub przekierować użytkownika
+    // You can open an edit form or redirect the user here
   }
 
-  // Mock danych (zastąp to prawdziwym API)
-  getMockProducts(): any[] {
-    return [
-      { id: 1, name: 'Mleko', quantity: 2, unit: 'litry', categoryName: 'Nabiał', price: 4.99, expiryDate: '2023-12-01' },
-      { id: 2, name: 'Chleb', quantity: 1, unit: 'sztuka', categoryName: 'Pieczywo', price: 3.49, expiryDate: '2023-12-12' },
-      { id: 3, name: 'Masło', quantity: 1, unit: 'kostka', categoryName: 'Nabiał', price: 6.99, expiryDate: '2023-11-30' },
-    ];
+  // Delete product
+  deleteProduct(productId: number) {
+    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
+      this.http.delete(`http://localhost:5000/api/product/${productId}`).subscribe(
+        () => {
+          this.dataSource.data = this.dataSource.data.filter((product) => product.id !== productId);
+          console.log(`Produkt o ID ${productId} został usunięty.`);
+        },
+        (error) => {
+          console.error('Błąd podczas usuwania produktu:', error);
+        }
+      );
+    }
   }
 }

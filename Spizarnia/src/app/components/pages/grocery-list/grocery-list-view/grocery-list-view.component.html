@@ -1,56 +1,61 @@
-<div class="product-model-view-container">
+<div class="grocery-list-view-container">
   <table mat-table [dataSource]="dataSource" matSort>
-    <!-- Kolumna: ID -->
+    <!-- Columns for id, name, quantity, category, price, and action buttons -->
+
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
       <td mat-cell *matCellDef="let product">{{ product.id }}</td>
     </ng-container>
 
-    <!-- Kolumna: Nazwa -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>NAZWA</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwa</th>
       <td mat-cell *matCellDef="let product">{{ product.name }}</td>
     </ng-container>
 
-    <!-- Kolumna: Ilość -->
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>ILOŚĆ</th>
-      <td mat-cell *matCellDef="let product">{{ product.quantity }} {{product.unit}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ilość</th>
+      <td mat-cell *matCellDef="let product">{{ product.quantity }}</td>
     </ng-container>
 
-    <!-- Kolumna: Kategoria -->
     <ng-container matColumnDef="categoryName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>KATEGORIA</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kategoria</th>
       <td mat-cell *matCellDef="let product">{{ product.categoryName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>CENA</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Cena</th>
       <td mat-cell *matCellDef="let product">{{ product.price }}</td>
     </ng-container>
 
-    <!-- Kolumna: Edytuj -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let product">
-        <button class="action-edit-button" (click)="editProduct(product)">EDYTUJ</button>
+        <button class="action-edit-button" (click)="editProduct(product)">Edytuj</button>
       </td>
     </ng-container>
 
-    <!-- Kolumna: Usuń -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let product">
-        <button class="action-edit-button" (click)="deleteProduct(product.id)">USUŃ</button>
+        <button class="action-edit-button" (click)="deleteProduct(product.id)">Usuń</button>
       </td>
     </ng-container>
 
-    <!-- Wiersze -->
+    <!-- Rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Total Price Row -->
+    <tr *ngIf="totalPrice > 0">
+      <td mat-cell colspan="7"></td> <!-- Leave space for 5 columns (id, name, quantity, category, price) -->
+      <td mat-header-cell><strong>Suma:</strong></td>
+      <td mat-cell><strong>{{ totalPrice | currency: 'PLN' }}</strong></td>
+      <td mat-cell></td> <!-- Empty for the actions column -->
+    </tr>
   </table>
 
-  <!-- Wiadomość, gdy brak produktów -->
+  <!-- No data message -->
   <div *ngIf="dataSource.data.length === 0" class="no-data">
-    Brak produktów w na liście zakupów.
+    Brak produktów w spiżarni.
   </div>
+</div>
