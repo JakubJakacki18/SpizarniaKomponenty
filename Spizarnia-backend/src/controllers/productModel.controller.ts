@@ -93,7 +93,7 @@ export const ProductModelController = {
       if (categoryName) {
         const category = await AppDataSource.getRepository(Category).findOne({
         where: { categoryName: categoryName } });
-        if (category) {
+        if (category !== null) {
           productModel.category = category;
         } else {
           res.status(400).json({ error: `Category with id: ${categoryName} was not found` });
@@ -101,11 +101,11 @@ export const ProductModelController = {
         }
       }
 
-      if (price !== undefined) {
+      if (price !== null) {
         productModel.price = price;
       }
 
-      if (type !== undefined) {
+      if (type !== null) {
         productModel.type = type;
       }
 
