@@ -6,7 +6,7 @@
 .product-model-view-container {
   position: relative;
   height: 60vh;
-  width: 100vh;
+  width: 150vh;
   background-color: var(--primary-color);
   overflow: auto;
   padding: 30px 20px;
