@@ -1,0 +1,61 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #5e3929; /* Brązowe tło */
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie w poziomie */
+  align-items: center; /* Wyśrodkowanie w pionie */
+}
+
+/* Form Container */
+.form-container {
+  background-color: #f8e8e3; /* Jasne tło dla formularza */
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Label */
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #5e3929;
+}
+
+/* Input Fields */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #d3a794;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6e9e57; /* Zielony odcień */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+  .submit-button:hover {
+    background-color: #5e3929; /* Brązowy na hover */
+  }

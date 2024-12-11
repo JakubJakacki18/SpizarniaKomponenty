@@ -1,41 +1,53 @@
-<div class="container">
-  <header>
-    <div class="actions">
-      <h1>Przepisy</h1>
-      <input #filter
-             id="search"
-             placeholder="Wyszukaj po nazwie..."
-             (keyup)="filterResults(filter.value)" />
-      <button class="primary" type="button" (click)="filterResults(filter.value)">
-        Szukaj
-      </button>
-      <button (click)="resetSearch()">Pokaż wszystkie</button>
-    </div>
-  </header>
+<!--<div class="content-container">-->
+  <!-- Section for recipe list --><!--<div class="title">Lista Przepisów</div>
+  <div class="search-bar">
+    <input type="text" placeholder="Wyszukaj po nazwie?" (input)="onSearch($event)" />
+    <button (click)="filterByName()">Szukaj</button>
+    <button (click)="resetFilters()">Wyświetl wszystkie</button>
+    <button (click)="filterByPantry()">Wyświetl te na które są składniki</button>
+    <button (click)="navigateToAddRecipe()">Dodaj Przepis</button>
+  </div>
 
-  <main>
-
-    <table>
+  <div class="content-section">-->
+    <!-- Title for the section -->
+    <!-- Search bar for filtering recipes -->
+    <!-- Table for displaying recipes -->
+    <!--<table>
       <thead>
         <tr>
           <th>Nazwa</th>
           <th>Składniki</th>
-          <th>Edytuj</th>
-          <th>Usuń</th>
+          <th>Opcje</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let recipe of filteredRecipes">
-          <td>{{ recipe.name }}</td>
-          <td>{{ recipe.ingredients.join(', ') }}</td>
-          <td>
-            <button (click)="deleteRecipe(recipe)">Edytuj</button>
-          </td>
-          <td>
-            <button (click)="deleteRecipe(recipe)">Usuń</button>
-          </td>
-        </tr>
-      </tbody>
+      <tbody id="recipes-body"></tbody>
     </table>
-  </main>
+  </div>
+</div>-->
+<div class="all-recipes-container">
+  <div class="header-container">
+    <div class="title">Lista Przepisów</div>
+    <div class="search-bar">
+      <input type="text"
+             placeholder="Wyszukaj po nazwie?"
+             (input)="onSearch($event)" />
+      <button (click)="filterByName()">Szukaj</button>
+      <button (click)="resetFilters()">Wyświetl wszystkie</button>
+      <button (click)="filterByPantry()">Wyświetl te na które są składniki</button>
+      <button (click)="navigateToAddRecipe()">Dodaj Przepis</button>
+    </div>
+  </div>
+
+  <div class="site-content all-recipes-section">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+          <th>Składniki</th>
+          <th>Opcje</th>
+        </tr>
+      </thead>
+      <tbody id="recipes-body"></tbody>
+    </table>
+  </div>
 </div>
