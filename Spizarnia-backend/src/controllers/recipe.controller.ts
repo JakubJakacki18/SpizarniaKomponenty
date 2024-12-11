@@ -1,72 +1,125 @@
-import { Request, Response } from 'express';
-import { Recipe } from '../models/Recipe';
-import { AppDataSource } from '../data-source';
+import { Request, Response } from "express";
+import { Repository } from "typeorm";
+import { Recipe } from "../models/Recipe";
+import { Ingredient } from "../models/Ingredient";
+import { AppDataSource } from "../data-source";
 
-const recipeRepository = AppDataSource.getRepository(Recipe);
+const recipeRepository: Repository<Recipe> = AppDataSource.getRepository(Recipe);
+const ingredientRepository: Repository<Ingredient> = AppDataSource.getRepository(Ingredient);
 
-export class RecipeController {
-    static getAll = async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const recipes = await recipeRepository.find({ relations: ['ingredients'] });
-            return res.json(recipes);
-        } catch (error) {
-            console.error('Error fetching recipes:', error);
-            return res.status(500).json({ error: 'Failed to fetch recipes' });
+export const RecipeController = {
+  async getAll(req: Request, res: Response) {
+    try {
+      const recipes = await recipeRepository.find({ relations: ["ingredients"] });
+      res.json(recipes);
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Cannot fetch recipes" });
+    }
+  },
+
+  async getOne(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      const recipe = await recipeRepository.findOne({
+        where: { id: parseInt(id) },
+        relations: ["ingredients"],
+      });
+
+      if (!recipe) {
+        res.status(404).json({ error: `Recipe with id ${id} was not found` });
+        return;
+      }
+
+      res.json(recipe);
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Cannot fetch recipe" });
+    }
+  },
+
+  async create(req: Request, res: Response) {
+    const { name, ingredientIds, finished } = req.body;
+
+    try {
+      let ingredients = [];
+      if (ingredientIds && ingredientIds.length > 0) {
+        ingredients = await ingredientRepository.findByIds(ingredientIds);
+        if (ingredients.length !== ingredientIds.length) {
+          res.status(404).json({ error: "Some ingredients were not found" });
+          return;
         }
-    };
+      }
 
-    static getById = async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const recipe = await recipeRepository.findOne({
-                where: { id: parseInt(req.params.id) },
-                relations: ['ingredients'],
-            });
-            if (!recipe) {
-                return res.status(404).json({ error: 'Recipe not found' });
-            }
-            return res.json(recipe);
-        } catch (error) {
-            console.error('Error fetching recipe:', error);
-            return res.status(500).json({ error: 'Failed to fetch recipe' });
-        }
-    };
+      const newRecipe = recipeRepository.create({
+        name,
+        ingredients,
+        finished: finished !== undefined ? finished : false, //Defultowo false
+      });
 
-    static create = async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const recipe = recipeRepository.create(req.body);
-            const savedRecipe = await recipeRepository.save(recipe);
-            return res.status(201).json(savedRecipe);
-        } catch (error) {
-            console.error('Error creating recipe:', error);
-            return res.status(500).json({ error: 'Failed to create recipe' });
-        }
-    };
+      await recipeRepository.save(newRecipe);
+      res.status(201).json(newRecipe);
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Recipe was not created" });
+    }
+  },
 
-    static update = async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const recipe = await recipeRepository.findOneBy({ id: parseInt(req.params.id) });
-            if (!recipe) {
-                return res.status(404).json({ error: 'Recipe not found' });
-            }
-            recipeRepository.merge(recipe, req.body);
-            const updatedRecipe = await recipeRepository.save(recipe);
-            return res.json(updatedRecipe);
-        } catch (error) {
-            console.error('Error updating recipe:', error);
-            return res.status(500).json({ error: 'Failed to update recipe' });
-        }
-    };
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { name, ingredientIds, finished } = req.body;
 
-    static delete = async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const result = await recipeRepository.delete(req.params.id);
-            if (result.affected === 0) {
-                return res.status(404).json({ error: 'Recipe not found' });
-            }
-            return res.json({ message: 'Recipe deleted successfully' });
-        } catch (error) {
-            console.error('Error deleting recipe:', error);
-            return res.status(500).json({ error: 'Failed to delete recipe' });
+    try {
+      const recipe = await recipeRepository.findOne({
+        where: { id: parseInt(id) },
+        relations: ["ingredients"],
+      });
+
+      if (!recipe) {
+        res.status(404).json({ error: `Recipe with id ${id} was not found` });
+        return;
+      }
+
+      if (name !== undefined) {
+        recipe.name = name;
+      }
+
+      if (ingredientIds) {
+        const ingredients = await ingredientRepository.findByIds(ingredientIds);
+        if (ingredients.length !== ingredientIds.length) {
+          res.status(404).json({ error: "Some ingredients were not found" });
+          return;
         }
-    };
-}
+        recipe.ingredients = ingredients;
+      }
+
+      if (finished !== undefined) {
+        recipe.finished = finished;
+      }
+
+      await recipeRepository.save(recipe);
+      res.json(recipe);
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Recipe was not updated" });
+    }
+  },
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      const recipe = await recipeRepository.findOne({
+        where: { id: parseInt(id) },
+        relations: ["ingredients"],
+      });
+
+      if (!recipe) {
+        res.status(404).json({ error: `Recipe with id ${id} was not found` });
+        return;
+      }
+
+      await recipeRepository.remove(recipe);
+      res.json({ message: `Recipe with id ${id} was removed successfully from database` });
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Recipe was not deleted" });
+    }
+  },
+};
