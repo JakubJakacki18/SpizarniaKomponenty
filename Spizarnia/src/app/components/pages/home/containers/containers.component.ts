@@ -26,11 +26,11 @@ export class ContainersComponent implements OnInit {
         this.categories = data.map((item: any) => ({
           categoryName: item.categoryName
         }));
+        console.log(this.categories);
         this.splitIntoRows();
       },
       error: (err) => {
         console.error('Error fetching categories:', err);
-        alert('Nie udało się załadować kategorii.');
       },
     });
   }

@@ -6,12 +6,15 @@
     <!-- Iteracja przez rzędy kontenerów -->
     <div *ngFor="let row of rows; let i = index" class="container-row">
       <div class="container-grid">
-        <!-- Iteracja przez kontenery w danym rzędzie -->
-        <div *ngFor="let containers of row" class="container-box">
-          <a [routerLink]="['/manage/category', containers.categoryName]">
-            <p>{{ containers.categoryName }}</p>
-          </a>
-        </div>
+        @for(category of categories; track category){
+          <a [routerLink]="['/manage/container', category.categoryName]">
+        <div class="container-box">
+     
+            <p>{{ category.categoryName }}</p>
+            
+          </div>
+        </a>
+      }
       </div>
       <!-- Półka pod rzędem kontenerów -->
       <div class="shelf"></div>

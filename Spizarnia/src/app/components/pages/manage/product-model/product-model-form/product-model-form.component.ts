@@ -30,7 +30,7 @@ ngOnInit(): void {
   unit: ['', Validators.required],
   price: ['', [Validators.required, Validators.min(0)]],
   quantity: ['', [Validators.required, Validators.min(1)]],
-  selectedCategory: ['',[Validators.required]],
+  categoryId: ['',[Validators.required]],
   type: []
   });
 }

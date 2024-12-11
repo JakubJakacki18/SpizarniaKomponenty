@@ -30,12 +30,12 @@
           <td mat-cell *matCellDef="let product" [ngStyle]="getRowStyle(product)">{{ product.quantity }}</td>
         </ng-container>
 
-        <!-- Kolumna: Kategoria -->
-        <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>KATEGORIA</th>
-          <td mat-cell *matCellDef="let product" [ngStyle]="getRowStyle(product)">{{ product.category }}</td>
-        </ng-container>
-
+      <!-- Kolumna: Kategoria -->
+      <ng-container matColumnDef="categoryName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>KATEGORIA</th>
+        <td mat-cell *matCellDef="let product" [ngStyle]="getRowStyle(product)">{{ product.categoryName }}</td>
+      </ng-container>
+        
         <!-- Kolumna: Data Zakupu -->
         <ng-container matColumnDef="purchaseDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>DATA ZAKUPU</th>

@@ -11,9 +11,8 @@ export const ProductController = {
   async getAll(req: Request, res: Response) {
     try {
       const products = await productRepository.find({
-        relations: ["productModel", "container"],
+        relations: ["productModel", "productModel.category"],
       });
-
       //podpinanie nazwy i ilosci z productmodel
       const result = products.map((product) =>({
 
@@ -22,9 +21,9 @@ export const ProductController = {
         purchaseDate: product.purchaseDate,
         name: product.productModel.name,
         quantity: product.productModel.quantity,
-        unit: product.productModel.unit
+        unit: product.productModel.unit,
+        categoryName: product.productModel.category.categoryName
       }))
-
       res.json(result);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot get all products" });

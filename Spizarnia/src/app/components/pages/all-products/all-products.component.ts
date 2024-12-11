@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class AllProductsComponent implements OnInit {
   products: any[] = [];
-  displayedColumns: string[] = ['id', 'name', 'quantity', 'category', 'purchaseDate', 'expirationDate', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'purchaseDate', 'expirationDate', 'edit', 'delete'];
   searchTerm: string = '';
   dataSource = new MatTableDataSource<any>([]); // Użycie MatTableDataSource dla sortowania
   @ViewChild(MatSort) sort!: MatSort; // Dodanie ViewChild do obsługi sortowania
