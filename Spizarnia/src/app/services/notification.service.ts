@@ -13,12 +13,11 @@ export class NotificationService {
 
   subscribeToNotifications(): void {
     if (!this.swPush.isEnabled) {
-      console.error('Service Worker or Push Notifications are not enabled in this browser.');
+      //console.error('Service Worker or Push Notifications are not enabled in this browser.');
       return;
     }
 
-    this.swPush
-      .requestSubscription({
+    this.swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY,
       })
       .then((subscription) => {
