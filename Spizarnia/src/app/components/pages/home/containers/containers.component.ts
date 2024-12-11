@@ -36,7 +36,7 @@ export class ContainersComponent implements OnInit {
   }
 
   splitIntoRows(): void {
-    const rowSize = 6; // Maksymalna liczba kategorii w rzędzie
+    const rowSize = 6;
     this.rows = [];
     for (let i = 0; i < this.categories.length; i += rowSize) {
       this.rows.push(this.categories.slice(i, i + rowSize));

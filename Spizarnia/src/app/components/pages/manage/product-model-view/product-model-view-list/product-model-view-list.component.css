@@ -1,0 +1,13 @@
+.mat-mdc-header-row {
+  background-color: var(--font-color);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+}
+
+.product-model-view-container {
+  position: relative;
+  height: 60vh;
+  width: 100vh;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 30px 20px;
+}
