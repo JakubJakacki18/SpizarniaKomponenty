@@ -21,7 +21,7 @@
       <!-- Kolumna: Kategoria -->
       <ng-container matColumnDef="categoryName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>KATEGORIA</th>
-        <td mat-cell *matCellDef="let product">{{ product.categoryName }}</td>
+        <td mat-cell *matCellDef="let product">{{ product.category.categoryName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="type">

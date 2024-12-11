@@ -20,11 +20,11 @@ export const ProductModelController = {
           where: {
             name: Like(`%${name}%`),
           },
-          relations: ["products", "ingredients"],
+          relations: ["products", "ingredients", "category"],
         });
       } else {
         productModels = await productModelRepository.find({
-          relations: ["products", "ingredients"],
+          relations: ["products", "ingredients", "category"],
         });
       }
 
