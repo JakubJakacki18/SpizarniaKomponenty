@@ -1,17 +1,24 @@
-.mat-mdc-dialog .mat-mdc-dialog-container {
-  color: var(--font-color); /* Kolor tekstu w dialogu */
-  font-family: "Poppins", "Arial"; /* Czcionka dialogu */
+
+.box-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-left:50px;
+  padding: 50px;
 }
 
+.mat-mdc-form-field {
+  width: 100%;
+ margin-bottom: 15px;
+  font-family: "Poppins", "Arial";
+
+}
+
+.mat-mdc-form-field-label {
+  font-family: "Poppins", "Arial";
+}
 .mat-mdc-dialog-title {
-  color: var(--font-color); /* Kolor tekstu tytułu */
-  font-size: 20px;
-}
-
-.mat-mdc-dialog-content {
-  color: var(--font-color); /* Kolor tekstu w treści dialogu */
-}
-
-.mat-mdc-dialog .mat-mdc-dialog-container {
-  background-color: var(--primary-color); /* Tło kontenera dialogu */
+    margin-left:20px;
+  font-family: "Poppins", "Arial";
 }

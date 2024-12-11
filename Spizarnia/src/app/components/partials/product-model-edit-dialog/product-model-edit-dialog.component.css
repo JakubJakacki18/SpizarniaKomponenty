@@ -1,0 +1,42 @@
+.mat-mdc-dialog .mat-mdc-dialog-container {
+  color: var(--font-color); /* Text color */
+  font-family: "Poppins", "Arial"; /* Font */
+}
+
+.mat-mdc-dialog-title {
+  color: var(--font-color); /* Title color */
+  font-size: 20px;
+}
+
+.mat-mdc-dialog-content {
+  color: var(--font-color); /* Text color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.mat-mdc-dialog .mat-mdc-dialog-container {
+  background-color: var(--primary-color); /* Dialog background */
+}
+
+.mat-form-field {
+  width: 100%; /* Ensure the form fields take the full width of their container */
+  margin-bottom: 15px; /* Space between the form fields */
+}
+
+.mat-form-field-label {
+  font-family: "Poppins", "Arial"; /* Label font */
+}
+
+.box-dialog {
+  display: flex;
+  flex-direction: column; /* Align the form fields vertically */
+  align-items: center; /* Center the form */
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.action-edit-button {
+  margin-top: 10px; /* Space between buttons */
+}

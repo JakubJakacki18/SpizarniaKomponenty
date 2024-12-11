@@ -1,7 +1,6 @@
 /* Kontener tła, który rozsuwa stronę w dół */
 .background-container {
   position: relative;
-  height: 90vh;
   width: 120%;
   background-color: var(--primary-color);
   overflow: auto;
