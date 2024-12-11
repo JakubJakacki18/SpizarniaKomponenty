@@ -1,20 +1,6 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-
-// Note: Color palettes are generated from primary: #60463b, secondary: #f2b79f, tertiary: #386641, neutral: #6a994e
-$_palettes: ( primary: ( 0: #000000, 10: #2a170e, 20: #422b21, 25: #4e362b, 30: #5a4136, 35: #674c41, 40: #74584d, 50: #8f7064, 60: #aa8a7d, 70: #c6a496, 80: #e3bfb0, 90: #ffdbcd, 95: #ffede7, 98: #fff8f6, 99: #fffbff, 100: #ffffff, ), secondary: ( 0: #000000, 10: #321205, 20: #4b2716, 25: #583120, 30: #653c2a, 35: #734835, 40: #815340, 50: #9d6b57, 60: #b9856f, 70: #d79e87, 80: #f4b9a1, 90: #ffdbcd, 95: #ffede7, 98: #fff8f6, 99: #fffbff, 100: #ffffff, ), tertiary: ( 0: #000000, 10: #00210a, 20: #073918, 25: #154423, 30: #22502d, 35: #2e5c38, 40: #3a6843, 50: #53825a, 60: #6c9c72, 70: #86b78b, 80: #a0d3a5, 90: #bcefc0, 95: #c9fecd, 98: #eaffe8, 99: #f6fff2, 100: #ffffff, ), neutral: ( 0: #000000, 10: #082100, 20: #133800, 25: #1b4402, 30: #26500d, 35: #325d19, 40: #3d6924, 50: #55833b, 60: #6e9d52, 70: #88b96a, 80: #a2d582, 90: #bdf19c, 95: #ceffad, 98: #eeffdd, 99: #f8ffec, 100: #ffffff, 4: #031200, 6: #051700, 12: #0a2500, 17: #103100, 22: #163d00, 24: #184200, 87: #b5e994, 92: #c3f7a1, 94: #c8fda6, 96: #d9ffbe, ), neutral-variant: ( 0: #000000, 10: #221a16, 20: #382e2a, 25: #443935, 30: #4f4440, 35: #5c504b, 40: #685c57, 50: #82746f, 60: #9c8e88, 70: #b7a8a2, 80: #d3c3bd, 90: #f0dfd9, 95: #ffede7, 98: #fff8f6, 99: #fffbff, 100: #ffffff, ), error: ( 0: #000000, 10: #410002, 20: #690005, 25: #7e0007, 30: #93000a, 35: #a80710, 40: #ba1a1a, 50: #de3730, 60: #ff5449, 70: #ff897d, 80: #ffb4ab, 90: #ffdad6, 95: #ffedea, 98: #fff8f7, 99: #fffbff, 100: #ffffff, ), );
-
-$_rest: ( secondary: map.get($_palettes, secondary), neutral: map.get($_palettes, neutral), neutral-variant: map.get($_palettes, neutral-variant), error: map.get($_palettes, error), );
-
-$primary-palette: map.merge(map.get($_palettes, primary), $_rest);
-$tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
-
-html {
-  @include mat.theme(( color: ( primary: $primary-palette, tertiary: $tertiary-palette, theme-type: light, ), typography: "Arial Black", density: 0 ));
-} 
-
-
 html, body {
   height: 100vh
 }
@@ -34,6 +20,11 @@ body {
   --background-color: #61463b;
   --font-color: #4e3d43;
   --font-color-hover: #ffffff;
+  @include mat.table-overrides((background-color: var(--background-color), header-headline-color: var(--secondary-left),row-item-outline-color: var(--primary-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
+  @include mat.expansion-overrides((container-text-color: var(--font-color), header-text-color: var(--font-color)));
+  @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red));
+  @include mat.datepicker-overrides((toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
+  @include mat.sort-overrides((arrow-color: var(---secondary-left)));
 }
 //linki dzięki temu są niepodkreślone, i z oryginalnym kolorem
 a {
@@ -98,8 +89,22 @@ a {
   text-transform: uppercase;
   font-family: "Poppins", "Arial Black";
 }
-
-.action-button:hover, .action-form-button:hover, .mat-raised-button:hover{
+.action-edit-button{
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--font-color);
+  padding: 5px;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  margin-right: 10px;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+}
+.action-button:hover, .action-edit-button:hover, {
   background-color: var(--secondary-left);
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
   color: var(--font-color-hover);

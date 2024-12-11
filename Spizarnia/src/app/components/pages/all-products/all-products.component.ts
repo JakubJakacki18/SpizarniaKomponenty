@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class AllProductsComponent implements OnInit {
   products: any[] = [];
-  displayedColumns: string[] = ['id', 'name', 'quantity', 'category', 'purchaseDate', 'expirationDate'];
+  displayedColumns: string[] = ['id', 'name', 'quantity', 'category', 'purchaseDate', 'expirationDate', 'edit', 'delete'];
   searchTerm: string = '';
   dataSource = new MatTableDataSource<any>([]); // Użycie MatTableDataSource dla sortowania
 
@@ -69,7 +69,25 @@ export class AllProductsComponent implements OnInit {
       }
     )
   }
+  deleteProduct(productId: number) {
+    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
+      this.http.delete(`http://localhost:5000/api/product/${productId}`).subscribe(
+        () => {
+          this.products = this.products.filter(product => product.id !== productId);
+          this.dataSource.data = this.products;
+        },
+        (error) => {
+          console.error('Błąd podczas usuwania produktu:', error);
+        }
+      );
+    }
+  }
 
+  editProduct(product: any) {
+    // Zaimplementuj logikę edytowania produktu (np. otwarcie formularza edycji)
+    console.log('Edycja produktu', product);
+    // Możesz przekazać dane do formularza edycji lub otworzyć modal
+  }
   checkExpirationDates() {
     const currentDate = new Date();
     const expiringProducts: Product[] = [];
