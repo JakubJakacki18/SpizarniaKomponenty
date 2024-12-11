@@ -137,7 +137,7 @@ export class AllProductsComponent implements OnInit {
     //Jesli jest wiecej niz 5 to nie wyswietlamy.
     const moreProductsText = products.length > 5 ? `i ${products.length - 5} innych produktów...` : '';
 
-    if ('serviceWorker' in navigator) {
+    if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
       navigator.serviceWorker.ready
         .then((registration) => {
           const notificationTitle = `Zbliża się termin ważności produktów`;
