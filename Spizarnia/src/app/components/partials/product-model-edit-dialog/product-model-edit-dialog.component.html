@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>EDYTUJ</h2>
+
+<div mat-dialog-contentclass="box-dialog">
+    <form>
+      <mat-form-field appearance="fill">
+        <div class="form-title">Cena</div>
+        <input matInput [(ngModel)]="updatedPrice" name="price" type="number" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <div class="form-title">Kategoria</div>
+        <input matInput [(ngModel)]="updatedCategory" name="category" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <div class="form-title">Typ</div>
+        <input matInput [(ngModel)]="updatedType" name="type" required />
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div mat-dialog-actions>
+    <button class="action-edit-button" mat-button (click)="onCancel()">Anuluj</button>
+    <button class="action-edit-button" mat-button color="primary" (click)="onSave()">Zapisz</button>
+  </div>
+

@@ -2,20 +2,26 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { ProductModelService } from './../../../../../services/product-model.service'; // Import serwisu
-
+import { MatDialog } from '@angular/material/dialog';
+import { ProductModelEditDialogComponent } from '../../../../partials/product-model-edit-dialog/product-model-edit-dialog.component';  // Correct path
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-product-model-view-list',
   standalone: true,
   imports: [
+ MatDialogModule,
     MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatSortModule,
-    CommonModule,
-    FormsModule,
+    FormsModule
   ],
   templateUrl: './product-model-view-list.component.html',
   styleUrl: './product-model-view-list.component.css',
@@ -28,7 +34,7 @@ export class ProductModelViewListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]); // Dane do tabeli
   @ViewChild(MatSort) sort!: MatSort; // Obsługa sortowania
 
-  constructor(private productModelService: ProductModelService, private http: HttpClient) {}
+  constructor(private productModelService: ProductModelService, private http: HttpClient, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadProductModels(); // Pobranie produktów na starcie
@@ -42,49 +48,65 @@ export class ProductModelViewListComponent implements OnInit {
 
   // Pobranie wszystkich modeli produktów z API
   loadProductModels(): void {
-    this.productModelService.getAllProductModels().subscribe({
-      next: (data) => {
-        this.dataSource.data = data; // Przypisanie danych do tabeli
-        console.log('Pobrano dane:', data); // Wypisanie danych w konsoli
+  this.productModelService.getAllProductModels().subscribe({
+    next: (data) => {
+      this.dataSource.data = data;
+      console.log('Pobrano dane:', data);
+    },
+    error: (err) => {
+      console.error('Błąd podczas pobierania modeli produktów:', err);
+      alert('Błąd podczas ładowania danych produktów.');
+    },
+  });
+}
 
+deleteProduct(productId: number) {
+  if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
+    this.http.delete(`http://localhost:5000/api/productModel/${productId}`).subscribe(
+      () => {
+        this.products = this.products.filter(product => product.id !== productId);
+        this.dataSource.data = this.products;
       },
-      error: (err) => console.error('Błąd podczas pobierania modeli produktów:', err),
-    });
+      (error) => {
+        console.error('Błąd podczas usuwania produktu:', error);
+        alert('Błąd podczas usuwania produktu.');
+      }
+    );
   }
+}
 
-  // Usuwanie produktModel - analogiczne jak product
-  deleteProduct(productId: number) {
-    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
-      this.http.delete(`http://localhost:5000/api/productModel/${productId}`).subscribe(
-        () => {
-          this.products = this.products.filter(product => product.id !== productId);
-          this.dataSource.data = this.products;
-        },
-        (error) => {
-          console.error('Błąd podczas usuwania produktu:', error);
-        }
-      );
+updateProduct(updatedProduct: any) {
+  this.http.put(`http://localhost:5000/api/productModel/${updatedProduct.id}`, updatedProduct).subscribe(
+    (response) => {
+      console.log('Produkt zaktualizowany:', response);
+      this.loadProductModels(); // Refresh the list after update
+    },
+    (error) => {
+      console.error('Błąd podczas aktualizacji produktu:', error);
+      alert('Błąd podczas aktualizacji produktu.');
     }
-  }
+  );
+}
+
 
   // Edycja produktu
   editProduct(product: any): void {
-   //Moze zmienic na jakis formularz?
-    const updatedPrice = prompt('Podaj nową cenę produktu:', product.price.toString());
-    const updatedCategory = prompt('Podaj nową kategorie produktu:', product.category.toString());
-    const updatedType = prompt('Podaj nowy typ produktu:', product.type.toString());
+  const dialogRef = this.dialog.open(ProductModelEditDialogComponent, {
+    width: '400px',
+    data: {
+      price: product.price.toString(),
+      category: product.categoryName,
+      type: product.type
+    }
+  });
 
-    const updatedProduct = { ...product, price: updatedPrice, type: updatedType, categoryName: updatedCategory };
-  
-      this.http.put(`http://localhost:5000/api/productModel/${product.id}`, updatedProduct).subscribe(
-        (response) => {
-          console.log('Produkt zaktualizowany:', response);
-          this.loadProductModels();
-        },
-        (error) => {
-          console.error('Błąd podczas aktualizacji produktu:', error);
-        }
-      );
-  }
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      const updatedProduct = { ...product, ...result };
+      this.updateProduct(updatedProduct);
+    }
+  });
+}
+
   
 }
