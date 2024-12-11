@@ -3,3 +3,11 @@
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
 }
 
+.all-products-container {
+  position: relative;
+  height: 90vh;
+  width: 100vh;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 30px 20px;
+}
