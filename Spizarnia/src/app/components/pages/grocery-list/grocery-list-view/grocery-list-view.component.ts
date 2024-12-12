@@ -18,12 +18,12 @@ import { ListOfProductsToBuy } from '../../../../../../../Spizarnia-backend/src/
   imports: [MatTableModule, MatSortModule, CommonModule, FormsModule],
   templateUrl: './grocery-list-view.component.html',
   styleUrls: ['./grocery-list-view.component.css'],
-  providers: [DatePipe],
+  providers: [DatePipe, ListOfProductsToBuyService]
 })
 export class GroceryListViewComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'price', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name','quantityOfProduct',  'categoryName','quantity', 'price','totalPrice', 'edit', 'delete'];
   dataSource = new MatTableDataSource<ListOfProductsToBuy>([]); // Table data
-  totalPrice: number = 0;  // Variable to hold the total price
+  totalSummaryPrice: number = 0;  // Variable to hold the total price
   expiredProducts : Product[]= [];
   productModelsToList : ProductModel[] = [];
   @ViewChild(MatSort) sort!: MatSort; // Sorting functionality
@@ -34,6 +34,7 @@ export class GroceryListViewComponent implements OnInit {
     this.getAllCartItems();
     this.loadExpiredProducts();
     this.deleteExpiredProducts();
+
   }
 
   ngAfterViewInit() {
@@ -56,7 +57,9 @@ export class GroceryListViewComponent implements OnInit {
 
   deleteExpiredProducts()
   {
-    if(this.expiredProducts===null)
+    console.log("expired",this.expiredProducts)
+    console.log(this.expiredProducts.length>0);
+    if(!(this.expiredProducts.length>0))
       return;
     if (!confirm('Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?')) 
         return;
@@ -76,6 +79,7 @@ export class GroceryListViewComponent implements OnInit {
       next: (response) => {
         console.log('Produkt dodany do listy zakupów', response);
         this.deleteProductFromPantry(product.id);
+
       },
       error: (error) => {
         console.error('Błąd podczas dodawania produktu do listy zakupów:', error);
@@ -97,13 +101,20 @@ export class GroceryListViewComponent implements OnInit {
   getAllCartItems()
   {
     this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
-      next: (data) => (this.dataSource.data = data),
+      next: (data) => 
+        {
+          this.dataSource.data = data;
+          this.calculateTotalPrice(data)
+        },
         error: (err) => console.error('Błąd podczas pobierania danych: ', err),
     })
-    console.log(this.dataSource.data);
   }
   
-
+  calculateTotalPrice(data : ListOfProductsToBuy[]) {
+    this.totalSummaryPrice = data.reduce((sum, product) => {
+      return sum + ((product.products?.price ?? 0) * product.quantity);
+    }, 0);
+  }
 
 
 
