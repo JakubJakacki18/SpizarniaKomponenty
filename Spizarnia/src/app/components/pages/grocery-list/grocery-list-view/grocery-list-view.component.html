@@ -9,7 +9,7 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwa</th>
-      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+      <td mat-cell *matCellDef="let product">{{ product.products.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">
@@ -19,12 +19,12 @@
 
     <ng-container matColumnDef="categoryName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Kategoria</th>
-      <td mat-cell *matCellDef="let product">{{ product.categoryName }}</td>
+      <td mat-cell *matCellDef="let product">{{ product.products.category.categoryName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Cena</th>
-      <td mat-cell *matCellDef="let product">{{ product.price }}</td>
+      <td mat-cell *matCellDef="let product">{{ product.products.price }}</td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
@@ -37,7 +37,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let product">
-        <button class="action-edit-button" (click)="deleteProduct(product.id)">Usuń</button>
+        <button class="action-edit-button" (click)="deleteProductModelFromCart(product.id)">Usuń</button>
       </td>
     </ng-container>
 
@@ -46,16 +46,19 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     <!-- Total Price Row -->
-    <tr *ngIf="totalPrice > 0">
+     @if(totalPrice > 0){
+    <tr>
       <td mat-cell colspan="7"></td> <!-- Leave space for 5 columns (id, name, quantity, category, price) -->
       <td mat-header-cell><strong>Suma:</strong></td>
       <td mat-cell><strong>{{ totalPrice | currency: 'PLN' }}</strong></td>
       <td mat-cell></td> <!-- Empty for the actions column -->
-    </tr>
+    </tr>}
   </table>
 
-  <!-- No data message -->
-  <div *ngIf="dataSource.data.length === 0" class="no-data">
+  @if(dataSource.data.length === 0){
+  <div class="no-data">
     Brak produktów w spiżarni.
   </div>
+  }  
+
 </div>

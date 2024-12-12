@@ -8,6 +8,7 @@ import productModelRouter from "./routers/productModel.router";
 import recipeRouter from "./routers/recipe.router";
 import ingredientRouter from "./routers/ingredient.router";
 import notificationRouter from './routers/notification.router';
+import listOfProductsToBuyRouter from './routers/listOfProductsToBuy.router'
 
 const app = express();
 const port = 5000;
@@ -25,6 +26,7 @@ app.use("/api/product", productRouter);
 app.use('/api/category', categoryRouter);
 app.use("/api/ingredient", ingredientRouter);
 app.use("/api/recipe", recipeRouter);
+app.use("/api/listOfProductsToBuy", listOfProductsToBuyRouter);
 app.use('/api', notificationRouter);
 app.get("/api",(req,res) => 
     {

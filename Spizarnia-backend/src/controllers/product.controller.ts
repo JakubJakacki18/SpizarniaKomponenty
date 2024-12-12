@@ -22,13 +22,25 @@ export const ProductController = {
         name: product.productModel.name,
         quantity: product.productModel.quantity,
         unit: product.productModel.unit,
-        categoryName: product.productModel.category.categoryName
+        categoryName: product.productModel.category.categoryName,
+        price : product.productModel.price
       }))
       res.json(result);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot get all products" });
     }
   },
+  async getAllWithoutMap(req: Request, res: Response) {
+    try {
+      const products = await productRepository.find({
+        relations: ["productModel", "productModel.category"],
+      });
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Cannot get all products" });
+    }
+  },
+
 
   async getOne(req: Request, res: Response) {
     const { id } = req.params;

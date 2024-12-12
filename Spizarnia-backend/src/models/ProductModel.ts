@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { Product } from "./Product";
 import { Ingredient } from "./Ingredient";
 import { Category } from "./Category";
@@ -32,7 +32,7 @@ export class ProductModel {
     @ManyToOne(() => Category, (category) => category.productModels)
     category?: Category;
 
-    @ManyToOne(() => ListOfProductsToBuy, (list) => list.products, {})
+    @OneToMany(() => ListOfProductsToBuy, (list) => list.products, {})
     listOfProductsToBuy?: ListOfProductsToBuy[];
     
 }

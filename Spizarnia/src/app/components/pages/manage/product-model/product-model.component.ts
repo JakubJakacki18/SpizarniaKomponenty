@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from '../../../../shared/models/ProductModel';
+import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/ProductModel';
 import { ProductModelService } from '../../../../services/product-model.service';
 import { CommonModule } from '@angular/common';
 import { ProductModelFormComponent } from './product-model-form/product-model-form.component';
