@@ -7,4 +7,5 @@ export const PRODUCTS = BASE_URL + "/api/product/"
 export const CATEGORIES = BASE_URL + "/api/category/"
 export const CONTAINERS = BASE_URL + "/api/container/"
 export const RECIPES = BASE_URL + "/api/recipe/"
+export const LISTOFPRODUCTSTOBUY = BASE_URL + "/api/listOfProductsToBuy/"
 

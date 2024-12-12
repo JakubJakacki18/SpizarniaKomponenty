@@ -1,9 +1,9 @@
-import { Product } from '../shared/models/Product';
+import { Product } from '../../../../Spizarnia-backend/src/models/Product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PRODUCTS } from '../shared/constances/urls';
-import { ProductModel } from '../shared/models/ProductModel';
+import { ProductModel } from '../../../../Spizarnia-backend/src/models/ProductModel';
 
 
 @Injectable({
@@ -21,7 +21,15 @@ export class ProductService {
   }
   getProductByName(name : string):Observable<Product[]>
   {
-     return this.http.get<Product[]>(PRODUCTS+"/name");
+     return this.http.get<Product[]>(PRODUCTS+`/${name}`);
+  }
+  getAllProductsWithoutMapping():Observable<Product[]>
+  {
+    return this.http.get<Product[]>(PRODUCTS+"/NoMap");
+  }
+  getProductById(id:number):Observable<Product>
+  {
+    return this.http.get<Product>(PRODUCTS+`/${id}`);
   }
   
 }
