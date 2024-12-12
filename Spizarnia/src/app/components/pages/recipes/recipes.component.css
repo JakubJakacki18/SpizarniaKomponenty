@@ -1,83 +1,135 @@
-/* Ustaw tło dla całej strony */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f9f4f0; /* Jasne tło przypominające kartę */
-}
-
-/* Stylizacja kontenera */
-.container {
-  min-height: 100vh; /* Ustaw minimalną wysokość na pełną stronę */
-  padding: 20px;
-  background-color: #ffffff; /* Białe tło dla kontenera */
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Stylizacja nagłówka i wyszukiwarki */
-.actions {
+.header-container {
   display: flex;
-  align-items: center; /* Wyśrodkowanie w pionie */
-  gap: 10px;
-  margin-bottom: 20px;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--font-color);
+  border: 3px solid var(--background-color);
+  border-radius: 10px;
+  padding: 15px;
+  color: var(--primary-color);
 }
 
-.search-label {
-  font-size: 1.2rem;
+.title {
+  font-size: 24px;
   font-weight: bold;
-  color: #5a3721;
 }
 
-input {
-  padding: 8px;
-  border: 1px solid #ccc;
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  padding: 10px 20px;
+  border: 3px solid var(--background-color);
   border-radius: 5px;
-  flex: 1;
-}
-
-button {
+  background: var(--primary-color);
+  color: var(--font-color);
+  font-size: 16px;
   cursor: pointer;
-  padding: 8px 15px;
-  border: none;
-  background-color: #5a3721;
-  color: white;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #3f2614;
+.action-button:hover {
+  background: #ffffff;
 }
 
-table {
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--font-color);
+  border: 3px solid var(--background-color);
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+input[type="text"] {
   width: 100%;
-  border-collapse: collapse;
+  padding: 10px;
+  border: 3px solid var(--background-color);
+  border-radius: 5px;
+  background: var(--primary-color);
+  color: var(--font-color);
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  background: #ffffff;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.recipes-container {
   margin-top: 20px;
 }
 
-th, td {
-  border: 1px solid #ccc;
-  padding: 10px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recipes-header {
+  font-size: 18px;
+  font-weight: bold;
   text-align: left;
+  background: var(--primary-color);
+  color: var(--font-color);
+  padding: 10px;
+  border: 3px solid var(--background-color);
 }
 
-th {
-  background-color: #e8dccc;
-  color: #5a3721;
+.recipes-cell {
+  padding: 10px;
+  border: 3px solid var(--background-color);
+  background: var(--font-color);
+  color: var(--primary-color);
 }
 
-td {
-  background-color: #f9f4f0;
-}
-
-td:last-child {
-  text-align: center;
-}
-
-table button {
-  margin: 0 5px;
+.action-edit-button,
+.action-delete-button {
   padding: 5px 10px;
-  font-size: 0.9rem;
+  border: 3px solid var(--background-color);
+  border-radius: 5px;
+  background: var(--primary-color);
+  color: var(--font-color);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.action-edit-button:hover,
+.action-delete-button:hover {
+  background: #ffffff;
+}
+
+.no-data {
+  padding: 20px;
+  font-size: 18px;
+  color: var(--secondary-color);
+  text-align: center;
 }
