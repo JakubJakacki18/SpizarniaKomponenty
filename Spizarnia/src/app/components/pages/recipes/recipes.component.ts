@@ -204,15 +204,10 @@ export class RecipesComponent implements OnInit {
 
   deleteRecipe(recipe: any) {
     if (confirm('Czy na pewno chcesz usunąć ten przepis?')) {
-      this.http.delete(`http://localhost:5000/api/recipe/${recipe.id}`).subscribe(
-        () => {
-          this.recipes = this.recipes.filter((r) => r.id !== recipe.id);
-          this.dataSource.data = this.recipes;
-        },
-        (error) => {
-          console.error('Error deleting recipe:', error);
-        }
-      );
+      this.recipes = this.recipes.filter((r) => r !== recipe);
+      this.dataSource.data = this.recipes;
+      
+      localStorage.setItem('recipes', JSON.stringify(this.recipes));
     }
   }
 }
