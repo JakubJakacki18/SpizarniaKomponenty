@@ -5,13 +5,13 @@
            placeholder="Wyszukaj produkt..."
            [(ngModel)]="searchTerm"
            (input)="onSearch()" />
-    <button (click)="onSearch()">Szukaj</button>
-    <button class="search-bar">Usuń listę zakupów</button>
+    <button class="action-button" (click)="onSearch()">Szukaj</button>
+    <button class="action-button">Usuń listę zakupów</button>
 
   </div>
 </div>
 
 <!-- Wyświetlanie dynamicznego widoku -->
 <div class="site-content">
-  <router-outlet></router-outlet>
+  <app-grocery-list-view></app-grocery-list-view>
 </div>

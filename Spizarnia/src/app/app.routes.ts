@@ -9,6 +9,7 @@ import { ProductComponent } from './components/pages/manage/product/product.comp
 import { ContainerComponent } from './components/pages/manage/container/container.component';
 import { CategoryComponent } from './components/pages/manage/category/category.component';
 import { RecipeComponent } from './components/pages/manage/recipe/recipe.component';
+import { ProductModelViewComponent } from './components/pages/manage/product-model-view/product-model-view.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, 
@@ -23,7 +24,8 @@ export const routes: Routes = [
       { path: 'productModel', component: ProductModelComponent },
       { path: 'recipe', component: RecipeComponent },
       { path: 'container/:categoryName', component: ContainerComponent },
-      { path: '', redirectTo: '/manage/productModel', pathMatch: 'full' } 
+      { path: 'productModelView', component: ProductModelViewComponent },
+      { path: '', redirectTo: '/manage/productModelView', pathMatch: 'full' } 
     ]
   },
   { path: 'recipes', component: RecipesComponent },

@@ -1,0 +1,24 @@
+
+.box-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-left:50px;
+  padding: 50px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+ margin-bottom: 15px;
+  font-family: "Poppins", "Arial";
+
+}
+
+.mat-mdc-form-field-label {
+  font-family: "Poppins", "Arial";
+}
+.mat-mdc-dialog-title {
+    margin-left:20px;
+  font-family: "Poppins", "Arial";
+}

@@ -7,11 +7,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
+import { GroceryListViewComponent } from './grocery-list-view/grocery-list-view.component';
+
 
 
 @Component({
   selector: 'app-grocery-list',
-imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, RouterModule],
+imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, RouterModule, GroceryListViewComponent],
 templateUrl: './grocery-list.component.html',
   styleUrl: './grocery-list.component.css'
 })
@@ -27,7 +29,7 @@ export class GroceryListComponent {
         return data.name.toLowerCase().includes(filter); // Wyszukiwanie po nazwie
       };
     } else {
-      this.dataSource.filter = ''; // Reset filtra
+      this.dataSource.filter = '';
     }
   }
 }

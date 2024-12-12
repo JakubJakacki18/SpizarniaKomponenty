@@ -4,6 +4,7 @@ import { ProductModel } from "../models/ProductModel";
 import { AppDataSource } from "../data-source"; 
 import { Category } from "../models/Category";
 import { Like } from "typeorm";
+import { Product } from "../models/Product";
 
 
 const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
@@ -20,11 +21,11 @@ export const ProductModelController = {
           where: {
             name: Like(`%${name}%`),
           },
-          relations: ["products", "ingredients"],
+          relations: ["products", "ingredients", "category"],
         });
       } else {
         productModels = await productModelRepository.find({
-          relations: ["products", "ingredients"],
+          relations: ["products", "ingredients", "category"],
         });
       }
 
@@ -76,27 +77,37 @@ export const ProductModelController = {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, quantity, unit, price, categoryId } = req.body;
+    const { price, categoryName, type } = req.body;
 
     try {
-      const productModel = await productModelRepository.findOneBy({ id: parseInt(id) });
+      const productModel = await productModelRepository.findOne({
+        where: { id: parseInt(id) },
+        relations: ["category"],
+      });
 
       if (!productModel) {
         res.status(404).json({ error: `ProductModel with id: ${id} was not found` });
         return;
       }
 
-      if (categoryId) {
-        const category = await AppDataSource.getRepository(Category).findOne({ where: { id: categoryId } });
-        if (category) {
-          productModel.category = category;  // Assign new category
+      if (categoryName) {
+        const category = await AppDataSource.getRepository(Category).findOne({
+        where: { categoryName: categoryName } });
+        if (category !== null) {
+          productModel.category = category;
+        } else {
+          res.status(400).json({ error: `Category with id: ${categoryName} was not found` });
+          return;
         }
       }
 
-      productModel.name = name;
-      productModel.quantity = quantity;
-      productModel.unit = unit;
-      productModel.price = price;
+      if (price !== null) {
+        productModel.price = price;
+      }
+
+      if (type !== null) {
+        productModel.type = type;
+      }
 
       await productModelRepository.save(productModel);
       res.json(productModel);
@@ -109,13 +120,21 @@ export const ProductModelController = {
     const { id } = req.params;
 
     try {
-      const productModel = await productModelRepository.findOneBy({ id: parseInt(id) });
+      const productModel = await productModelRepository.findOne({
+        where: { id: parseInt(id) },
+        relations: ["products"], //Przy usuwaniu productModel usuwamy również powiązane Product.
+      });
 
       if (!productModel) {
          res.status(404).json({ error: `ProductModel with id: ${id} was not found` });
          return;
       }
-
+      
+      const productRepository = AppDataSource.getRepository(Product);
+      for (const product of productModel.products) {
+        await productRepository.remove(product); //Tu usuwamy product
+      }
+      //A tu productModel
       await productModelRepository.remove(productModel);
       res.json({ message: `ProductModel with id: ${id} was removed succesfully from database` });
     } catch (error) {

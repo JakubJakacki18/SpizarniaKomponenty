@@ -1,93 +1,14 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--background-color);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  border: 10px solid var(--font-color);
-  border-radius: 10px;
+.mat-mdc-header-row {
+  background-color: var(--font-color);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
 }
 
-
-/* Tabela z produktami */
-.styled-table {
-  width: calc(100% - 40px);
-  border-collapse: collapse;
-  border-spacing: 0;
-  background-color: white; /* Białe tło tabeli */
-  color: var(--font-color);
-  overflow: hidden;
-  text-transform: uppercase;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 20px auto; /* Wyśrodkowanie tabeli */
-  padding-right: 40px;
-}
-
-  .styled-table thead {
-    background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
-    color: var(--font-color-hover);
-  }
-
-    .styled-table thead th {
-      padding: 12px;
-      text-align: center;
-      font-size: 18px;
-      text-transform: uppercase;
-      font-weight: bold;
-      border-left: 5px solid var(--background-color);
-    }
-
-      .styled-table thead th:first-child {
-        border-left: none;
-      }
-
-  .styled-table tbody tr {
-    border-bottom: 1px solid var(--background-color);
-  }
-
-    .styled-table tbody tr:nth-child(even) {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
-  .styled-table tbody td {
-    text-align: center;
-    vertical-align: middle; /* Wyśrodkowanie tekstu w pionie */
-    padding: 10px;
-    font-size: 14px;
-    border-left: 1px solid var(--background-color);
-  }
-
-    .styled-table tbody td:first-child {
-      border-left: none;
-    }
-
-  .styled-table tbody tr:last-child {
-    border-bottom: none;
-  }
-
-  .styled-table tbody tr td[colspan="4"] {
-    text-align: center;
-    font-style: italic;
-    color: var(--font-color);
-    background-color: rgba(0, 0, 0, 0.02);
-  }
-
-/* Responsywność dla urządzeń mobilnych */
-@media (max-width: 768px) {
-  .search-bar input {
-    font-size: 14px;
-    width: 200px;
-  }
-
-  .search-bar button {
-    font-size: 14px;
-    padding: 8px 15px;
-  }
-
-  thead th, tbody td {
-    font-size: 14px;
-    padding: 8px;
-  }
+.all-products-container {
+  position: relative;
+  height: 90vh;
+  width: 150vh;
+  margin-top:82px;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 30px 20px;
 }

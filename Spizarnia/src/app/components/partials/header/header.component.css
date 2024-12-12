@@ -1,7 +1,6 @@
 /* Sekcja nagłówka */
 .header-container {
   width: 100%;
-  padding: 10px;
   box-sizing: border-box;
   border-radius: 10px;
   display: flex;
@@ -18,7 +17,7 @@
 .header-title {
   color: var(--primary-color);
   text-align: center;
-  font-size: 38px;
+  font-size: 34px;
   padding: 10px 20px;
   border-radius: 10px;
   text-transform: uppercase;

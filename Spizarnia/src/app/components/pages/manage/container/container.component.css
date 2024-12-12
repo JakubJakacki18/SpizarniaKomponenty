@@ -1,58 +1,12 @@
-/* Kontener formularza */
-.category-container {
-  background-color: var(--background-color); /* Kolor tła kontenera */
-  padding: 20px;
-  border-radius: 15px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Formularz */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 15px;
+.mat-mdc-header-row {
   background-color: var(--font-color);
-  border: 3px solid var(--background-color);
-  border-radius: 15px;
-  padding: 25px;
-  width: 100%;
-  max-width: 500px;
-  box-sizing: border-box;
-  font-family: 'Poppins', serif;
-  color: var(--secondary-left);
-  font-weight: bold;
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
 }
-
-.mat-form-field {
-  width: 100%;
-}
-
-.mat-raised-button {
-  cursor: pointer;
-  font-size: 18px;
-  color: var(--font-color);
-  padding: 10px;
-  width: 200px;
-  text-align: center;
+.container-wrapper {
+  position: relative;
+  height: 90vh;
+  width: 100vh;
   background-color: var(--primary-color);
-  border-radius: 5px;
-  text-transform: uppercase;
-}
-
-.mat-table {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.mat-header-cell {
-  font-weight: bold;
-  color: var(--secondary-left);
-}
-
-.mat-cell {
-  color: var(--font-color);
+  overflow: auto;
+  padding: 30px 20px;
 }

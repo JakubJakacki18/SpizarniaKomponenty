@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
-import {Container} from "./Container"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { Product } from "./Product";
 import { Ingredient } from "./Ingredient";
 import { Category } from "./Category";
@@ -21,7 +20,7 @@ export class ProductModel {
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: false })
     price!: number;
 
-    @Column({ type: "varchar", length: 255})
+    @Column({ type: "varchar", length: 255, nullable: true })
     type?: string;
 
     @OneToMany(() => Product, (product) => product.productModel, { cascade: ['remove'] })
@@ -33,7 +32,7 @@ export class ProductModel {
     @ManyToOne(() => Category, (category) => category.productModels)
     category?: Category;
 
-    @ManyToOne(() => ListOfProductsToBuy, (list) => list.products, {})
+    @OneToMany(() => ListOfProductsToBuy, (list) => list.products, {})
     listOfProductsToBuy?: ListOfProductsToBuy[];
     
 }
