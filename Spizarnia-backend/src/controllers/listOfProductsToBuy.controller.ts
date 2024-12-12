@@ -2,16 +2,18 @@ import { Repository } from "typeorm/repository/Repository";
 import { ListOfProductsToBuy } from "../models/ListOfProductsToBuy";
 import { AppDataSource } from "../data-source";
 import { Request, Response } from "express";
+import { ProductModel } from "../models/ProductModel";
 
 
 
 const listOfProductsToBuyRepository: Repository<ListOfProductsToBuy> = AppDataSource.getRepository(ListOfProductsToBuy);
+const productModelsRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
 
 export const ListOfProductsToBuyController = {
     async getAll(req: Request, res: Response) {
         try {
         const products = await listOfProductsToBuyRepository.find({
-            relations: ["products"],
+            relations: ["products","products.category"],
         });
         res.json(products);
         } catch (error) {
@@ -19,21 +21,42 @@ export const ListOfProductsToBuyController = {
         }
     },
     async create(req: Request, res: Response) {
-        const { product, quantity } = req.body;
-        if (!product) {
+        const { idProductModel, quantity } = req.body;
+        if (!idProductModel) {
             res.status(400).json({ error: "Missing required fields" });
             return
           }
-      
           try {
-            const newCartElement = listOfProductsToBuyRepository.create({
-              products: product,
-              quantity: quantity ?? 1,
+          const productModel = await productModelsRepository.findOne({ where: { id: parseInt(idProductModel) } });
+          if(!productModel)
+            {
+                res.status(404).json({ error: `ProductModel with id: ${idProductModel} was not found` });
+                return; 
+            }
+            const existingEntry = await listOfProductsToBuyRepository.findOne({ 
+                where: { 
+                    products: { id: parseInt(idProductModel) } 
+                },
+                relations: ['products'] 
             });
-      
-            await listOfProductsToBuyRepository.save(newCartElement);
-            res.status(201).json(newCartElement);
-          } catch (error) {
+            if(existingEntry)
+                {
+                    existingEntry.quantity += quantity ?? 1;
+                    await listOfProductsToBuyRepository.save(existingEntry);
+                    res.status(200).json(existingEntry);
+                    return; 
+                }else
+                {
+                    const newCartElement = listOfProductsToBuyRepository.create({
+                      products: productModel,
+                      quantity: quantity ?? 1,
+                    });
+              
+                    await listOfProductsToBuyRepository.save(newCartElement);
+                    res.status(201).json(newCartElement);
+
+                }}
+                catch (error) {
             res.status(500).json({ error: "Internal error: Cart entry was not created" });
           }
 

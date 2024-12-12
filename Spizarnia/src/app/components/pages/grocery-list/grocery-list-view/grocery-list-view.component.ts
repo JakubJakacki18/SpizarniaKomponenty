@@ -9,6 +9,8 @@ import { ProductModelService } from '../../../../services/product-model.service'
 import { ProductService } from '../../../../services/product.service';
 import { Product } from '../../../../../../../Spizarnia-backend/src/models/Product';
 import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/ProductModel';
+import { ListOfProductsToBuyService } from '../../../../services/list-of-products-to-buy.service';
+import { ListOfProductsToBuy } from '../../../../../../../Spizarnia-backend/src/models/ListOfProductsToBuy';
 
 @Component({
   selector: 'app-grocery-list-view',
@@ -20,15 +22,16 @@ import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/
 })
 export class GroceryListViewComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'price', 'edit', 'delete'];
-  dataSource = new MatTableDataSource<any>([]); // Table data
+  dataSource = new MatTableDataSource<ListOfProductsToBuy>([]); // Table data
   totalPrice: number = 0;  // Variable to hold the total price
   expiredProducts : Product[]= [];
   productModelsToList : ProductModel[] = [];
   @ViewChild(MatSort) sort!: MatSort; // Sorting functionality
 
-  constructor(private productModelService: ProductModelService, private productService: ProductService) {}
+  constructor(private productModelService: ProductModelService, private productService: ProductService, private listOfProductsToBuyService: ListOfProductsToBuyService) {}
 
   ngOnInit() {
+    this.getAllCartItems();
     this.loadExpiredProducts();
     this.deleteExpiredProducts();
   }
@@ -57,7 +60,6 @@ export class GroceryListViewComponent implements OnInit {
       return;
     if (!confirm('Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?')) 
         return;
-      
     this.expiredProducts.forEach((product)=>
       {
         this.addProductToShoppingCart(product);
@@ -65,15 +67,49 @@ export class GroceryListViewComponent implements OnInit {
   }
   addProductToShoppingCart(product : Product)
   {
-    
+    const newEntry = {
+      idProductModel: product.productModel?.id?? -1,
+      quantity: 1 
+    };
+
+    this.listOfProductsToBuyService.createEntryInListOfProductsToBuy(newEntry).subscribe({
+      next: (response) => {
+        console.log('Produkt dodany do listy zakupów', response);
+        this.deleteProductFromPantry(product.id);
+      },
+      error: (error) => {
+        console.error('Błąd podczas dodawania produktu do listy zakupów:', error);
+      }
+    });
   }
+  deleteProductFromPantry(id:number)
+  {
+    this.productService.deleteProductById(id).subscribe(
+      {
+        next: (response) => {
+          console.log('Produkt został pomyślnie usunięty', response);
+        },
+        error: (error) => {
+          console.error('Błąd podczas usuwania produktu ze spiżarni:', error);
+        }
+      });
+  }
+  getAllCartItems()
+  {
+    this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
+      next: (data) => (this.dataSource.data = data),
+        error: (err) => console.error('Błąd podczas pobierania danych: ', err),
+    })
+    console.log(this.dataSource.data);
+  }
+  
 
 
 
 
   // Edit product (for your requirements)
   editProduct(product: any): void {
-    console.log('Edycja produktu:', product);
+    console.log('Edycja produktu: ', product);
     // You can open an edit form or redirect the user here
   }
 

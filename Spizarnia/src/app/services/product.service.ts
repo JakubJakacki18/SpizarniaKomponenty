@@ -31,6 +31,10 @@ export class ProductService {
   {
     return this.http.get<Product>(PRODUCTS+`/${id}`);
   }
+  deleteProductById(id:number):Observable<Product>
+  {
+    return this.http.delete<Product>(PRODUCTS+`/${id}`);
+  }
   
 }
 

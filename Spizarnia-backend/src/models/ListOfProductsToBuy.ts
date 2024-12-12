@@ -2,8 +2,9 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    ManyToOne,
     OneToMany,
+    JoinColumn,
+    ManyToOne,
   } from 'typeorm';
   import { ProductModel } from './ProductModel';
   
@@ -11,8 +12,8 @@ import {
   export class ListOfProductsToBuy {
     @PrimaryGeneratedColumn()
     id!: number;
-  
-    @OneToMany(() => ProductModel, (productModel) => productModel.listOfProductsToBuy)
+    
+    @ManyToOne(() => ProductModel, (productModel) => productModel.listOfProductsToBuy)
     products?: ProductModel;
   
     @Column()
