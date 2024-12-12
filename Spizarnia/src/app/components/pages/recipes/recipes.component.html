@@ -54,60 +54,41 @@
   </div>
 </div>
 
+<app-add-recipe></app-add-recipe>
 
 <!-- Lista przepisów -->
 <div class="recipes-container">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let recipe">{{ recipe.id }}</td>
-    </ng-container>
+  <div *ngIf="dataSource && dataSource.data && dataSource.data.length > 0; else noRecipes">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Nazwa Kolumna -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="recipes-header">Nazwa</th>
+        <td mat-cell *matCellDef="let recipe" class="recipes-cell">{{ recipe.name }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nazwa</th>
-      <td mat-cell *matCellDef="let recipe">{{ recipe.name }}</td>
-    </ng-container>
+      <!-- Składniki Kolumna -->
+      <ng-container matColumnDef="ingredients">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="recipes-header">Składniki</th>
+        <td mat-cell *matCellDef="let recipe" class="recipes-cell">{{ recipe.ingredients.join(', ') }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="ingredients">
-      <th mat-header-cell *matHeaderCellDef>Składniki</th>
-      <td mat-cell *matCellDef="let recipe">
-        <span *ngFor="let ingredient of recipe.ingredients; let isLast = last">
-          {{ ingredient.productModel?.name || ingredient.quantity }}<span *ngIf="!isLast">, </span>
-        </span>
-      </td>
-    </ng-container>
+      <!-- Akcje Kolumna -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="recipes-header">Akcje</th>
+        <td mat-cell *matCellDef="let recipe" class="recipes-cell">
+          <button class="action-edit-button" (click)="deleteRecipe(recipe)">
+            Usuń
+          </button>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="finished">
-      <th mat-header-cell *matHeaderCellDef>Gotowy</th>
-      <td mat-cell *matCellDef="let recipe">{{ recipe.finished ? 'Tak' : 'Nie' }}</td>
-    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Akcje</th>
-      <td mat-cell *matCellDef="let recipe">
-        <button mat-button (click)="deleteRecipe(recipe.id)">Usuń</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-
-  <form (ngSubmit)="addRecipe()">
-    <mat-form-field>
-      <input matInput placeholder="Nazwa przepisu" [(ngModel)]="newRecipe.name" name="name" />
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Składniki</mat-label>
-      <mat-select [(ngModel)]="newRecipe.ingredients" name="ingredients" multiple>
-        <mat-option *ngFor="let ingredient of availableIngredients" [value]="ingredient.id">
-          {{ ingredient.productModel?.name || ingredient.quantity }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <button mat-raised-button type="submit">Dodaj Przepis</button>
-  </form>
+  <!-- Wiadomość, gdy brak przepisów -->
+  <ng-template #noRecipes>
+    <div class="no-data">Brak przepisów do wyświetlenia.</div>
+  </ng-template>
 </div>
-

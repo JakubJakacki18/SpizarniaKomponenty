@@ -128,27 +128,21 @@ import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
-// Define an interface for recipes
-interface Recipe {
-  id?: number; // Optional for new recipes
-  name: string;
-  ingredients: string[];
-}
+import { AddRecipeComponent } from "./add-recipe/add-recipe.component";
 
 @Component({
   selector: 'app-recipes',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule],
+  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule, AddRecipeComponent],
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css'],
 })
 export class RecipesComponent implements OnInit {
-  recipes: Recipe[] = [];
-  newRecipe = { name: '', ingredients: '' }; // Temporary form data
+  recipes: any[] = [];
+  newRecipe = { name: '', ingredients: '' };
   displayedColumns: string[] = ['name', 'ingredients', 'actions'];
   searchTerm: string = '';
-  dataSource = new MatTableDataSource<Recipe>([]);
+  dataSource = new MatTableDataSource<any>([]);
   showDialog: boolean = false;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
@@ -158,104 +152,65 @@ export class RecipesComponent implements OnInit {
     this.getAllRecipes();
     this.dataSource.sort = this.sort;
   }
-
+  //Aktualnie bez komunikacji z Backendem TODO
   getAllRecipes() {
-    this.http.get<Recipe[]>('http://localhost:5000/api/recipe').subscribe(
-      (data) => {
-        console.log('Fetched recipes:', data);
-  
-        // Map the fetched data to format ingredients properly
-        this.recipes = data.map((recipe) => ({
-          ...recipe,
-          ingredients:
-            recipe.ingredients && recipe.ingredients.length > 0
-              ? recipe.ingredients.map((ingredient: any) =>
-                  ingredient.productModel ? ingredient.productModel.name : 'Unknown'
-                ) // Extract ingredient names from productModel
-              : ['Brak składników'], // Default message for recipes without ingredients
-        }));
-  
-        this.dataSource.data = this.recipes; // Update the data source for the table
-        this.snackBar.open('Przepisy zostały załadowane.', 'OK', { duration: 3000 });
-      },
-      (error) => {
-        console.error('Error fetching recipes:', error);
-        this.snackBar.open('Nie udało się pobrać przepisów. Sprawdź połączenie z serwerem.', 'OK', {
-          duration: 3000,
-        });
-      }
-    );
+    const storedRecipes = localStorage.getItem('recipes');
+    if (storedRecipes) {
+      this.recipes = JSON.parse(storedRecipes);
+      this.dataSource.data = this.recipes;
+    } else {
+      this.recipes = [];
+      this.dataSource.data = [];
+    }
   }
-  
-
 
   addRecipe() {
-    if (!this.newRecipe.name.trim() || !this.newRecipe.ingredients.trim()) {
+    if (!this.newRecipe.name || !this.newRecipe.ingredients.trim()) {
       alert('Uzupełnij wszystkie pola przed dodaniem przepisu!');
       return;
     }
-  
-    const ingredientsArray = this.newRecipe.ingredients
-      .split(',')
-      .map(ingredient => ingredient.trim())
-      .filter(ingredient => ingredient); // Removes empty strings
-  
-    const recipeToAdd = {
-      name: this.newRecipe.name.trim(),
-      ingredients: ingredientsArray
-    };
-  
-    console.log('Sending recipe to backend:', recipeToAdd);
-  
-    this.http.post<any>('http://localhost:5000/api/recipe', recipeToAdd).subscribe(
-      response => {
-        console.log('Recipe added successfully:', response);
-        this.recipes.push(response);
-        this.dataSource.data = [...this.recipes];
-        this.newRecipe = { name: '', ingredients: '' };
-        this.showDialog = false;
-        this.snackBar.open('Przepis dodany pomyślnie!', 'OK', { duration: 3000 });
-      },
-      error => {
-        console.error('Error adding recipe:', error);
-        alert('Wystąpił błąd podczas dodawania przepisu. Sprawdź serwer.');
-      }
-    );
-  }
-  
 
-  private formatIngredients(ingredients: string): string[] {
-    return ingredients
-      .split(',')
-      .map((item) => item.trim()) // Remove whitespace
-      .filter((item) => item); // Remove empty entries
+    const ingredientsArray = this.newRecipe.ingredients.split(',').map((item) => item.trim());
+    const recipeToAdd = {
+      name: this.newRecipe.name,
+      ingredients: ingredientsArray,
+    };
+    this.recipes.push(recipeToAdd);
+    this.dataSource.data = [...this.recipes];
+    
+    localStorage.setItem('recipes', JSON.stringify(this.recipes));
+
+    this.newRecipe = { name: '', ingredients: '' };
+    this.showDialog = false;
   }
 
   onSearch() {
     const searchTermLower = this.searchTerm.trim().toLowerCase();
     this.dataSource.filter = searchTermLower;
-    this.dataSource.filterPredicate = (data: Recipe, filter: string) => {
-      return data.name.toLowerCase().includes(filter);
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      return (
+        data.name.toLowerCase().includes(filter) ||
+        data.ingredients.some((ingredient: string) =>
+          ingredient.toLowerCase().includes(filter)
+        )
+      );
     };
   }
-
 
   resetSearch() {
     this.searchTerm = '';
     this.dataSource.filter = '';
   }
 
-  deleteRecipe(recipe: Recipe) {
+  deleteRecipe(recipe: any) {
     if (confirm('Czy na pewno chcesz usunąć ten przepis?')) {
       this.http.delete(`http://localhost:5000/api/recipe/${recipe.id}`).subscribe(
         () => {
           this.recipes = this.recipes.filter((r) => r.id !== recipe.id);
           this.dataSource.data = this.recipes;
-          this.snackBar.open('Przepis został usunięty.', 'OK', { duration: 3000 });
         },
         (error) => {
           console.error('Error deleting recipe:', error);
-          alert('Wystąpił błąd podczas usuwania przepisu.');
         }
       );
     }
