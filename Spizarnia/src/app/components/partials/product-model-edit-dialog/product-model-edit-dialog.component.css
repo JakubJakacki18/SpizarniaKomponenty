@@ -40,3 +40,10 @@
 .action-edit-button {
   margin-top: 10px; /* Space between buttons */
 }
+div[mat-dialog-actions]
+{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+

@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';  // Ensure FormsModule is imported
   selector: 'app-product-model-edit-dialog',
   standalone: true,
   templateUrl: './product-model-edit-dialog.component.html',
- // styleUrls: ['./product-model-edit-dialog.component.css'],
+  styleUrls: ['./product-model-edit-dialog.component.css'],
   imports: [CommonModule, MatFormFieldModule, FormsModule],  // Ensure these are modules, not components
 })
 export class ProductModelEditDialogComponent {
