@@ -11,6 +11,7 @@ import { Product } from '../../../../../../../Spizarnia-backend/src/models/Produ
 import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/ProductModel';
 import { ListOfProductsToBuyService } from '../../../../services/list-of-products-to-buy.service';
 import { ListOfProductsToBuy } from '../../../../../../../Spizarnia-backend/src/models/ListOfProductsToBuy';
+import { DialogService } from '../../../../services/dialog.service';
 
 @Component({
   selector: 'app-grocery-list-view',
@@ -18,7 +19,7 @@ import { ListOfProductsToBuy } from '../../../../../../../Spizarnia-backend/src/
   imports: [MatTableModule, MatSortModule, CommonModule, FormsModule],
   templateUrl: './grocery-list-view.component.html',
   styleUrls: ['./grocery-list-view.component.css'],
-  providers: [DatePipe, ListOfProductsToBuyService]
+  providers: [DatePipe, ListOfProductsToBuyService, ProductModelService, ProductService, DialogService]
 })
 export class GroceryListViewComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name','quantityOfProduct',  'categoryName','quantity', 'price','totalPrice', 'edit', 'delete'];
@@ -27,42 +28,55 @@ export class GroceryListViewComponent implements OnInit {
   expiredProducts : Product[]= [];
   productModelsToList : ProductModel[] = [];
   @ViewChild(MatSort) sort!: MatSort; // Sorting functionality
+  deleteExpiredProductsDialogData: { title: string; message: string; } ={
+    title: 'Przeterminowane produkty',
+    message: 'Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?'
+   }
 
-  constructor(private productModelService: ProductModelService, private productService: ProductService, private listOfProductsToBuyService: ListOfProductsToBuyService) {}
+  constructor(private dialogService:DialogService,private productModelService: ProductModelService, private productService: ProductService, private listOfProductsToBuyService: ListOfProductsToBuyService) {}
 
   ngOnInit() {
+    console.log('GroceryListViewComponent initialized');
     this.getAllCartItems();
     this.loadExpiredProducts();
-    this.deleteExpiredProducts();
+    
 
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort; // Sorting after view initialization
+    this.calculateTotalPrice(this.dataSource.data);
   }
 
 
   loadExpiredProducts() {
     this.productService.getAllProductsWithoutMapping().subscribe({
       next: (data : Product[]) => {
+        console.log('Pobrano produkty:', data);
         const currentDate = new Date();
         this.expiredProducts = data.filter((product) => {
           const expirationDate = new Date(product.expirationDate);
           return expirationDate.getTime() < currentDate.getTime(); 
         });
+        this.deleteExpiredProducts();
       },
       error: (error : any) => console.error('Błąd podczas pobierania produktów:', error)
     });  
   }
 
-  deleteExpiredProducts()
+  async deleteExpiredProducts()
   {
     console.log("expired",this.expiredProducts)
     console.log(this.expiredProducts.length>0);
     if(!(this.expiredProducts.length>0))
       return;
-    if (!confirm('Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?')) 
-        return;
+    let dialogRef = await this.dialogService.openConfirmDialog(this.deleteExpiredProductsDialogData);
+    if(!dialogRef)
+      return;
+
+
+
+
     this.expiredProducts.forEach((product)=>
       {
         this.addProductToShoppingCart(product);
@@ -103,8 +117,8 @@ export class GroceryListViewComponent implements OnInit {
     this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
       next: (data) => 
         {
+          console.log('Pobrano dane:', data);
           this.dataSource.data = data;
-          this.calculateTotalPrice(data)
         },
         error: (err) => console.error('Błąd podczas pobierania danych: ', err),
     })
