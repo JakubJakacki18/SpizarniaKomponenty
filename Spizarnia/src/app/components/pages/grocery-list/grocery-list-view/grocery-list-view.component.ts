@@ -32,6 +32,10 @@ export class GroceryListViewComponent implements OnInit {
     title: 'Przeterminowane produkty',
     message: 'Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?'
    }
+   deleteProductToBuyFromCartDialogData: { title: string; message: string; } ={
+    title: 'Usuwanie produktu',
+    message: 'Czy na pewno chcesz usunąć ten produkt z listy zakupów?'  
+    }
 
   constructor(private dialogService:DialogService,private productModelService: ProductModelService, private productService: ProductService, private listOfProductsToBuyService: ListOfProductsToBuyService) {}
 
@@ -70,8 +74,8 @@ export class GroceryListViewComponent implements OnInit {
     console.log(this.expiredProducts.length>0);
     if(!(this.expiredProducts.length>0))
       return;
-    let dialogRef = await this.dialogService.openConfirmDialog(this.deleteExpiredProductsDialogData);
-    if(!dialogRef)
+    let dialogAnswer = await this.dialogService.openConfirmDialog(this.deleteExpiredProductsDialogData);
+    if(!dialogAnswer)
       return;
 
 
@@ -139,7 +143,21 @@ export class GroceryListViewComponent implements OnInit {
   }
 
   // Delete product
-  deleteProductModelFromCart(productModelId: number) {
+  async deleteProductModelFromCart(productToBuyId: number) {
+    let dialogAnswer = await this.dialogService.openConfirmDialog(this.deleteProductToBuyFromCartDialogData);
+    if(!dialogAnswer)
+      return;
+    this.listOfProductsToBuyService.deleteProductModelFromCart(productToBuyId).subscribe({
+      next: (response) => {
+        console.log('Produkt został usunięty z listy zakupów', response);
+        //this.dataSource.data = this.dataSource.data.filter((product) => product.id !== productToBuyId);
+        this.getAllCartItems();
+        //this.calculateTotalPrice(this.dataSource.data);
+      },
+      error: (error) => {
+        console.error('Błąd podczas usuwania produktu z listy zakupów:', error);
+      }
+    });
     // if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
     //   this.http.delete(`http://localhost:5000/api/product/${productId}`).subscribe(
     //     () => {

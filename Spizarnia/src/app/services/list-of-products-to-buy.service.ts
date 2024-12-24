@@ -11,6 +11,9 @@ import { ProductModel } from '../shared/models/ProductModel';
 })
 export class ListOfProductsToBuyService {
   constructor(private http: HttpClient) { }
+  deleteProductModelFromCart(productToBuyId: number) {
+    return this.http.delete(`${LISTOFPRODUCTSTOBUY}${productToBuyId}`);
+  }
   getAllListOfProductsToBuy():Observable<ListOfProductsToBuy[]>
   {
     return this.http.get<ListOfProductsToBuy[]>(LISTOFPRODUCTSTOBUY);
