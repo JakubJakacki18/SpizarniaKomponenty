@@ -10,6 +10,13 @@ import { ProductModel } from '../shared/models/ProductModel';
   providedIn: 'root'
 })
 export class ListOfProductsToBuyService {
+  updateProductModelInCart(productToBuyId: number, dialogAnswer: number) {
+    return this.http.patch(`${LISTOFPRODUCTSTOBUY}${productToBuyId}`, { quantity: dialogAnswer });
+  }
+  getProductOnListById(productToBuyId: number) {
+    console.log(productToBuyId);
+    return this.http.get<ListOfProductsToBuy>(LISTOFPRODUCTSTOBUY+productToBuyId);
+  }
   constructor(private http: HttpClient) { }
   deleteProductModelFromCart(productToBuyId: number) {
     return this.http.delete(`${LISTOFPRODUCTSTOBUY}${productToBuyId}`);

@@ -1,1 +1,41 @@
-<p>edit-quantity works!</p>
+<!-- <h1 mat-dialog-title>Edycja ilości</h1>
+        <div mat-dialog-content>
+            <p>Podaj nową ilość produktu:</p>   
+            <mat-form-field>
+                <input matInput type="number" [(ngModel)]="quantity" placeholder="Ilość" required>
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onCancel()">Anuluj</button>
+            <button mat-button (click)="onConfirm()">OK</button>
+        </div> -->
+
+
+<h1 mat-dialog-title>Edycja ilości produktu</h1>
+<div mat-dialog-content>
+    <!-- Wyświetlanie danych o produkcie -->
+    <p><strong>Nazwa produktu:</strong> {{ productOnList.products?.name }}</p>
+    <p><strong>Aktualna ilość:</strong> {{ productOnList.quantity }}</p>
+    <p><strong>Cena:</strong> {{ productOnList.products?.price}}</p>
+    <!-- <p><strong>Opis:</strong> {{ productOnList.products?.description }}</p> -->
+
+    <!-- Formularz do wprowadzenia nowej ilości -->
+    <p>Podaj nową ilość produktu:</p>
+    <form #editQuantityForm="ngForm">
+        <mat-form-field>
+            <input matInput type="number" name="newQuantity" [(ngModel)]="newQuantity" placeholder="Nowa ilość" required
+                #quantityInput="ngModel" [min]="1" />
+        </mat-form-field>
+        <div *ngIf="quantityInput.touched && quantityInput.invalid" class="error">
+            <p *ngIf="quantityInput.errors?.required">Ilość jest wymagana.</p>
+            <p *ngIf="newQuantity === productOnList.products.quantity">Nowa ilość musi być różna od aktualnej.</p>
+        </div>
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Anuluj</button>
+    <button mat-button [disabled]="editQuantityForm.invalid || newQuantity === productOnList.quantity" (click)="onConfirm()">
+        Zatwierdź
+    </button>
+</div>

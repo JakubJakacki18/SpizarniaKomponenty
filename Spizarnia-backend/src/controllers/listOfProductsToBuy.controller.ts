@@ -20,6 +20,23 @@ export const ListOfProductsToBuyController = {
             res.status(500).json({ error: "Internal error: Cannot get all cart entries" });
         }
     },
+    async getOne(req: Request, res: Response) 
+    {
+        const { id } = req.params;
+        try {
+            const entry = await listOfProductsToBuyRepository.findOne({
+                where: { id: parseInt(id) },
+                relations: ['products'],
+            });
+            if (!entry) {
+                res.status(404).json({ error: `Cart entry with id: ${id} was not found` });
+                return;
+            }
+            res.json(entry);
+        } catch (error) {
+            res.status(500).json({ error: "Internal error: Cannot get cart entry" });
+        }
+    },
     async create(req: Request, res: Response) {
         const { idProductModel, quantity } = req.body;
         if (!idProductModel) {
@@ -60,12 +77,12 @@ export const ListOfProductsToBuyController = {
             res.status(500).json({ error: "Internal error: Cart entry was not created" });
           }
 
-        },
+        },  
 
 
 
 
-        async update(req: Request, res: Response) {
+        async updateQuantityById(req: Request, res: Response) {
             const { id } = req.params;
             const { quantity } = req.body;
             if (!quantity) {

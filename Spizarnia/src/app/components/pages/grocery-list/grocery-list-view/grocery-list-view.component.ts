@@ -12,6 +12,8 @@ import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/
 import { ListOfProductsToBuyService } from '../../../../services/list-of-products-to-buy.service';
 import { ListOfProductsToBuy } from '../../../../../../../Spizarnia-backend/src/models/ListOfProductsToBuy';
 import { DialogService } from '../../../../services/dialog.service';
+import { type } from 'node:os';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-grocery-list-view',
@@ -22,28 +24,28 @@ import { DialogService } from '../../../../services/dialog.service';
   providers: [DatePipe, ListOfProductsToBuyService, ProductModelService, ProductService, DialogService]
 })
 export class GroceryListViewComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name','quantityOfProduct',  'categoryName','quantity', 'price','totalPrice', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'quantityOfProduct', 'categoryName', 'quantity', 'price', 'totalPrice', 'edit', 'delete'];
   dataSource = new MatTableDataSource<ListOfProductsToBuy>([]); // Table data
   totalSummaryPrice: number = 0;  // Variable to hold the total price
-  expiredProducts : Product[]= [];
-  productModelsToList : ProductModel[] = [];
+  expiredProducts: Product[] = [];
+  productModelsToList: ProductModel[] = [];
   @ViewChild(MatSort) sort!: MatSort; // Sorting functionality
-  deleteExpiredProductsDialogData: { title: string; message: string; } ={
+  deleteExpiredProductsDialogData: { title: string; message: string; } = {
     title: 'Przeterminowane produkty',
     message: 'Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?'
-   }
-   deleteProductToBuyFromCartDialogData: { title: string; message: string; } ={
+  }
+  deleteProductToBuyFromCartDialogData: { title: string; message: string; } = {
     title: 'Usuwanie produktu',
-    message: 'Czy na pewno chcesz usunąć ten produkt z listy zakupów?'  
-    }
+    message: 'Czy na pewno chcesz usunąć ten produkt z listy zakupów?'
+  }
 
-  constructor(private dialogService:DialogService,private productModelService: ProductModelService, private productService: ProductService, private listOfProductsToBuyService: ListOfProductsToBuyService) {}
+  constructor(private dialogService: DialogService, private productModelService: ProductModelService, private productService: ProductService, private listOfProductsToBuyService: ListOfProductsToBuyService) { }
 
   ngOnInit() {
     console.log('GroceryListViewComponent initialized');
     this.getAllCartItems();
     this.loadExpiredProducts();
-    
+
 
   }
 
@@ -55,42 +57,39 @@ export class GroceryListViewComponent implements OnInit {
 
   loadExpiredProducts() {
     this.productService.getAllProductsWithoutMapping().subscribe({
-      next: (data : Product[]) => {
+      next: (data: Product[]) => {
         console.log('Pobrano produkty:', data);
         const currentDate = new Date();
         this.expiredProducts = data.filter((product) => {
           const expirationDate = new Date(product.expirationDate);
-          return expirationDate.getTime() < currentDate.getTime(); 
+          return expirationDate.getTime() < currentDate.getTime();
         });
         this.deleteExpiredProducts();
       },
-      error: (error : any) => console.error('Błąd podczas pobierania produktów:', error)
-    });  
+      error: (error: any) => console.error('Błąd podczas pobierania produktów:', error)
+    });
   }
 
-  async deleteExpiredProducts()
-  {
-    console.log("expired",this.expiredProducts)
-    console.log(this.expiredProducts.length>0);
-    if(!(this.expiredProducts.length>0))
+  async deleteExpiredProducts() {
+    console.log("expired", this.expiredProducts)
+    console.log(this.expiredProducts.length > 0);
+    if (!(this.expiredProducts.length > 0))
       return;
     let dialogAnswer = await this.dialogService.openConfirmDialog(this.deleteExpiredProductsDialogData);
-    if(!dialogAnswer)
+    if (!dialogAnswer)
       return;
 
 
 
 
-    this.expiredProducts.forEach((product)=>
-      {
-        this.addProductToShoppingCart(product);
-      });
+    this.expiredProducts.forEach((product) => {
+      this.addProductToShoppingCart(product);
+    });
   }
-  addProductToShoppingCart(product : Product)
-  {
+  addProductToShoppingCart(product: Product) {
     const newEntry = {
-      idProductModel: product.productModel?.id?? -1,
-      quantity: 1 
+      idProductModel: product.productModel?.id ?? -1,
+      quantity: 1
     };
 
     this.listOfProductsToBuyService.createEntryInListOfProductsToBuy(newEntry).subscribe({
@@ -104,8 +103,7 @@ export class GroceryListViewComponent implements OnInit {
       }
     });
   }
-  deleteProductFromPantry(id:number)
-  {
+  deleteProductFromPantry(id: number) {
     this.productService.deleteProductById(id).subscribe(
       {
         next: (response) => {
@@ -116,19 +114,17 @@ export class GroceryListViewComponent implements OnInit {
         }
       });
   }
-  getAllCartItems()
-  {
+  getAllCartItems() {
     this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
-      next: (data) => 
-        {
-          console.log('Pobrano dane:', data);
-          this.dataSource.data = data;
-        },
-        error: (err) => console.error('Błąd podczas pobierania danych: ', err),
+      next: (data) => {
+        console.log('Pobrano dane:', data);
+        this.dataSource.data = data;
+      },
+      error: (err) => console.error('Błąd podczas pobierania danych: ', err),
     })
   }
-  
-  calculateTotalPrice(data : ListOfProductsToBuy[]) {
+
+  calculateTotalPrice(data: ListOfProductsToBuy[]) {
     this.totalSummaryPrice = data.reduce((sum, product) => {
       return sum + ((product.products?.price ?? 0) * product.quantity);
     }, 0);
@@ -137,15 +133,32 @@ export class GroceryListViewComponent implements OnInit {
 
 
   // Edit product (for your requirements)
-  editProduct(product: any): void {
-    console.log('Edycja produktu: ', product);
-    // You can open an edit form or redirect the user here
+  async editProduct(productToBuyId: number) {
+    const response: ListOfProductsToBuy = await firstValueFrom(
+      this.listOfProductsToBuyService.getProductOnListById(productToBuyId)
+    );
+    console.log('Odpowiedź z serwera:', response);
+    const dialogAnswer = await this.dialogService.openEditProductDialog(response);
+    if (dialogAnswer <0) {
+      console.log(dialogAnswer,'Nie dokonano zmian w ilości produktu');
+      return;
+    }
+    this.listOfProductsToBuyService.updateProductModelInCart(productToBuyId, dialogAnswer).subscribe({
+      next: (response) => {
+        console.log('Ilość produktu została zaktualizowana', response);
+        this.getAllCartItems();
+        //this.calculateTotalPrice(this.dataSource.data);
+      },
+      error: (error) => {
+        console.error('Błąd podczas aktualizacji ilości produktu:', error);
+      }
+    });
   }
 
   // Delete product
   async deleteProductModelFromCart(productToBuyId: number) {
     let dialogAnswer = await this.dialogService.openConfirmDialog(this.deleteProductToBuyFromCartDialogData);
-    if(!dialogAnswer)
+    if (!dialogAnswer)
       return;
     this.listOfProductsToBuyService.deleteProductModelFromCart(productToBuyId).subscribe({
       next: (response) => {
