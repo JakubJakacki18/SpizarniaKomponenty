@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
-import { Product } from '../../../shared/models/Product';
+import { Product } from '../../../../../../Spizarnia-backend/src/models/Product';
 import { Observable } from 'rxjs';
 
 @Component({

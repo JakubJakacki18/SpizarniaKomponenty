@@ -3,9 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListOfProductsToBuy } from '../../../../Spizarnia-backend/src/models/ListOfProductsToBuy';
 import { LISTOFPRODUCTSTOBUY } from '../shared/constances/urls';
-import { Product } from '../shared/models/Product';
-import { ProductModel } from '../shared/models/ProductModel';
-
 @Injectable({
   providedIn: 'root'
 })
