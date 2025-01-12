@@ -9,25 +9,30 @@
         <!-- [(ngModel)]="newRecipe.name"  -->
       </mat-form-field>
       <div formArrayName="ingredients">
-      <mat-form-field>
-        <mat-label>Składniki</mat-label>
-        <mat-select>
-          <!-- [formControl]="addRecipeControl" -->
-          @for (category of categories; track category) {
-          <mat-optgroup [label]="category.categoryName">
-            @for (productModel of category.productModels; track productModel) {
-            <mat-option [value]="productModel">{{productModel.name}}</mat-option>
+      <div *ngFor="let ingredient of ingredients.controls; let i = index;" [formGroupName]="i">
+        <mat-form-field>
+          <mat-label>Składnik</mat-label>
+          <mat-select formControlName="productId" name="productId" [disabled]="isSelectDisabled(i)">
+            <!-- [formControl]="addRecipeControl" -->
+            @for (category of availableCategories; track category) {
+              
+            <mat-optgroup [label]="category.categoryName">
+              @for (productModel of category.productModels; track productModel) {
+              <mat-option [value]="productModel" [disabled]="productModel['isDisabled']">{{productModel.name}} {{productModel['isDisabled']}}</mat-option>
+              }
+            </mat-optgroup>
             }
-          </mat-optgroup>
-          }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Ilość</mat-label>
-        <input matInput formControlName="quantity" type="number" name="quantity" required />
-      </mat-form-field>
-
-      <button class="action-edit-button" mat-button (click)="addProductModelToRecipe()">Dodaj produkt</button>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-label>Ilość</mat-label>
+          <input matInput type="number" placeholder="Wpisz nazwę przepisu" name="quantity" required  formControlName="quantity" [min]="1" />
+        </mat-form-field>
+        <button class="action-edit-button" mat-button (click)="removeProductModelFromReceipt($event,i)">Usuń produkt</button>
+        
+      </div>
+      <button class="action-edit-button" mat-button (click)="addProductModelToRecipe($event)">Dodaj produkt</button>
     </div>
 
 
