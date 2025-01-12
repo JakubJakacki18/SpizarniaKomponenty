@@ -45,13 +45,14 @@ export class GroceryListViewComponent implements OnInit {
     console.log('GroceryListViewComponent initialized');
     this.getAllCartItems();
     this.loadExpiredProducts();
-
-
+    
+    
+    
   }
-
+  
   ngAfterViewInit() {
     this.dataSource.sort = this.sort; // Sorting after view initialization
-    this.calculateTotalPrice(this.dataSource.data);
+    
   }
 
 
@@ -65,6 +66,7 @@ export class GroceryListViewComponent implements OnInit {
           return expirationDate.getTime() < currentDate.getTime();
         });
         this.deleteExpiredProducts();
+        this.calculateTotalPrice(this.dataSource.data);
       },
       error: (error: any) => console.error('Błąd podczas pobierania produktów:', error)
     });
@@ -119,6 +121,7 @@ export class GroceryListViewComponent implements OnInit {
       next: (data) => {
         console.log('Pobrano dane:', data);
         this.dataSource.data = data;
+        this.calculateTotalPrice(this.dataSource.data);
       },
       error: (err) => console.error('Błąd podczas pobierania danych: ', err),
     })

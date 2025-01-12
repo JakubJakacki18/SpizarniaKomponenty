@@ -1,4 +1,5 @@
-<table mat-table [dataSource]="dataSource" class="form-container" matSort>
+<div class="form-container">
+<table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
     <td mat-cell *matCellDef="let product">{{ product.id }}</td>
@@ -51,3 +52,4 @@
   Brak produktów w spiżarni.
 </div>
 }
+</div>

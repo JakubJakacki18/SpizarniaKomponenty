@@ -55,14 +55,16 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <!-- Total Price Row -->
-     @if(totalSummaryPrice > 0){
-    <tr>
-      <td mat-cell colspan="7"></td> <!-- Leave space for 5 columns (id, name, quantity, category, price) -->
+
+    <!-- <tr>
+      <td mat-cell colspan="7"></td> 
       <td mat-header-cell><strong>Suma:</strong></td>
       <td mat-cell><strong>{{ totalSummaryPrice | currency: 'PLN' }}</strong></td>
-      <td mat-cell></td> <!-- Empty for the actions column -->
-    </tr>}
+      <td mat-cell></td> 
+    </tr> -->
   </table>
+
+  {{ totalSummaryPrice}}
 
   @if(dataSource.data.length === 0){
   <div class="no-data">
