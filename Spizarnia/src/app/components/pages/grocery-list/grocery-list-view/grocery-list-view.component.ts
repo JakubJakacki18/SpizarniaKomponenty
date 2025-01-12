@@ -30,10 +30,13 @@ export class GroceryListViewComponent implements OnInit {
   expiredProducts: Product[] = [];
   productModelsToList: ProductModel[] = [];
   @ViewChild(MatSort) sort!: MatSort; // Sorting functionality
+
   deleteExpiredProductsDialogData: { title: string; message: string; } = {
     title: 'Przeterminowane produkty',
     message: 'Masz przeterminowane produkty. Czy chciałbyś/chciałabyś usunąć je ze spiżarni i dodać je do listy zakupów?'
+    
   }
+
   deleteProductToBuyFromCartDialogData: { title: string; message: string; } = {
     title: 'Usuwanie produktu',
     message: 'Czy na pewno chcesz usunąć ten produkt z listy zakupów?'
@@ -81,11 +84,9 @@ export class GroceryListViewComponent implements OnInit {
     if (!dialogAnswer)
       return;
 
-
-
-
     this.expiredProducts.forEach((product) => {
       this.addProductToShoppingCart(product);
+      location.reload()
     });
   }
   addProductToShoppingCart(product: Product) {
