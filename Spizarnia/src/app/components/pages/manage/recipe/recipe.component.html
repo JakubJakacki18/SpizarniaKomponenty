@@ -1,8 +1,49 @@
-<div class="recipe-container">
-  <div class="site-content">
-    <div class="title">Dodaj przepis</div>
-    <form class="form-container">
-     
+<div class="site-content">
+  <div class="title">Dodaj przepis do spiżarni</div>
+  <div class="background-container">
+
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="form-container">
+      <mat-form-field>
+        <mat-label>Nazwa</mat-label>
+        <input matInput type="text" formControlName="name" name="name" placeholder="Wpisz nazwę przepisu" required />
+        <!-- [(ngModel)]="newRecipe.name"  -->
+      </mat-form-field>
+      <div formArrayName="ingredients">
+      <div *ngFor="let ingredient of ingredients.controls; let i = index;" [formGroupName]="i">
+        <mat-form-field>
+          <mat-label>Składnik</mat-label>
+          <mat-select formControlName="productId" name="productId" [disabled]="isSelectDisabled(i)">
+            <!-- [formControl]="addRecipeControl" -->
+            @for (category of availableCategories; track category) {
+              
+            <mat-optgroup [label]="category.categoryName">
+              @for (productModel of category.productModels; track productModel) {
+              <mat-option [value]="productModel" [disabled]="productModel['isDisabled']">{{productModel.name}} {{productModel['isDisabled']}}</mat-option>
+              }
+            </mat-optgroup>
+            }
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-label>Ilość</mat-label>
+          <input matInput type="number" placeholder="Wpisz nazwę przepisu" name="quantity" required  formControlName="quantity" [min]="1" />
+        </mat-form-field>
+        <button class="action-edit-button" mat-button (click)="removeProductModelFromReceipt($event,i)">Usuń produkt</button>
+        
+      </div>
+      <button class="action-edit-button" mat-button (click)="addProductModelToRecipe($event)">Dodaj produkt</button>
+    </div>
+
+
+      <!-- <mat-form-field>
+        <mat-label>Ilość</mat-label>
+ [(ngModel)]="newProductModel.quantit
+    </mat-form-field> -->
+      <div class="button-group">
+        <button class="action-button" (ngSubmit)="onSubmit()">Dodaj przepis</button>
+      </div>
     </form>
   </div>
+
 </div>

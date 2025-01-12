@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './edit-quantity.component.css'
 })
 export class EditQuantityComponent {
+  isEdited : boolean = false;
   constructor(
     public dialogRef: MatDialogRef<EditQuantityComponent>, 
     @Inject(MAT_DIALOG_DATA) public productOnList: ListOfProductsToBuy
@@ -21,6 +22,7 @@ export class EditQuantityComponent {
   }
   newQuantity: number;
   onConfirm(): void {
+    this.isEdited=true;
     this.dialogRef.close(this.newQuantity);
   }
 
@@ -28,7 +30,7 @@ export class EditQuantityComponent {
     this.dialogRef.close(-1);
   }
   ngOnDestroy(): void {
-    if (this.dialogRef) {
+    if (this.dialogRef&&this.isEdited===false) {
       this.dialogRef.close(-1);
     }
   }

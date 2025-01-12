@@ -128,12 +128,11 @@ import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AddRecipeComponent } from "./add-recipe/add-recipe.component";
 
 @Component({
   selector: 'app-recipes',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule, AddRecipeComponent],
+  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule],
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css'],
 })
