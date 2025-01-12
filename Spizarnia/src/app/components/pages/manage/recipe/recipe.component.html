@@ -12,7 +12,7 @@
       <div *ngFor="let ingredient of ingredients.controls; let i = index;" [formGroupName]="i">
         <mat-form-field>
           <mat-label>Składnik</mat-label>
-          <mat-select formControlName="productId" name="productId" [disabled]="isSelectDisabled(i)">
+          <mat-select formControlName="productModel" name="productModel" [disabled]="isSelectDisabled(i)">
             <!-- [formControl]="addRecipeControl" -->
             @for (category of availableCategories; track category) {
               

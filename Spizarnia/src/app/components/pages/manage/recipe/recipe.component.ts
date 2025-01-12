@@ -12,6 +12,7 @@ import { elementAt } from 'rxjs';
 import { DialogService } from '../../../../services/dialog.service';
 import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/ProductModel';
 import { CategoryWithDisabledProductModels } from '../../../../shared/constances/additional.types';
+import { RecipeService } from '../../../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe',
@@ -25,7 +26,7 @@ export class RecipeComponent {
 
    availableCategories: CategoryWithDisabledProductModels[]=[];
    recipeForm : FormGroup;
-      constructor(private categoryService : CategoryService,private fb: FormBuilder, private dialogService : DialogService)
+      constructor(private categoryService : CategoryService,private fb: FormBuilder, private dialogService : DialogService, private recipeService : RecipeService)
       {
         this.fetchCategories();
         this.recipeForm = this.fb.group({
@@ -49,7 +50,7 @@ export class RecipeComponent {
 
       updateAvailableProducts() {
         const selectedProductModels = this.ingredients.controls
-          .map(control => control.get('productId')?.value)
+          .map(control => control.get('productModel')?.value)
           .filter(value => value); // Tylko wybrane wartości
         console.log("selected",selectedProductModels);
         this.availableCategories.forEach(category => {
@@ -69,13 +70,25 @@ export class RecipeComponent {
       
     onSubmit(): void 
     {
-
+      if (!this.recipeForm.valid) {
+        console.log('Formularz jest nieprawidłowy');
+      }
+     else {
+      this.recipeService.createRecipe(this.recipeForm.value).subscribe({
+        next: (response) => {
+          console.log('Produkt został utworzony:', response);          
+        },
+        error: (error) => {
+          console.error('Błąd podczas tworzenia produktu:', error);
+        }
+     });
+     }
     }
     get ingredients(): FormArray {
       return this.recipeForm.get('ingredients') as FormArray;
     }
     checkAllIngredientsFilled(): boolean {
-      return this.ingredients.controls.every(control => !!control.value?.productId);
+      return this.ingredients.controls.every(control => !!control.value?.productModel);
     }
     addProductModelToRecipe(event: { preventDefault: () => void; } /*parametr */): void 
     {
@@ -93,7 +106,7 @@ export class RecipeComponent {
       }
       this.updateAvailableProducts();
       // this.ingredients.controls.forEach(control => {
-      //   control.get('productId')?.disable(); // Wyłącza select
+      //   control.get('productModel')?.disable(); // Wyłącza select
       // });
       this.addNewIngredientControlGroup();
       console.log(this.ingredients.controls)
@@ -101,7 +114,7 @@ export class RecipeComponent {
     addNewIngredientControlGroup()
     {
       const productGroup = this.fb.group({
-        productId: [null, Validators.required],
+        productModel: [null, Validators.required],
         quantity: [1, [Validators.required, Validators.min(1)]],
       });
       this.ingredients.push(productGroup);
