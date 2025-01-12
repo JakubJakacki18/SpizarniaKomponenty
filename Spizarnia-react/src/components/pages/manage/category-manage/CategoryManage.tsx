@@ -1,6 +1,6 @@
 import React from "react";
 
-function AddCategory() {
+function CategoryManage() {
     return (
         <div>
             <h1>Add Category Page</h1>
@@ -9,4 +9,4 @@ function AddCategory() {
     );
 }
 
-export default AddCategory;
+export default CategoryManage;

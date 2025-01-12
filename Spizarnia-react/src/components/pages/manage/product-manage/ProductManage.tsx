@@ -1,6 +1,6 @@
 import React from "react";
 
-function AddProduct() {
+function ProductManage() {
     return (
         <div>
             <h1>Add Product Page</h1>
@@ -9,4 +9,4 @@ function AddProduct() {
     );
 }
 
-export default AddProduct;
+export default ProductManage;
