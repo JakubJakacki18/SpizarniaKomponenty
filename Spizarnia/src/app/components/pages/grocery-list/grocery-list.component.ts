@@ -76,26 +76,38 @@ export class GroceryListComponent implements OnInit {
     }
   }
   
-//Dodać endpoint
-  /*// Clear the shopping list
+//Dodać endpoint?
+  // Usuwam jeden po drugim - miałem problem z endpointami przez to w jaki sposób wyświetlamy tutaj produkty
   async clearList() {
     let dialogAnswer = await this.dialogService.openConfirmDialog(this.clearListDialogData);
     if (!dialogAnswer) return;
+    
+    this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
+      next: (products) => {
+        const deletePromises = products.map(product => {
+          return new Promise((resolve, reject) => {
+            this.listOfProductsToBuyService.deleteProductModelFromCart(product.id).subscribe({
+              next: () => resolve(true),
+              error: (err) => reject(err)
+            });
+          });
+        });
   
-    // Clear the shopping list locally (without calling the service)
-    this.dataSource.data = [];
-    this.totalSummaryPrice = 0;
-  
-    // Optionally, you could call your service to clear the data on the backend as well
-    this.listOfProductsToBuyService.clearShoppingList().subscribe({
-      next: (response: any) => {
-        console.log('Lista zakupów została pomyślnie usunięta.', response);
+        // Execute all deletes
+        Promise.all(deletePromises)
+          .then(() => {
+            this.getAllCartItems(); // Refresh the list
+            console.log('Lista zakupów została wyczyszczona');
+          })
+          .catch(error => {
+            console.error('Błąd podczas czyszczenia listy zakupów:', error);
+          });
       },
-      error: (error: any) => {
-        console.error('Błąd podczas usuwania listy zakupów:', error);
+      error: (error) => {
+        console.error('Błąd podczas pobierania listy produktów:', error);
       }
     });
-  }*/
+  }
   
   loadExpiredProducts() {
     this.productService.getAllProductsWithoutMapping().subscribe({
@@ -150,7 +162,7 @@ export class GroceryListComponent implements OnInit {
       }
     });
   }
-//endpointem?
+
   getAllCartItems() {
     this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
       next: (data) => {

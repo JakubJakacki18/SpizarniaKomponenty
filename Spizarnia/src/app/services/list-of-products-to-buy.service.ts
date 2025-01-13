@@ -26,7 +26,8 @@ export class ListOfProductsToBuyService {
   {
     return this.http.post(LISTOFPRODUCTSTOBUY, newEntry);
   }
-
-
+  deleteAllProductsFromCart(): Observable<any> {
+    return this.http.delete(`${LISTOFPRODUCTSTOBUY}deleteAll`);
+  }
 
 }
