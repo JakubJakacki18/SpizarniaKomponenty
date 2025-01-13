@@ -21,7 +21,7 @@ import { firstValueFrom } from 'rxjs';
   providers: [ProductModelService, ProductService, ListOfProductsToBuyService, DialogService]
 })
 export class GroceryListComponent implements OnInit {
-  searchTerm: string = '';
+  
   dataSource = new MatTableDataSource<any>([]);
   totalSummaryPrice: number = 0;
   expiredProducts: Product[] = [];
@@ -60,13 +60,16 @@ export class GroceryListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  searchTermGrocery: string = '';
   onSearch() {
-    if (this.searchTerm.length >= 2) {
-      const searchTermLower = this.searchTerm.toLowerCase();
+    if (this.searchTermGrocery.length >= 2) {
+      console.log(this.searchTermGrocery.toLowerCase());
+      const searchTermLower = this.searchTermGrocery.toLowerCase();
 
       this.dataSource.filter = searchTermLower; // Użycie wbudowanego filtrowania w MatTableDataSource
       this.dataSource.filterPredicate = (data: any, filter: string) => {
-        return data.name.toLowerCase().includes(filter); // Wyszukiwanie po nazwie
+        
+        return data.products.name.toLowerCase().includes(filter); // Wyszukiwanie po nazwie
       };
     } else {
       this.dataSource.filter = ''; // Reset filtra
