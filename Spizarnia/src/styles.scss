@@ -22,10 +22,11 @@ body {
   --font-color-hover: #ffffff;
   @include mat.table-overrides((background-color: var(--font-color), header-headline-color: var(--background-color),row-item-outline-color: var(--font-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
   @include mat.expansion-overrides((container-text-color: var(--font-color), header-text-color: var(--font-color)));
-  @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red));
+  @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red, filled-input-text-color: var(--secondary-right), enabled-select-arrow-color:var(--secondary-right)));
   @include mat.datepicker-overrides((toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
   @include mat.sort-overrides((arrow-color: var(---secondary-left)));
   @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color)) );
+  @include mat.select-overrides((panel-background-color: var(--primary-color)));
 }
 :host {
   display: grid;
