@@ -1,17 +1,90 @@
+<!-- PRZEKOPIOWANE Z ALL-PRODUCTS! -->
 <div class="header-container">
   <div class="title">Lista Zakupów</div>
   <div class="search-bar">
     <input type="text"
            placeholder="Wyszukaj produkt..."
-           [(ngModel)]="searchTerm"
+           [(ngModel)]="searchTermGrocery"
            (input)="onSearch()" />
-    <button class="action-button" (click)="onSearch()">Szukaj</button>
-    <button class="action-button">Usuń listę zakupów</button>
-
+    <button class ="action-button"(click)="onSearch()">Szukaj</button>
+    <button class="action-button"(click)="clearList()">Usuń listę zakupów</button>
   </div>
 </div>
-
-<!-- Wyświetlanie dynamicznego widoku -->
+  <!-- Tabela z produktami -->
 <div class="site-content">
-  <app-grocery-list-view></app-grocery-list-view>
+  <div class="grocery-list-view-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Kolumna: ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let product" >{{ product.id }}</td>
+      </ng-container>
+
+      <!-- Kolumna: Nazwa -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>NAZWA</th>
+        <td mat-cell *matCellDef="let product" >{{ product.products.name }}</td>
+      </ng-container>
+
+      <!-- Kolumna: Ilość produktów -->
+      <ng-container matColumnDef="quantityOfProduct">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ILOŚĆ PRODUKTU</th>
+        <td mat-cell *matCellDef="let product">{{ product.products.quantity }} {{ product.products.unit }}</td>
+      </ng-container>
+      
+      <!-- Kolumna: Ilość -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ILOŚĆ</th>
+        <td mat-cell *matCellDef="let product" >{{ product.quantity }} {{product.unit}}</td>
+      </ng-container>
+
+    <!-- Kolumna: Kategoria -->
+    <ng-container matColumnDef="categoryName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>KATEGORIA</th>
+      <td mat-cell *matCellDef="let product" >{{ product.products.category.categoryName  }}</td>
+    </ng-container>
+      
+      <!-- Kolumna: Cena -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CENA</th>
+        <td mat-cell *matCellDef="let product">{{ product.products.price }}</td>
+      </ng-container>
+
+      <!-- Kolumna: Data Ważności -->
+      <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>SUMA</th>
+        <td mat-cell *matCellDef="let product">{{ product.products.price * product.quantity }}</td>
+      </ng-container>
+
+      <!-- Kolumna: Edytuj -->
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let product">
+          <button class="action-edit-button" (click)="editProduct(product.id)">EDYTUJ</button>
+        </td>
+      </ng-container>
+
+      <!-- Kolumna: Usuń -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let product">
+          <button class="action-edit-button" (click)="deleteProductModelFromCart(product.id)">Usuń</button>
+        </td>
+      </ng-container>
+
+      <!-- Wiersze -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- Suma Ceny -->
+    <div class="total-summary">
+      <strong>Suma:</strong> {{ totalSummaryPrice | currency: 'PLN' }}
+    </div>
+
+    <!-- Wiadomość, gdy brak produktów -->
+    <div *ngIf="dataSource.data.length === 0" class="no-data">
+      Brak produktów w spiżarni.
+    </div>
+  </div>
 </div>

@@ -79,9 +79,6 @@ export const ListOfProductsToBuyController = {
 
         },  
 
-
-
-
         async updateQuantityById(req: Request, res: Response) {
             const { id } = req.params;
             const { quantity } = req.body;
@@ -127,4 +124,14 @@ export const ListOfProductsToBuyController = {
               res.status(500).json({ error: "Internal error: Entry was not deleted" });
             }
           },
+          
+          async deleteAll(req: Request, res: Response) {
+            try {
+                const allEntries = await listOfProductsToBuyRepository.find();
+                await listOfProductsToBuyRepository.remove(allEntries);
+                res.json({ message: "All entries were removed successfully from database" });
+            } catch (error) {
+                res.status(500).json({ error: "Internal error: Entries were not deleted" });
+            }
+        },
 }

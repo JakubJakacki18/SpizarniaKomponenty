@@ -97,6 +97,7 @@ export class AllProductsComponent implements OnInit {
       }
     )
   }
+  
   deleteProduct(productId: number) {
     if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
       this.http.delete(`http://localhost:5000/api/product/${productId}`).subscribe(
