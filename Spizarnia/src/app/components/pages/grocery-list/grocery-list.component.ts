@@ -61,23 +61,15 @@ export class GroceryListComponent implements OnInit {
   }
 
   onSearch() {
-    console.log('Search Term:', this.searchTerm); 
     if (this.searchTerm.length >= 2) {
       const searchTermLower = this.searchTerm.toLowerCase();
-      console.log('Filtered Term:', searchTermLower); 
-      
-      // Set the filter predicate
-      this.dataSource.filterPredicate = (data, filter) => {
-        const name = data.name ? data.name.toLowerCase() : '';
-        console.log('Product Name:', name);
-        return name.includes(filter);
+
+      this.dataSource.filter = searchTermLower; // Użycie wbudowanego filtrowania w MatTableDataSource
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        return data.name.toLowerCase().includes(filter); // Wyszukiwanie po nazwie
       };
-  
-      // Apply the filter
-      this.dataSource.filter = searchTermLower;  
     } else {
-      // Clear the filter if searchTerm is less than 2 characters
-      this.dataSource.filter = '';
+      this.dataSource.filter = ''; // Reset filtra
     }
   }
   
@@ -102,7 +94,6 @@ export class GroceryListComponent implements OnInit {
     });
   }*/
   
-
   loadExpiredProducts() {
     this.productService.getAllProductsWithoutMapping().subscribe({
       next: (data: Product[]) => {
@@ -156,7 +147,7 @@ export class GroceryListComponent implements OnInit {
       }
     });
   }
-
+//endpointem?
   getAllCartItems() {
     this.listOfProductsToBuyService.getAllListOfProductsToBuy().subscribe({
       next: (data) => {
