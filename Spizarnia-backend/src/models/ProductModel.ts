@@ -23,10 +23,14 @@ export class ProductModel {
     @Column({ type: "varchar", length: 255, nullable: true })
     type?: string;
 
-    @OneToMany(() => Product, (product) => product.productModel, { cascade: ['remove'] })
+    @OneToMany(() => Product, (product) => product.productModel, { 
+        cascade: true, 
+        onDelete: "CASCADE" })
     products?: Product[];
   
-    @OneToMany(() => Ingredient, (ingredient) => ingredient.productModel, { cascade: ['remove'] })
+    @OneToMany(() => Ingredient, (ingredient) => ingredient.productModel, { 
+        cascade: true,
+        onDelete: "CASCADE" })
     ingredients?: Ingredient[];
 
     @ManyToOne(() => Category, (category) => category.productModels)

@@ -3,6 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  JoinColumn,
   } from 'typeorm';
 
 import { ProductModel } from './ProductModel';
@@ -17,7 +18,10 @@ export class Product {
 
     @Column({ type: "date", nullable: false })
     purchaseDate!: Date;
-
-    @ManyToOne(() => ProductModel, (productModel) => productModel.products)
+  
+    @ManyToOne(() => ProductModel, (productModel) => productModel.products, {
+      onDelete: "CASCADE"
+    })
+    @JoinColumn({name: "productModelId"})
     productModel?: ProductModel;
 }

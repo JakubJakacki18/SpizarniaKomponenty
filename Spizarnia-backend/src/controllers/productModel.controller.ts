@@ -118,27 +118,36 @@ export const ProductModelController = {
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
-
+    //Usuwanie - zostawiłem troche wieksze logi, byly potrzebne do kaskadowego.
     try {
       const productModel = await productModelRepository.findOne({
         where: { id: parseInt(id) },
-        relations: ["products"], //Przy usuwaniu productModel usuwamy również powiązane Product.
+        relations: ["products", "ingredients"],
       });
-
+  
       if (!productModel) {
-         res.status(404).json({ error: `ProductModel with id: ${id} was not found` });
-         return;
+        console.log(`Product model with id ${id} not found`);
+        res.status(404).json({ error: `ProductModel with id: ${id} was not found` });
+        return;
       }
-      
-      const productRepository = AppDataSource.getRepository(Product);
-      for (const product of productModel.products) {
-        await productRepository.remove(product); //Tu usuwamy product
+  
+      try {
+        await productModelRepository.remove(productModel);
+        console.log(`Successfully deleted product model ${id}`);
+      } catch (deleteError) {
+        console.error('Specific delete error:', deleteError);
+        throw deleteError;
       }
-      //A tu productModel
-      await productModelRepository.remove(productModel);
-      res.json({ message: `ProductModel with id: ${id} was removed succesfully from database` });
+  
+      res.json({ message: `ProductModel with id: ${id} was removed successfully` });
     } catch (error) {
-      res.status(500).json({ error: "Internal error: ProductModel was not deleted" });
+      console.error('Full error details:', error);
+      
+      res.status(500).json({ 
+        error: "Internal error: ProductModel was not deleted",
+        details: error.message,
+        code: error.code
+      });
     }
   },
   async checkDuplicate(req: Request, res: Response) {
