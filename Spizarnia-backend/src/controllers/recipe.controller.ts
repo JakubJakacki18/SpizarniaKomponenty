@@ -38,18 +38,11 @@ export const RecipeController = {
   },
 
   async create(req: Request, res: Response) {
-    const { name, ingredientIds, finished } = req.body;
-
-    try {
-      let ingredients = [];
-      if (ingredientIds && ingredientIds.length > 0) {
-        ingredients = await ingredientRepository.findByIds(ingredientIds);
-        if (ingredients.length !== ingredientIds.length) {
-          res.status(404).json({ error: "Some ingredients were not found" });
-          return;
-        }
-      }
-
+    const { name, ingredients, finished } = req.body;
+    const ingredientsFromFront = ingredients;
+    try{
+      let ingredients = RecipeController.createOrGetIngredients(ingredientsFromFront);
+     
       const newRecipe = recipeRepository.create({
         name,
         ingredients,

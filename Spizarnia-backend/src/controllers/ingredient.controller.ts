@@ -40,7 +40,7 @@ export const IngredientController = {
   },
 
   async create(req: Request, res: Response) {
-    const { productModelId, quantity, recipeIds } = req.body;
+    const { productModelId, quantity,  } = req.body;
 
     try {
       const productModel = await productModelRepository.findOneBy({ id: productModelId });
@@ -49,19 +49,9 @@ export const IngredientController = {
         return;
       }
 
-      let recipes = [];
-      if (recipeIds && recipeIds.length > 0) {
-        recipes = await recipeRepository.findByIds(recipeIds);
-        if (recipes.length !== recipeIds.length) {
-          res.status(404).json({ error: "Some recipes were not found" });
-          return;
-        }
-      }
-
       const newIngredient = ingredientRepository.create({
         productModel,
         quantity,
-        recipes,
       });
 
       await ingredientRepository.save(newIngredient);
@@ -135,4 +125,55 @@ export const IngredientController = {
       res.status(500).json({ error: "Internal error: Ingredient was not deleted" });
     }
   },
+  async createOrGetIngredients(ingredientsFromFront : any)
+  {
+    const ingredients : Ingredient[] = [];
+     ingredientsFromFront.forEach(async ingredient => {
+            const ingredientFromDb = await IngredientController.getIngredientFromDbOrCreateOne(ingredient.productModelId, ingredient.quantity);
+            if(!!ingredientFromDb)
+            {
+              ingredients.push(ingredientFromDb)
+            } else
+            {
+    
+            }           
+              
+          });
+          
+  },
+  async getIngredientFromDbOrCreateOne(productModelId: any, quantity: any) : Promise<Ingredient> {
+    const ingredientFromDb = await ingredientRepository
+    .createQueryBuilder("ingredient")
+    .where("ingredient.productModelId = :productModelId", { productModelId })
+    .andWhere("ingredient.quantity = :quantity", { quantity })
+    .getOne(); 
+    if(!!ingredientFromDb)
+    {
+      return ingredientFromDb;
+    } 
+    else
+    {
+      const mockRequest = {
+        body: {
+          productModelId: productModelId,
+          quantity: quantity,
+        },
+      } as Request;
+      const mockResponse = {
+        status: (statusCode: number) => {
+          console.log("Status:", statusCode);
+          return mockResponse;
+        },
+        json: (data: any) => {
+          console.log("Response data:", data);
+        },
+      } as unknown as Response;
+      await IngredientController.create(mockRequest, mockResponse);
+      return mockResponse
+    }           
+        
+  }
+        
 };
+
+
