@@ -35,6 +35,11 @@ export class ProductService {
   {
     return this.http.delete<Product>(PRODUCTS+`/${id}`);
   }
+  getQuantityOfProducts(id:number):Observable<number>
+  {
+    return this.http.get<number>(PRODUCTS+`getQuantity/${id}`);
+  }
+  
   
 }
 

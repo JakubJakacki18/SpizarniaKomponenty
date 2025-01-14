@@ -132,6 +132,9 @@ import { RecipeService } from '../../../services/recipe.service';
 import { error } from 'console';
 import { DialogService } from '../../../services/dialog.service';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { Recipe } from '../../../../../../Spizarnia-backend/src/models/Recipe';
+import { ProductService } from '../../../services/product.service';
+import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 
 @Component({
   selector: 'app-recipes',
@@ -149,7 +152,7 @@ export class RecipesComponent implements OnInit {
   showDialog: boolean = false;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private recipeService : RecipeService, private dialogService: DialogService) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private recipeService : RecipeService, private dialogService: DialogService, private productService : ProductService) {}
 
   ngOnInit() {
     this.getAllRecipes();
@@ -217,10 +220,44 @@ export class RecipesComponent implements OnInit {
   }
 
   deleteRecipe(recipe: any) {
+    //Trzeba zrobić usuwanie przepisu z backendu
     const dialogMessage = {title: 'Usuwanie przepisu', message: 'Czy na pewno chcesz usunąć ten przepis?'};
     const dialogAnswer =this.dialogService.openConfirmDialog(dialogMessage);
       if (!dialogAnswer) return;
-    //usuwanie przepisu z backendu
     //this.recipeService.deleteRecipe(recipe.id).subscribe({});
   }
+  async getAccordionStyle(recipe: Recipe)
+  {
+    if(await this.isRecipeExecutable(recipe))
+      {
+        return {
+          background: 'red',
+          fontWeight: 'bold'
+        };
+      }
+      else
+      {
+        return {
+          background: 'green',
+          
+        }
+      }
+  }
+  async isRecipeExecutable(recipe: Recipe)
+  {
+    for (const ingredient of recipe.ingredients ?? []) {
+      const productModelId = ingredient.productModel?.id ?? -1;
+      try {
+      const quantityOfProductModel = await firstValueFrom(this.productService.getQuantityOfProducts(productModelId));
+      if(ingredient.quantity>quantityOfProductModel)
+        return false;
+    } catch (err) {
+      console.error("Nie udało się sprawdzić ilości produktu w spiżarni", err);
+      return false; 
+    }  
+    }
+    return true;
+
+  }
+  
 }
