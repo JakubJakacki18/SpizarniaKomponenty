@@ -151,12 +151,16 @@ export class RecipesComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   showDialog: boolean = false;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  recipeStyles: { [key: number]: any } = {};
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private recipeService : RecipeService, private dialogService: DialogService, private productService : ProductService) {
+    
+  }
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private recipeService : RecipeService, private dialogService: DialogService, private productService : ProductService) {}
-
-  ngOnInit() {
+  async ngOnInit() {
     this.getAllRecipes();
+    
     this.dataSource.sort = this.sort;
+    
   }
   //Aktualnie bez komunikacji z Backendem TODO
   getAllRecipes() {
@@ -164,6 +168,7 @@ export class RecipesComponent implements OnInit {
       next: (data) => {
         this.recipes = data;
         this.dataSource.data = data;
+        this.setRecipeStyles();
       },
       error: (err) => {
         console.error('Error fetching recipes:', err);
@@ -175,6 +180,7 @@ export class RecipesComponent implements OnInit {
         // });
       }}
     );
+    
   }
 
   addRecipe() {
@@ -230,17 +236,16 @@ export class RecipesComponent implements OnInit {
   {
     if(await this.isRecipeExecutable(recipe))
       {
-        return {
-          background: 'red',
+        return {style : {
+          background: 'green',
           fontWeight: 'bold'
-        };
+        }, isExecutable : true};
       }
       else
       {
-        return {
-          background: 'green',
-          
-        }
+        return {style : {
+          background: 'red',
+        }, isExecutable : false};
       }
   }
   async isRecipeExecutable(recipe: Recipe)
@@ -257,7 +262,14 @@ export class RecipesComponent implements OnInit {
     }  
     }
     return true;
+  }
 
+
+  async setRecipeStyles() {
+    for (const recipe of this.dataSource.data ?? []) {
+      const style = await this.getAccordionStyle(recipe);
+      this.recipeStyles[recipe.id] = style; // Przechowujemy styl w obiekcie, używając ID przepisu
+    }
   }
   
 }

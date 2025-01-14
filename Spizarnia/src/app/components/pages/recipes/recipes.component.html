@@ -59,8 +59,8 @@
 <div class="recipes-container">
   <div *ngIf="dataSource && dataSource.data && dataSource.data.length > 0; else noRecipes">
     @for (recipe of dataSource.data; track recipe) {
-    <mat-accordion [ngStyle]="getAccordionStyle(recipe)">
-      <mat-expansion-panel>
+    <mat-accordion>
+      <mat-expansion-panel [ngStyle]="recipeStyles[recipe.id].style">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ recipe.name }}
@@ -69,6 +69,10 @@
           Składniki:
           @for(ingredient of recipe.ingredients; track ingredient){
             <p>{{ingredient.productModel.name}} Ilość: {{ingredient.quantity}}</p>
+          }
+          @if(recipeStyles[recipe.id].isExecutable)
+          {
+            <button>Wykonaj przepis</button>
           }
       </mat-expansion-panel>
     </mat-accordion>
