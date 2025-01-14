@@ -128,6 +128,9 @@ import { FormsModule } from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RecipeService } from '../../../services/recipe.service';
+import { error } from 'console';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-recipes',
@@ -145,7 +148,7 @@ export class RecipesComponent implements OnInit {
   showDialog: boolean = false;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private recipeService : RecipeService, private dialogService: DialogService) {}
 
   ngOnInit() {
     this.getAllRecipes();
@@ -153,34 +156,45 @@ export class RecipesComponent implements OnInit {
   }
   //Aktualnie bez komunikacji z Backendem TODO
   getAllRecipes() {
-    const storedRecipes = localStorage.getItem('recipes');
-    if (storedRecipes) {
-      this.recipes = JSON.parse(storedRecipes);
-      this.dataSource.data = this.recipes;
-    } else {
-      this.recipes = [];
-      this.dataSource.data = [];
-    }
+    this.recipeService.getAllRecipes().subscribe({
+      next: (data) => {
+        this.recipes = data;
+        this.dataSource.data = data;
+      },
+      error: (err) => {
+        console.error('Error fetching recipes:', err);
+      
+
+
+        // this.snackBar.open('Nie udało się pobrać przepisów. Sprawdź połączenie z serwerem.', 'OK', {
+        //   duration: 3000,
+        // });
+      }}
+    );
   }
 
   addRecipe() {
-    if (!this.newRecipe.name || !this.newRecipe.ingredients.trim()) {
-      alert('Uzupełnij wszystkie pola przed dodaniem przepisu!');
-      return;
-    }
+    //Można tutaj ew. przekierować do manage-recipe albo wywalić 
 
-    const ingredientsArray = this.newRecipe.ingredients.split(',').map((item) => item.trim());
-    const recipeToAdd = {
-      name: this.newRecipe.name,
-      ingredients: ingredientsArray,
-    };
-    this.recipes.push(recipeToAdd);
-    this.dataSource.data = [...this.recipes];
+
+
+    // if (!this.newRecipe.name || !this.newRecipe.ingredients.trim()) {
+    //   alert('Uzupełnij wszystkie pola przed dodaniem przepisu!');
+    //   return;
+    // }
+
+    // const ingredientsArray = this.newRecipe.ingredients.split(',').map((item) => item.trim());
+    // const recipeToAdd = {
+    //   name: this.newRecipe.name,
+    //   ingredients: ingredientsArray,
+    // };
+    // this.recipes.push(recipeToAdd);
+    // this.dataSource.data = [...this.recipes];
     
-    localStorage.setItem('recipes', JSON.stringify(this.recipes));
+    // localStorage.setItem('recipes', JSON.stringify(this.recipes));
 
-    this.newRecipe = { name: '', ingredients: '' };
-    this.showDialog = false;
+    // this.newRecipe = { name: '', ingredients: '' };
+    // this.showDialog = false;
   }
 
   onSearch() {
@@ -202,11 +216,10 @@ export class RecipesComponent implements OnInit {
   }
 
   deleteRecipe(recipe: any) {
-    if (confirm('Czy na pewno chcesz usunąć ten przepis?')) {
-      this.recipes = this.recipes.filter((r) => r !== recipe);
-      this.dataSource.data = this.recipes;
-      
-      localStorage.setItem('recipes', JSON.stringify(this.recipes));
-    }
+    const dialogMessage = {title: 'Usuwanie przepisu', message: 'Czy na pewno chcesz usunąć ten przepis?'};
+    const dialogAnswer =this.dialogService.openConfirmDialog(dialogMessage);
+      if (!dialogAnswer) return;
+    //usuwanie przepisu z backendu
+    //this.recipeService.deleteRecipe(recipe.id).subscribe({});
   }
 }
