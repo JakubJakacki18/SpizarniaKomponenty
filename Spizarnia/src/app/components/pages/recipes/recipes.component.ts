@@ -131,11 +131,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RecipeService } from '../../../services/recipe.service';
 import { error } from 'console';
 import { DialogService } from '../../../services/dialog.service';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-recipes',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule],
+  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule, MatExpansionModule],
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css'],
 })

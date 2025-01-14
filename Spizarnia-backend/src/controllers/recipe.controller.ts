@@ -12,7 +12,7 @@ const productModelRepository: Repository<ProductModel> = AppDataSource.getReposi
 export const RecipeController = {
   async getAll(req: Request, res: Response) {
     try {
-      const recipes = await recipeRepository.find({ relations: ["ingredients"] });
+      const recipes = await recipeRepository.find({ relations: ["ingredients", "ingredients.productModel"] });
       res.json(recipes);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot fetch recipes" });

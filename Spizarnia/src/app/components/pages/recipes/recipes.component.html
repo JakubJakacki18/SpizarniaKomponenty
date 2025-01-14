@@ -58,32 +58,21 @@
 <!-- Lista przepisów -->
 <div class="recipes-container">
   <div *ngIf="dataSource && dataSource.data && dataSource.data.length > 0; else noRecipes">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Nazwa Kolumna -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="recipes-header">Nazwa</th>
-        <td mat-cell *matCellDef="let recipe" class="recipes-cell">{{ recipe.name }}</td>
-      </ng-container>
-
-      <!-- Składniki Kolumna -->
-      <ng-container matColumnDef="ingredients">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="recipes-header">Składniki</th>
-        <td mat-cell *matCellDef="let recipe" class="recipes-cell">{{ recipe.ingredients.join(', ') }}</td>
-      </ng-container>
-
-      <!-- Akcje Kolumna -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="recipes-header">Akcje</th>
-        <td mat-cell *matCellDef="let recipe" class="recipes-cell">
-          <button class="action-edit-button" (click)="deleteRecipe(recipe)">
-            Usuń
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    <mat-accordion>
+      @for (recipe of dataSource.data; track recipe) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ recipe.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+          Składniki:
+          @for(ingredient of recipe.ingredients; track ingredient){
+            <p>{{ingredient.productModel.name}}</p>
+          }
+      </mat-expansion-panel>
+      }
+    </mat-accordion>
   </div>
 
   <!-- Wiadomość, gdy brak przepisów -->
