@@ -23,4 +23,8 @@ export class ProductModelService {
     return this.http.post(PRODUCT_MODELS, productData);
   }
 
+  checkDuplicateProduct(product: any): Observable<any> {
+    return this.http.post(`http://localhost:5000/api/productModel/checkDuplicate`, product);
+  }
+
 }

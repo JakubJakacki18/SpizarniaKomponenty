@@ -141,4 +141,26 @@ export const ProductModelController = {
       res.status(500).json({ error: "Internal error: ProductModel was not deleted" });
     }
   },
+  async checkDuplicate(req: Request, res: Response) {
+    const { name, quantity, unit, price, categoryId, type } = req.body;
+  
+    try {
+      const existingProduct = await productModelRepository.findOne({
+        where: {
+          name,
+          quantity,
+          unit,
+          price,
+          category: { id: categoryId },
+          type
+        },
+        relations: ["category"]
+      });
+  
+      // If product exists, return true (it's a duplicate)
+      res.json(existingProduct !== null);
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Cannot check for duplicate product" });
+    }
+  }
 };

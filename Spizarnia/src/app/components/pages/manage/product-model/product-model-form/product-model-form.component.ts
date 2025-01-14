@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ProductModelService } from './../../../../../services/product-model.service'; // Serwis do wysyłania danych
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../../../../../../Spizarnia-backend/src/models/Category';
+import { first } from 'rxjs';
 
 @Component({
  selector: 'app-product-model-form',
@@ -36,20 +37,51 @@ ngOnInit(): void {
 }
 onSubmit() {
   if (this.productForm.valid) {
+    //Akceptujemy ta sama nazwe jesli pozostale parametry sa inne
+    //Kategoria bez znaczenia
+    const productToCheck = {
+      name: this.productForm.get('name').value,
+      unit: this.productForm.get('unit').value,
+      price: this.productForm.get('price').value,
+      quantity: this.productForm.get('quantity').value
+    };
+
   // Wywołanie metody serwisu  do wysyłania danych
-  this.productModelService.createProduct(this.productForm.value).subscribe(
-  (response) => {
-    console.log('Produkt został utworzony:', response);
-    this.productCreated.emit();
-  },
-  (error) => {
-    console.error('Błąd podczas tworzenia produktu:', error);
-  }
- );
- } else {
-    console.log('Formularz jest nieprawidłowy');
- }
- }
+  this.productModelService.checkDuplicateProduct(productToCheck)
+  .pipe(first())
+  .subscribe({
+    next: (isDuplicate) => {
+      if (isDuplicate) {
+        alert('Produkt o tych samych parametrach już istnieje!');
+      } else {
+        this.productModelService.createProduct(this.productForm.value).subscribe({
+          next: (response) => {
+            console.log('Produkt został utworzony:', response);
+            this.productCreated.emit();
+            this.productForm.reset();
+          },
+          error: (error) => {
+            console.error('Błąd podczas tworzenia produktu:', error);
+            alert('Błąd podczas tworzenia produktu.');
+          }
+        });
+      }
+    },
+    error: (error) => {
+      console.error('Błąd podczas sprawdzania duplikatów:', error);
+      alert('Wystąpił błąd podczas sprawdzania duplikatów.');
+    }
+  });
+} else {
+
+Object.keys(this.productForm.controls).forEach(key => {
+  const control = this.productForm.get(key);
+  control.markAsTouched();
+});
+alert('Proszę wypełnić wszystkie wymagane pola poprawnie.');
+console.log('Formularz jest nieprawidłowy');
+}
+}
  fetchCategories(): void {
   this.categoryService.getAllCategories().subscribe({
     next: (data) => (this.categories = data),
