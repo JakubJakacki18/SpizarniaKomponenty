@@ -124,56 +124,7 @@ export const IngredientController = {
     } catch (error) {
       res.status(500).json({ error: "Internal error: Ingredient was not deleted" });
     }
-  },
-  async createOrGetIngredients(ingredientsFromFront : any)
-  {
-    const ingredients : Ingredient[] = [];
-     ingredientsFromFront.forEach(async ingredient => {
-            const ingredientFromDb = await IngredientController.getIngredientFromDbOrCreateOne(ingredient.productModelId, ingredient.quantity);
-            if(!!ingredientFromDb)
-            {
-              ingredients.push(ingredientFromDb)
-            } else
-            {
-    
-            }           
-              
-          });
-          
-  },
-  async getIngredientFromDbOrCreateOne(productModelId: any, quantity: any) : Promise<Ingredient> {
-    const ingredientFromDb = await ingredientRepository
-    .createQueryBuilder("ingredient")
-    .where("ingredient.productModelId = :productModelId", { productModelId })
-    .andWhere("ingredient.quantity = :quantity", { quantity })
-    .getOne(); 
-    if(!!ingredientFromDb)
-    {
-      return ingredientFromDb;
-    } 
-    else
-    {
-      const mockRequest = {
-        body: {
-          productModelId: productModelId,
-          quantity: quantity,
-        },
-      } as Request;
-      const mockResponse = {
-        status: (statusCode: number) => {
-          console.log("Status:", statusCode);
-          return mockResponse;
-        },
-        json: (data: any) => {
-          console.log("Response data:", data);
-        },
-      } as unknown as Response;
-      await IngredientController.create(mockRequest, mockResponse);
-      return mockResponse
-    }           
-        
-  }
-        
+  },    
 };
 
 
