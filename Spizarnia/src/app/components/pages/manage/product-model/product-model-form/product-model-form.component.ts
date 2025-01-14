@@ -73,14 +73,15 @@ onSubmit() {
     }
   });
 } else {
-
-Object.keys(this.productForm.controls).forEach(key => {
-  const control = this.productForm.get(key);
-  control.markAsTouched();
-});
-alert('Proszę wypełnić wszystkie wymagane pola poprawnie.');
-console.log('Formularz jest nieprawidłowy');
-}
+  //"keys" wyciaga same nazwy kluczy z formularza
+  //"mark as touched" używa się do pokazania błędów
+    Object.keys(this.productForm.controls).forEach(key => {
+      const control = this.productForm.get(key);
+      control.markAsTouched();
+    });
+    alert('Proszę wypełnić wszystkie wymagane pola poprawnie.');
+    console.log('Formularz jest nieprawidłowy');
+    }
 }
  fetchCategories(): void {
   this.categoryService.getAllCategories().subscribe({
