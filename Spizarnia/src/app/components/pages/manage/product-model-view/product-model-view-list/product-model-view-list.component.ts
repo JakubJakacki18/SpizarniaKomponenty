@@ -64,8 +64,8 @@ deleteProduct(productId: number) {
   if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
     this.http.delete(`http://localhost:5000/api/productModel/${productId}`).subscribe(
       () => {
-        this.products = this.products.filter(product => product.id !== productId);
-        this.dataSource.data = this.products;
+        this.dataSource.data = this.dataSource.data.filter(product => product.id !== productId);
+        
       },
       (error) => {
         console.error('Błąd podczas usuwania produktu:', error);
