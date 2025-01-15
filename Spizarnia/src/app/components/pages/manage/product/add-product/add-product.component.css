@@ -62,18 +62,6 @@ mat-expansion-panel-header {
   font-weight: bold;
 }
 
-mat-list-option {
-  font-size: 18px;
-  padding: 10px;
-  color: var(--font-color);
-  border-radius: 5px;
-  background-color: var(--primary-color);
-}
-
-  mat-list-option:hover {
-    background-color: #ffffff;
-  }
-
 .emptyWarning {
   font-size: 16px;
   color: var(--secondary-right);
@@ -90,19 +78,4 @@ mat-form-field {
   color: var(--secondary-left);
   font-size: 16px;
   margin-top: 5px;
-}
-
-.mat-raised-button {
-  cursor: pointer;
-  font-size: 18px;
-  color: var(--font-color);
-  padding: 10px;
-  width: 200px;
-  text-align: center;
-  margin-right: 10px;
-  white-space: nowrap;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-family: "Poppins", "Arial Black";
 }
