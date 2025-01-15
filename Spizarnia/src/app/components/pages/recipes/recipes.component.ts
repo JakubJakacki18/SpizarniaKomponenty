@@ -234,10 +234,18 @@ export class RecipesComponent implements OnInit {
   }
   async getAccordionStyle(recipe: Recipe)
   {
-    if(await this.isRecipeExecutable(recipe))
-      return {style : "recipe-accordion-executable", isExecutable : true};
-    else
-      return {style : "recipe-accordion-nonexecutable", isExecutable : false};
+    const isExecutable = await this.isRecipeExecutable(recipe);
+  return {
+    style: isExecutable
+      ? {
+          background: 'green',
+          fontWeight: 'bold'
+      }
+      : {
+        background: 'red',
+      },
+    isExecutable,
+  };
   }
   async isRecipeExecutable(recipe: Recipe)
   {
@@ -259,7 +267,7 @@ export class RecipesComponent implements OnInit {
   async setRecipeStyles() {
     for (const recipe of this.dataSource.data ?? []) {
       const style = await this.getAccordionStyle(recipe);
-      this.recipeStyles[recipe.id] = style; // Przechowujemy styl w obiekcie, używając ID przepisu
+      this.recipeStyles[recipe.id] = style; 
     }
   }
  executeRecipe(recipe : Recipe){
