@@ -1,5 +1,5 @@
 <div class="site-content">
-  <div class="title">Dodaj przepis do spiżarni</div>
+  <div class="title-manage">Dodaj przepis do spiżarni</div>
   <div class="background-container">
 
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="form-container">
@@ -13,7 +13,7 @@
         <label>Dodaj składniki:</label>
         <div formArrayName="ingredients">
           <div *ngFor="let ingredient of ingredients.controls; let i = index;" [formGroupName]="i">
-                  Składnik {{ i + 1 }}
+                       Składnik {{ i + 1 }}
               <mat-form-field>
                 <mat-label>Składnik</mat-label>
                 <mat-select formControlName="productModel" name="productModel" [disabled]="isSelectDisabled(i)">

@@ -135,11 +135,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { Recipe } from '../../../../../../Spizarnia-backend/src/models/Recipe';
 import { ProductService } from '../../../services/product.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule, MatExpansionModule],
+  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, MatSnackBarModule, MatExpansionModule, RouterModule],
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css'],
 })
