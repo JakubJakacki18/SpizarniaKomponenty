@@ -72,7 +72,7 @@
           }
           @if(recipeStyles[recipe.id].isExecutable)
           {
-            <button>Wykonaj przepis</button>
+            <button (click)="executeRecipe(recipe)">Wykonaj przepis</button>
           }
       </mat-expansion-panel>
     </mat-accordion>

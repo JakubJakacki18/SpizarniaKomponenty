@@ -235,18 +235,9 @@ export class RecipesComponent implements OnInit {
   async getAccordionStyle(recipe: Recipe)
   {
     if(await this.isRecipeExecutable(recipe))
-      {
-        return {style : {
-          background: 'green',
-          fontWeight: 'bold'
-        }, isExecutable : true};
-      }
-      else
-      {
-        return {style : {
-          background: 'red',
-        }, isExecutable : false};
-      }
+      return {style : "recipe-accordion-executable", isExecutable : true};
+    else
+      return {style : "recipe-accordion-nonexecutable", isExecutable : false};
   }
   async isRecipeExecutable(recipe: Recipe)
   {
@@ -271,5 +262,7 @@ export class RecipesComponent implements OnInit {
       this.recipeStyles[recipe.id] = style; // Przechowujemy styl w obiekcie, używając ID przepisu
     }
   }
+ executeRecipe(recipe : Recipe){
   
+ } 
 }

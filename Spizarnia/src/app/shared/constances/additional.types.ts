@@ -5,3 +5,9 @@ export type CategoryWithDisabledProductModels = Category & {
     productModels?: (ProductModel & { isDisabled: boolean })[] 
   };
   
+export enum SnackBarResultType
+{
+  Error = -1,
+  Success = 0,
+  Info = 1,
+} 

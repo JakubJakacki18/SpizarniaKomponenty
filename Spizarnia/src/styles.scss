@@ -27,6 +27,10 @@ body {
   @include mat.sort-overrides((arrow-color: var(---secondary-left)));
   @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color)) );
   @include mat.select-overrides((panel-background-color: var(--primary-color)));
+  // @include mat.snack-bar-overrides((
+  //   container-color: var(--secondary-left),
+  //   supporting-text-color: var(--font-color-hover),
+  // ));
 }
 :host {
   display: grid;
@@ -169,4 +173,30 @@ a {
 .search-bar button:hover {
   color: var(--font-color);
   background-color: var(--primary-color);
+}
+
+.snackbar-error {
+  background-color: #f44336; 
+  color: #fff;
+}
+
+.snackbar-success {
+  background-color: var(--secondary-right); 
+  color: #fff;
+}
+
+.snackbar-info {
+  background-color: var(--primary-color); 
+  color: var(--font-color);
+}
+
+.recipe-accordion-executable
+{
+  background: 'green';
+  font-weight: 'bold';
+}
+.recipe-accordion-nonexecutable
+{
+  background: 'red';
+
 }
