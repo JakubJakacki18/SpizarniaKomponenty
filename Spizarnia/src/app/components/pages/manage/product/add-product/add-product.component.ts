@@ -53,35 +53,26 @@ export class AddProductComponent {
 selectedProduct: any;
 selectedDate: any;
 onSubmit() {
-  let dataDialog : {title : string, message : string};
+  let messageSnackBar : string
   //dataDialog = {title : "Błąd", message:"Wartość wiadomości nie została przypisana"};
   if (this.productForm.valid) {
     this.productService.createProduct(this.productForm.value).subscribe(
     (response) => {
       console.log('Produkt został utworzony:', response);
-      dataDialog = {
-        title: 'Sukces',
-        message: 'Produkt został pomyślnie utworzony!'
-      }
-      this.dialog.open(SimpleDialogComponent, {data: dataDialog});
+      messageSnackBar = 'Produkt został pomyślnie utworzony!';
+      this.snackBarService.openSnackBar(messageSnackBar,SnackBarResultType.Success);
       this.productForm.reset();
     },
     (error) => {
       console.error('Błąd podczas tworzenia produktu:', error);
-      dataDialog= {
-        title: 'Błąd',
-        message: 'Wystąpił błąd podczas tworzenia produktu. Spróbuj ponownie.'
-      }
-      this.dialog.open(SimpleDialogComponent, {data: dataDialog});
+      messageSnackBar= 'Wystąpił błąd podczas tworzenia produktu. Spróbuj ponownie.'
+      this.snackBarService.openSnackBar(messageSnackBar,SnackBarResultType.Error);
 
     }
    );
    } else {
-     dataDialog = {
-       title: 'Nieprawidłowy formularz',
-       message: 'Formularz jest nieprawidłowy. Uzupełnij wszystkie pola poprawnymi wartościami.'
-      }
-      this.dialog.open(SimpleDialogComponent, {data: dataDialog});
+     messageSnackBar = 'Formularz jest nieprawidłowy. Uzupełnij wszystkie pola poprawnymi wartościami.'
+     this.snackBarService.openSnackBar(messageSnackBar,SnackBarResultType.Error);
       console.log('Formularz jest nieprawidłowy');
    }
 }
@@ -108,10 +99,10 @@ onSubmit() {
 
     if (purchaseDate && expirationDate) {
       if (new Date(purchaseDate) > new Date(expirationDate)) {
-        return { invalidDateRange: true }; // Błąd: data zakupu nie może być większa lub równa dacie ważności
+        return { invalidDateRange: true }; 
       }
     }
-    return null; // Brak błędów
+    return null; 
   }
   constructor(private fb: FormBuilder, private categoryService: CategoryService, private productService:ProductService,  private dialog: MatDialog, private snackBarService : SnackBarService) {
     this.productForm = new FormGroup({
