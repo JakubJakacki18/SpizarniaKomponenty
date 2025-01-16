@@ -18,13 +18,14 @@ export class ProductModelComponent implements OnInit {
   constructor(private productModelService: ProductModelService) {}
   //doczytuje dane z api po wygenerowaniu komponentu
   ngOnInit(): void {
-    this.fetchProductModels();
+    //this.fetchProductModels();
 }
 
 fetchProductModels(): void {
   this.productModelService.getAllProductModels().subscribe({
     next: (data) => (this.productModels = data),
     error: (err) => console.error('Error fetching ProductModels:', err),
+    //nie ma snack bara bo nie wykorzystujemy tej funkcji
   });
 }
 

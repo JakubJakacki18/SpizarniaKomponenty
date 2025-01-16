@@ -8,6 +8,11 @@ import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { Product } from '../../../../../../Spizarnia-backend/src/models/Product';
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { ProductService } from '../../../services/product.service';
+import { SnackBarService } from '../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../shared/constances/additional.types';
+import { DialogService } from '../../../services/dialog.service';
+
 
 @Component({
   selector: 'app-all-products',
@@ -21,10 +26,10 @@ export class AllProductsComponent implements OnInit {
   products: any[] = [];
   displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'purchaseDate', 'expirationDate', 'delete'];
   searchTerm: string = '';
-  dataSource = new MatTableDataSource<any>([]); // Użycie MatTableDataSource dla sortowania
-  @ViewChild(MatSort) sort!: MatSort; // Dodanie ViewChild do obsługi sortowania
+  dataSource = new MatTableDataSource<any>([]); 
+  @ViewChild(MatSort) sort!: MatSort; 
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe,private productService : ProductService,private snackBarService : SnackBarService, private dialogService : DialogService) { }
   private checkExpirationInterval: any;
 
   ngOnInit() {
@@ -34,26 +39,25 @@ export class AllProductsComponent implements OnInit {
     }, 60000); // 60000 ms = 1 minuta
   }
   ngOnDestroy() {
-    // Czyść interwał przy niszczeniu komponentu
     if (this.checkExpirationInterval) {
       clearInterval(this.checkExpirationInterval);
     }
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort; // Ustawienie sortowania po inicjalizacji widoku
+    this.dataSource.sort = this.sort;
   }
 
   onSearch() {
     if (this.searchTerm.length >= 2) {
       const searchTermLower = this.searchTerm.toLowerCase();
 
-      this.dataSource.filter = searchTermLower; // Użycie wbudowanego filtrowania w MatTableDataSource
+      this.dataSource.filter = searchTermLower;
       this.dataSource.filterPredicate = (data: any, filter: string) => {
-        return data.name.toLowerCase().includes(filter); // Wyszukiwanie po nazwie
+        return data.name.toLowerCase().includes(filter);
       };
     } else {
-      this.dataSource.filter = ''; // Reset filtra
+      this.dataSource.filter = '';
     }
   }
   getRowStyle(product: any): any {
@@ -69,7 +73,7 @@ export class AllProductsComponent implements OnInit {
       return {
         color: 'red',
         fontWeight: 'bold'
-      }; // Kolor czerwony dla produktów, których data ważności zbliża się
+      };
     }
     if (daysDifference < 7 && daysDifference > 3) {
       return {
@@ -88,27 +92,35 @@ export class AllProductsComponent implements OnInit {
   }
 
   getAllProducts() {
-    this.http.get<any[]>(`http://localhost:5000/api/product`).subscribe(
-      (data) => {
+    this.productService.getAllProducts().subscribe({
+      next: (data) => {
         this.products = data;
-        this.dataSource.data = data; // Przekazanie danych do MatTableDataSource
+        this.dataSource.data = data;
       },
-      (error) => {
+      error: (error) => {
+        this.snackBarService.openSnackBar('Błąd podczas pobierania produktów', SnackBarResultType.Error);
         console.error("Error!", error);
       }
-    )
+  });
   }
   
-  deleteProduct(productId: number) {
-    if (confirm('Czy na pewno chcesz usunąć ten produkt?')) {
-      this.http.delete(`http://localhost:5000/api/product/${productId}`).subscribe(
-        () => {
+  async deleteProduct(productId: number) {
+    const deleteProductDialogData: { title: string; message: string; } = {
+      title: 'Usuwanie produktu',
+      message: 'Czy na pewno chcesz usunąć ten produkt?'
+    }
+    const dialogAnswer= await this.dialogService.openConfirmDialog(deleteProductDialogData);
+    if (dialogAnswer) {
+      this.productService.deleteProductById(productId).subscribe({
+        next: () => {
           this.products = this.products.filter(product => product.id !== productId);
           this.dataSource.data = this.products;
         },
-        (error) => {
+        error: (error) => {
+          this.snackBarService.openSnackBar('Nie udało się usunąć produktu', SnackBarResultType.Error);
           console.error('Błąd podczas usuwania produktu:', error);
         }
+      }
       );
     }
   }

@@ -11,6 +11,9 @@ import { DialogService } from '../../../services/dialog.service';
 import { Product } from '../../../../../../Spizarnia-backend/src/models/Product';
 import { ListOfProductsToBuy } from '../../../../../../Spizarnia-backend/src/models/ListOfProductsToBuy';
 import { firstValueFrom } from 'rxjs';
+import { SnackBarComponent } from '../../partials/snack-bar/snack-bar.component';
+import { SnackBarService } from '../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../shared/constances/additional.types';
 
 @Component({
   selector: 'app-grocery-list',
@@ -48,7 +51,8 @@ export class GroceryListComponent implements OnInit {
     private dialogService: DialogService,
     private productModelService: ProductModelService,
     private productService: ProductService,
-    private listOfProductsToBuyService: ListOfProductsToBuyService
+    private listOfProductsToBuyService: ListOfProductsToBuyService,
+    private snackBarService : SnackBarService
   ) {}
 
   ngOnInit() {
@@ -66,13 +70,13 @@ export class GroceryListComponent implements OnInit {
       console.log(this.searchTermGrocery.toLowerCase());
       const searchTermLower = this.searchTermGrocery.toLowerCase();
 
-      this.dataSource.filter = searchTermLower; // Użycie wbudowanego filtrowania w MatTableDataSource
+      this.dataSource.filter = searchTermLower; 
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         
-        return data.products.name.toLowerCase().includes(filter); // Wyszukiwanie po nazwie
+        return data.products.name.toLowerCase().includes(filter); 
       };
     } else {
-      this.dataSource.filter = ''; // Reset filtra
+      this.dataSource.filter = ''; 
     }
   }
   
@@ -88,7 +92,9 @@ export class GroceryListComponent implements OnInit {
           return new Promise((resolve, reject) => {
             this.listOfProductsToBuyService.deleteProductModelFromCart(product.id).subscribe({
               next: () => resolve(true),
-              error: (err) => reject(err)
+              error: (err) => {
+                this.snackBarService.openSnackBar("Nie udało się usunąć produktu z koszyka",SnackBarResultType.Error)
+                reject(err)}
             });
           });
         });
@@ -100,11 +106,13 @@ export class GroceryListComponent implements OnInit {
             console.log('Lista zakupów została wyczyszczona');
           })
           .catch(error => {
+            this.snackBarService.openSnackBar("Czyszczenie listy zakupów nie powiodło się",SnackBarResultType.Error)
             console.error('Błąd podczas czyszczenia listy zakupów:', error);
           });
       },
       error: (error) => {
         console.error('Błąd podczas pobierania listy produktów:', error);
+        this.snackBarService.openSnackBar("Pobieranie listy zakupów nie powiodło się",SnackBarResultType.Error)
       }
     });
   }
@@ -120,7 +128,10 @@ export class GroceryListComponent implements OnInit {
         this.deleteExpiredProducts();
         this.calculateTotalPrice(this.dataSource.data);
       },
-      error: (error: any) => console.error('Błąd podczas pobierania produktów:', error)
+      error: (error: any) => {
+        console.error('Błąd podczas pobierania produktów:', error)
+        this.snackBarService.openSnackBar("Pobieranie produktów nie powiodło się",SnackBarResultType.Error);
+      }
     });
   }
 
@@ -144,10 +155,12 @@ export class GroceryListComponent implements OnInit {
     this.listOfProductsToBuyService.createEntryInListOfProductsToBuy(newEntry).subscribe({
       next: (response) => {
         console.log('Produkt dodany do listy zakupów', response);
+        //this.snackBarService.openSnackBar("Produkt dodany do listy zakupów",SnackBarResultType.Success)
         this.deleteProductFromPantry(product.id);
       },
       error: (error) => {
         console.error('Błąd podczas dodawania produktu do listy zakupów:', error);
+        this.snackBarService.openSnackBar('Nie udało się dodać produktu do listy zakupów',SnackBarResultType.Error);
       }
     });
   }
@@ -159,6 +172,7 @@ export class GroceryListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Błąd podczas usuwania produktu ze spiżarni:', error);
+        this.snackBarService.openSnackBar('Nie udało się usunąć produktu ze spiżarni',SnackBarResultType.Error);
       }
     });
   }
@@ -169,7 +183,10 @@ export class GroceryListComponent implements OnInit {
         this.dataSource.data = data;
         this.calculateTotalPrice(this.dataSource.data);
       },
-      error: (err) => console.error('Błąd podczas pobierania danych: ', err),
+      error: (err) => {
+        console.error('Błąd podczas pobierania danych: ', err),
+        this.snackBarService.openSnackBar('Nie udało się pobrać listy zakupów',SnackBarResultType.Error);
+      }
     });
   }
 
@@ -191,6 +208,8 @@ export class GroceryListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Błąd podczas aktualizacji ilości produktu:', error);
+        this.snackBarService.openSnackBar('Nie udało się zmienić ilości produktu',SnackBarResultType.Error);
+
       }
     });
   }
@@ -204,6 +223,7 @@ export class GroceryListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Błąd podczas usuwania produktu z listy zakupów:', error);
+        this.snackBarService.openSnackBar('Nie udało się usunąć produktu z listy zakupów',SnackBarResultType.Error);
       }
     });
   }

@@ -62,7 +62,7 @@ ngOnInit() {
 
 
 getAllProducts() {
-  this.productService.getAllProductModels().subscribe({
+  this.productService.getAllProducts().subscribe({
     next: (data) => {
       console.log('Fetched products:', data);
       data.forEach(product => {

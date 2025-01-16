@@ -136,6 +136,8 @@ import { Recipe } from '../../../../../../Spizarnia-backend/src/models/Recipe';
 import { ProductService } from '../../../services/product.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { RouterModule } from '@angular/router';
+import { SnackBarService } from '../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../shared/constances/additional.types';
 
 @Component({
   selector: 'app-recipes',
@@ -153,7 +155,7 @@ export class RecipesComponent implements OnInit {
   showDialog: boolean = false;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   recipeStyles: { [key: number]: any } = {};
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private recipeService : RecipeService, private dialogService: DialogService, private productService : ProductService) {
+  constructor(private http: HttpClient, private snackBarService: SnackBarService, private recipeService : RecipeService, private dialogService: DialogService, private productService : ProductService) {
     
   }
 
@@ -173,7 +175,7 @@ export class RecipesComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching recipes:', err);
-      
+        this.snackBarService.openSnackBar('Nie udało się pobrać przepisów',SnackBarResultType.Error);
 
 
         // this.snackBar.open('Nie udało się pobrać przepisów. Sprawdź połączenie z serwerem.', 'OK', {
@@ -258,6 +260,7 @@ export class RecipesComponent implements OnInit {
         return false;
     } catch (err) {
       console.error("Nie udało się sprawdzić ilości produktu w spiżarni", err);
+      //this.snackBarService.openSnackBar('Nie udało sprawdzić ilości produktu w spiżarni',SnackBarResultType.Error);
       return false; 
     }  
     }
