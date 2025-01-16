@@ -11,7 +11,7 @@
         <!-- Iteracja przez kategorie w jednym rzędzie -->
         <a *ngFor="let category of row" [routerLink]="['/manage/container', category.categoryName]">
           <div class="container-box">
-            <p>{{ category.categoryName }}</p>
+            <p>{{ category.categoryName.slice(0, 8) }}</p>
           </div>
         </a>
       </div>
