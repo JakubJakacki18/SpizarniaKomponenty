@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { SimpleDialogComponent } from '../../../../partials/simple-dialog/simple-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
+import { SnackBarService } from '../../../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../../../shared/constances/additional.types';
 
 
 @Component({
@@ -111,7 +113,7 @@ onSubmit() {
     }
     return null; // Brak błędów
   }
-  constructor(private fb: FormBuilder, private categoryService: CategoryService, private productService:ProductService,  private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private categoryService: CategoryService, private productService:ProductService,  private dialog: MatDialog, private snackBarService : SnackBarService) {
     this.productForm = new FormGroup({
       categories: this.categoriesControl,
     });
@@ -121,7 +123,10 @@ onSubmit() {
     fetchCategories(): void {
       this.categoryService.getAllCategories().subscribe({
         next: (data) => (this.categories = data),
-        error: (err) => console.error('Error fetching ProductModels:', err),
+        error: (err) => {
+          this.snackBarService.openSnackBar('Nie udało się pobrać kategorii', SnackBarResultType.Error);          
+          console.error('Error fetching ProductModels:', err)
+        }
       });
     }
   }

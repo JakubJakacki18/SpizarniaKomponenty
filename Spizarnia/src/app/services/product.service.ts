@@ -15,9 +15,9 @@ export class ProductService {
   }
 
   constructor(private http: HttpClient) {}
-  getAllProductModels():Observable<Product[]>
+  getAllProductModels():Observable<any[]>
   {
-     return this.http.get<Product[]>(PRODUCTS);
+     return this.http.get<any[]>(PRODUCTS);
   }
   getProductByName(name : string):Observable<Product[]>
   {

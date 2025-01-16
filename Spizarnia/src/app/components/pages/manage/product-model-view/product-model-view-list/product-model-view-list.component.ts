@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { SnackBarService } from '../../../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../../../shared/constances/additional.types';
 @Component({
   selector: 'app-product-model-view-list',
   standalone: true,
@@ -28,25 +30,24 @@ import { FormsModule } from '@angular/forms';
   providers: [DatePipe]
 })
 export class ProductModelViewListComponent implements OnInit {
-  // Kolumny wyświetlane w tabeli
   displayedColumns: string[] = ['id', 'name', 'quantity', 'categoryName', 'type', 'price', 'edit', 'delete'];
   products: any[] = [];
-  dataSource = new MatTableDataSource<any>([]); // Dane do tabeli
-  @ViewChild(MatSort) sort!: MatSort; // Obsługa sortowania
+  dataSource = new MatTableDataSource<any>([]); 
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private productModelService: ProductModelService, private http: HttpClient, private dialog: MatDialog) {}
+  constructor(private productModelService: ProductModelService, private http: HttpClient, private dialog: MatDialog, private snackBarService : SnackBarService) {}
 
   ngOnInit(): void {
-    this.loadProductModels(); // Pobranie produktów na starcie
+    this.loadProductModels(); 
   }
 
   ngAfterViewInit(): void {
     if (this.sort) {
-      this.dataSource.sort = this.sort; // Przypisanie sortowania do tabeli
+      this.dataSource.sort = this.sort; 
     }
   }
 
-  // Pobranie wszystkich modeli produktów z API
+  
   loadProductModels(): void {
   this.productModelService.getAllProductModels().subscribe({
     next: (data) => {
@@ -55,7 +56,7 @@ export class ProductModelViewListComponent implements OnInit {
     },
     error: (err) => {
       console.error('Błąd podczas pobierania modeli produktów:', err);
-      alert('Błąd podczas ładowania danych produktów.');
+      this.snackBarService.openSnackBar('Nastąpił problem podczas pobierania modeli produktów:',SnackBarResultType.Error);
     },
   });
 }

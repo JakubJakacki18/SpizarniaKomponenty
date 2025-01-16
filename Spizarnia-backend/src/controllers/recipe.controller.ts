@@ -58,11 +58,11 @@ export const RecipeController = {
         return;
       } 
 
-
+      console.log(finished);
       const newRecipe = recipeRepository.create({
         name,
         ingredients,
-        finished: finished !== undefined ? finished : false, //Defultowo false
+        finished: (finished !== undefined) ? finished : true, //Defultowo false
       });
 
       await recipeRepository.save(newRecipe);
