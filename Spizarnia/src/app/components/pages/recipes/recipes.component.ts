@@ -239,7 +239,7 @@ export class RecipesComponent implements OnInit {
   return {
     style: isExecutable
       ? {
-          background: 'green',
+          background: 'lightgreen',
           fontWeight: 'bold'
       }
       : {

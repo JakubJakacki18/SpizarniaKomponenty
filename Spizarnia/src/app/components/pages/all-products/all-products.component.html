@@ -5,7 +5,8 @@
              placeholder="Wyszukaj pyszności..."
              [(ngModel)]="searchTerm"
              (input)="onSearch()" />
-      <button class ="action-button"(click)="onSearch()">Szukaj</button>
+      <button class="action-button" (click)="onSearch()">Szukaj</button>
+      <a [routerLink]="['/manage/product']" class="action-button" routerLinkActive="active-link">Dodaj produkt</a>
     </div>
   </div>
     <!-- Tabela z produktami -->

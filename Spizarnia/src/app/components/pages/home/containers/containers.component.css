@@ -1,10 +1,20 @@
 .container-grid {
   display: grid;
   align-items: center;
+
   grid-template-columns: repeat(6, 1fr); /* Maksymalnie 5 kontenerów w rzędzie */
   gap: 30px; /* Odstępy między kontenerami */
 }
-
+.container-row {
+  display: flex;
+  flex-direction: column; /* Pionowe rozmieszczenie kontenerów i półki */
+  align-items: center; /* Wyśrodkowanie w poziomie */
+  margin-bottom: 20px; /* Odstęp między rzędami */
+  margin-top:50px;
+}
+.container-section{
+    height:85vh
+}
 /* Półka pod rzędem kontenerów */
 .shelf {
   width: 100%;
@@ -38,9 +48,11 @@
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%); /* Gradient */
   color: white;
   text-align: center;
-  width: 80px; /* Zwiększona szerokość */
+  width: auto; /* Zwiększona szerokość */
   text-transform: uppercase;
-  padding: 50px; /* Zwiększenie paddingu */
+  margin-left:20px;
+  margin-right:20px;
+  padding: 40px; /* Zwiększenie paddingu */
   font-size: 20px; /* Zwiększona wysokość (padding) */
   border-radius: 12px; /* Bardziej zaokrąglone rogi */
   font-weight: bold;

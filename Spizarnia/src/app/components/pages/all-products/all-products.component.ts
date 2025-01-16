@@ -7,11 +7,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
 import { Product } from '../../../../../../Spizarnia-backend/src/models/Product';
 import { Observable } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-all-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule],
+  imports: [CommonModule, FormsModule, MatTableModule, MatSortModule, RouterModule],
   templateUrl: './all-products.component.html',
   styleUrls: ['./all-products.component.css'],
   providers: [DatePipe]

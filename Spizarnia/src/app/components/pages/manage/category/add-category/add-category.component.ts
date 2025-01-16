@@ -56,7 +56,7 @@ export class AddCategoryComponent implements OnInit{
     }
     });
    } else {
-    snackBarMessage ='Formularz jest nieprawidłowy, Wpisz nazwę kategorii którą chcesz dodać.'
+    snackBarMessage ='Formularz jest nieprawidłowy, wpisz kategorię którą chcesz dodać.'
     this.snackBarService.openSnackBar(snackBarMessage, SnackBarResultType.Error);
       console.log('Formularz jest nieprawidłowy');
    }

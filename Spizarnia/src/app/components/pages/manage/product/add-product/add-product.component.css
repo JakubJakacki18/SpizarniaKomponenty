@@ -1,10 +1,9 @@
 /* Kontener tła, który rozsuwa stronę w dół */
 .background-container {
-  position: relative;
-  width: 120%;
+  display:flex;
+  width: auto;
+  height:auto;
   background-color: var(--primary-color);
-  overflow: auto;
-  padding: 30px 20px;
 }
 
 /* Form container, który będzie trzymany w background-container */

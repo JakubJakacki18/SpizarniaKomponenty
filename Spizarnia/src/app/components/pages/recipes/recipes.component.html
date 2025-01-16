@@ -29,10 +29,6 @@
           @for(ingredient of recipe.ingredients; track ingredient){
             <p>{{ingredient.productModel.name}} Ilość: {{ingredient.quantity}}</p>
           }
-          @if(recipeStyles[recipe.id].isExecutable)
-          {
-            <button (click)="executeRecipe(recipe)">Wykonaj przepis</button>
-          }
       </mat-expansion-panel>
     </mat-accordion>
   }
