@@ -26,9 +26,15 @@
             <input matInput type="number" name="newQuantity" [(ngModel)]="newQuantity" placeholder="Nowa ilość" required
                 #quantityInput="ngModel" [min]="1" />
         </mat-form-field>
-        <div *ngIf="quantityInput.touched && quantityInput.invalid" class="error">
-            <p *ngIf="quantityInput.errors?.required">Ilość jest wymagana.</p>
-            <p *ngIf="newQuantity === productOnList.products.quantity">Nowa ilość musi być różna od aktualnej.</p>
+        <div class="error">
+            @if(newQuantity === productOnList.quantity){
+                <p>Nowa ilość musi być różna od aktualnej.</p>
+            }
+        @if(quantityInput.touched && quantityInput.invalid){ 
+            @if(quantityInput.errors?.['required']){
+                <p>Ilość jest wymagana.</p>
+            }
+        }
         </div>
     </form>
 </div>
