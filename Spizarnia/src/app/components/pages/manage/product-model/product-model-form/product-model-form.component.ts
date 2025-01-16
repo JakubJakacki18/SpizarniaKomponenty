@@ -5,6 +5,8 @@ import { ProductModelService } from './../../../../../services/product-model.ser
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../../../../../../Spizarnia-backend/src/models/Category';
 import { first } from 'rxjs';
+import { SnackBarService } from '../../../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../../../shared/constances/additional.types';
 
 @Component({
  selector: 'app-product-model-form',
@@ -17,7 +19,7 @@ export class ProductModelFormComponent {
  @Output() productCreated = new EventEmitter<void>();
  categories: Category[] =[];
  categoriesControl = new FormControl();
- constructor(private fb: FormBuilder, private productModelService: ProductModelService, private categoryService: CategoryService) 
+ constructor(private fb: FormBuilder, private productModelService: ProductModelService, private categoryService: CategoryService, private snackBarService : SnackBarService) 
  {
   this.productForm = new FormGroup({
     categories: this.categoriesControl,
@@ -52,24 +54,25 @@ onSubmit() {
   .subscribe({
     next: (isDuplicate) => {
       if (isDuplicate) {
-        alert('Produkt o tych samych parametrach już istnieje!');
+        this.snackBarService.openSnackBar('Produkt o tych samych parametrach już istnieje!', SnackBarResultType.Error);
       } else {
         this.productModelService.createProduct(this.productForm.value).subscribe({
           next: (response) => {
             console.log('Produkt został utworzony:', response);
+            this.snackBarService.openSnackBar('Produkt został utworzony pomyślnie!', SnackBarResultType.Success);
             this.productCreated.emit();
             this.productForm.reset();
           },
           error: (error) => {
             console.error('Błąd podczas tworzenia produktu:', error);
-            alert('Błąd podczas tworzenia produktu.');
+            this.snackBarService.openSnackBar('Błąd podczas tworzenia produktu.', SnackBarResultType.Error);
           }
         });
       }
     },
     error: (error) => {
       console.error('Błąd podczas sprawdzania duplikatów:', error);
-      alert('Wystąpił błąd podczas sprawdzania duplikatów.');
+      this.snackBarService.openSnackBar('Błąd podczas sprawdzania duplikatów:',SnackBarResultType.Error)
     }
   });
 } else {
@@ -79,14 +82,18 @@ onSubmit() {
       const control = this.productForm.get(key);
       control.markAsTouched();
     });
-    alert('Proszę wypełnić wszystkie wymagane pola poprawnie.');
+    this.snackBarService.openSnackBar('Przynajmniej jedno z wymaganych pól jest puste. Wypełnij wszystkie pola', SnackBarResultType.Error);
     console.log('Formularz jest nieprawidłowy');
     }
 }
  fetchCategories(): void {
   this.categoryService.getAllCategories().subscribe({
     next: (data) => (this.categories = data),
-    error: (err) => console.error('Error fetching ProductModels:', err),
+    error: (err) => {
+      console.error('Error fetching ProductModels:', err)
+      this.snackBarService.openSnackBar('Nie udało się pobrać kategorii', SnackBarResultType.Error);
+      
+    }
   });
 }
 }
