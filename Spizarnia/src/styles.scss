@@ -176,7 +176,7 @@ a {
 }
 
 .snackbar-error {
-  background-color: #f44336; 
+  background: #f44336; 
   color: #fff;
 }
 
@@ -186,6 +186,18 @@ a {
 }
 
 .snackbar-info {
+  background-color: var(--primary-color); 
+  color: var(--font-color);
+}
+.snackbar-error button:hover{
+  background-color: var(--primary-color); 
+  color: var(--font-color);
+}
+.snackbar-success button:hover{
+  background-color: var(--primary-color); 
+  color: var(--font-color);
+}
+.snackbar-info button:hover{
   background-color: var(--primary-color); 
   color: var(--font-color);
 }
