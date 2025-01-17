@@ -30,7 +30,7 @@ ngOnInit(): void {
   this.fetchCategories();
   this.productForm = this.fb.group({
   name: ['', Validators.required],
-  unit: ['', Validators.required],
+  unit: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
   price: ['', [Validators.required, Validators.min(0)]],
   quantity: ['', [Validators.required, Validators.min(0.001)]],
   categoryId: ['',[Validators.required]],

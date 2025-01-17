@@ -19,7 +19,7 @@
       </div>
       @if(productForm.get('unit')?.invalid && productForm.get('unit')?.touched){
       <div class="error-message">
-        Jednostka jest wymagana
+        Jednostka jest wymagana, i nie może być ujemna.
       </div>
     }
     </div>
