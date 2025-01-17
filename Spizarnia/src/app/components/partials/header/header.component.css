@@ -1,31 +1,6 @@
-/* Sekcja nagłówka */
-.header-container {
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between; /* Dzieli przestrzeń między tytuł i przyciski */
-  align-items: center;
-}
-
-.title-section {
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.header-title {
-  color: var(--primary-color);
-  text-align: center;
-  font-size: 34px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-  .header-active {
+.header-active {
     color: var(--secondary-left);
-  }
+}
 
 .button-section {
   display: flex;
