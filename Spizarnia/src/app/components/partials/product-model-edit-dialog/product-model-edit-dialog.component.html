@@ -1,17 +1,20 @@
-<h1 mat-dialog-title>Edycja produktu</h1>
+<h1 mat-dialog-title>Edycja produktu z katalogu</h1>
 
-<div mat-dialog-content>
-  <!-- Formularz do edycji danych produktu -->
-  <form #editForm="ngForm">
-    <mat-form-field appearance="fill">
-      <div class="form-title">Cena</div>
-      <input matInput type="number" [(ngModel)]="updatedPrice" name="price" placeholder="Nowa cena" required />
-    </mat-form-field>
+<div mat-dialog-content class="box-dialog">
+    <form>
+      <mat-form-field appearance="fill">
+        <div class="form-title">Cena</div>
+        <input matInput [(ngModel)]="updatedPrice" name="price" type="number" required />
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <div class="form-title">Kategoria</div>
-      <input matInput [(ngModel)]="updatedCategory" name="category" placeholder="Nowa kategoria" required />
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <div class="form-title">Kategoria</div>
+        <mat-select [(ngModel)]="updatedCategory">
+          @for (category of categories; track category) {
+            <mat-option [value]="category.categoryName">{{category.categoryName}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
     <mat-form-field appearance="fill">
       <div class="form-title">Typ</div>
