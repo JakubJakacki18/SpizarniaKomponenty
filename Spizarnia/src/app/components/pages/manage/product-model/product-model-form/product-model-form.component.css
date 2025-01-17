@@ -42,11 +42,12 @@ label {
   font-size: 16px;
   color: var(--font-color);
   box-sizing: border-box;
+  font-family: "Poppins", "Arial Black";
 }
 
   .form-input:focus {
     outline: none;
-    background: #ffffff;
+    background: var(--primary-color);
   }
 
 .error-message {
