@@ -1,24 +1,43 @@
+div[mat-dialog-actions] button {
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--font-color);
+  padding: 2px;
+  width: auto;
+  height: 30px;
+  margin-left: 80px;
+  margin-bottom:10px;
+  border: 1px solid var(--background-color);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+  div[mat-dialog-actions] button:hover {
+    background-color: var(--secondary-left);
+    background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+    color: var(--font-color-hover);
+  }
 
 .box-dialog {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  margin-left:50px;
-  padding: 50px;
+  margin-left: 85px;
+  margin-right: 20px;
 }
 
-.mat-mdc-form-field {
-  width: 100%;
- margin-bottom: 15px;
+.dialog-title {
+  margin-top:10px;
+  margin-left:30px;
   font-family: "Poppins", "Arial";
-
-}
-
-.mat-mdc-form-field-label {
-  font-family: "Poppins", "Arial";
-}
-.mat-mdc-dialog-title {
-    margin-left:20px;
-  font-family: "Poppins", "Arial";
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  color: var(--font-color);
 }
