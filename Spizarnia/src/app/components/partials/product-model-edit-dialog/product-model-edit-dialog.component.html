@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>EDYTUJ</h2>
+<h1 mat-dialog-title>Edycja produktu z katalogu</h1>
 
-<div mat-dialog-contentclass="box-dialog">
+<div mat-dialog-content class="box-dialog">
     <form>
       <mat-form-field appearance="fill">
         <div class="form-title">Cena</div>
@@ -9,7 +9,11 @@
 
       <mat-form-field appearance="fill">
         <div class="form-title">Kategoria</div>
-        <input matInput [(ngModel)]="updatedCategory" name="category" required />
+        <mat-select [(ngModel)]="updatedCategory">
+          @for (category of categories; track category) {
+            <mat-option [value]="category.categoryName">{{category.categoryName}}</mat-option>
+          }
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill">

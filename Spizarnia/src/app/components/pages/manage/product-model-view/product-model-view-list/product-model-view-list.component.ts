@@ -102,7 +102,7 @@ updateProduct(updatedProduct: any) {
     width: '400px',
     data: {
       price: product.price.toString(),
-      category: product.category.categoryName,
+      categoryName: product.category.categoryName,
       type: product.type
     }
   });
