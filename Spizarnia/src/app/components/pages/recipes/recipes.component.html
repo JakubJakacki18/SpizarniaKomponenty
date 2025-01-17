@@ -3,7 +3,7 @@
   <div class="search-bar">
     <input type="text"
            placeholder="Wyszukaj przepis..."
-           [(ngModel)]="searchTerm"
+           [(ngModel)]="searchTermRecipe"
            (input)="onSearch()" />
     <button class="action-button" routerLinkActive="active-link" (click)="onSearch()">
       Szukaj
@@ -16,8 +16,8 @@
 <!-- Lista przepisów -->
 <div class="site-content">
 <div class="background-container">
-  <div *ngIf="dataSource && dataSource.data && dataSource.data.length > 0; else noRecipes">
-    @for (recipe of dataSource.data; track recipe) {
+  <div *ngIf="dataSource && dataSource.filteredData && dataSource.filteredData.length > 0; else noRecipes">
+    @for (recipe of dataSource.filteredData; track recipe) {
     <mat-accordion>
       <mat-expansion-panel [ngStyle]="recipeStyles[recipe.id].style">
         <mat-expansion-panel-header>

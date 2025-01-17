@@ -40,27 +40,28 @@ export class RecipesComponent implements OnInit {
     this.getAllRecipes();
     
     this.dataSource.sort = this.sort;
+
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      return data.name.toLowerCase().includes(filter.toLowerCase());
+    };
     
   }
-  //Aktualnie bez komunikacji z Backendem TODO
   getAllRecipes() {
     this.recipeService.getAllRecipes().subscribe({
       next: (data) => {
         this.recipes = data;
-        this.dataSource.data = data;
+        this.dataSource = new MatTableDataSource(data);  // Recreate the datasource
+        this.dataSource.filterPredicate = (data: any, filter: string) => {
+          if (!filter) return true;
+          return data.name.toLowerCase().includes(filter.toLowerCase());
+        };
         this.setRecipeStyles();
       },
       error: (err) => {
         console.error('Error fetching recipes:', err);
-        this.snackBarService.openSnackBar('Nie udało się pobrać przepisów',SnackBarResultType.Error);
-
-
-        // this.snackBar.open('Nie udało się pobrać przepisów. Sprawdź połączenie z serwerem.', 'OK', {
-        //   duration: 3000,
-        // });
-      }}
-    );
-    
+        this.snackBarService.openSnackBar('Nie udało się pobrać przepisów', SnackBarResultType.Error);
+      }
+    });
   }
 
   addRecipe() {
@@ -87,23 +88,18 @@ export class RecipesComponent implements OnInit {
     // this.showDialog = false;
   }
 
+  searchTermRecipe: string = '';
+
   onSearch() {
-    const searchTermLower = this.searchTerm.trim().toLowerCase();
-    this.dataSource.filter = searchTermLower;
     this.dataSource.filterPredicate = (data: any, filter: string) => {
-      return (
-        data.name.toLowerCase().includes(filter) ||
-        data.ingredients.some((ingredient: string) =>
-          ingredient.toLowerCase().includes(filter)
-        )
-      );
+      if (!filter) return true;
+      return data.name.toLowerCase().includes(filter.toLowerCase());
     };
+    
+    // Apply the filter
+    this.dataSource.filter = this.searchTermRecipe.trim();
   }
 
-  resetSearch() {
-    this.searchTerm = '';
-    this.dataSource.filter = '';
-  }
 
   deleteRecipe(recipe: any) {
     //Trzeba zrobić usuwanie przepisu z backendu

@@ -170,13 +170,11 @@ export const RecipeController = {
         return null;
       }
   
-      // Utwórz nowy Ingredient
       const ingredient = ingredientRepository.create({
         productModel,
         quantity,
       });
-  
-      // Zapisz w bazie danych
+
       await ingredientRepository.save(ingredient);
       return ingredient;
     }           
