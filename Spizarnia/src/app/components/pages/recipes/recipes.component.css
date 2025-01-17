@@ -20,31 +20,11 @@ label {
   align-items: center;
 }
 
-.recipes-container {
-  margin-top: 20px;
-}
-
 .table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.recipes-header {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: left;
-  background: var(--primary-color);
-  color: var(--font-color);
-  padding: 10px;
-  border: 3px solid var(--background-color);
-}
-
-.recipes-cell {
-  padding: 10px;
-  border: 3px solid var(--background-color);
-  background: var(--font-color);
-  color: var(--primary-color);
-}
 .no-data {
   padding: 20px;
   font-size: 18px;
