@@ -19,7 +19,7 @@
   <div *ngIf="dataSource && dataSource.filteredData && dataSource.filteredData.length > 0; else noRecipes">
     @for (recipe of dataSource.filteredData; track recipe) {
     <mat-accordion>
-      <mat-expansion-panel [ngStyle]="recipeStyles[recipe.id].style">
+      <mat-expansion-panel [ngStyle]="recipeStyles[recipe.id]?.style">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ recipe.name }}

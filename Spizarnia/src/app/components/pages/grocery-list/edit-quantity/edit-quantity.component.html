@@ -36,8 +36,8 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Anuluj</button>
   <button mat-button [disabled]="editQuantityForm.invalid || newQuantity === productOnList.quantity" (click)="onConfirm()">
     Zatwierdź
   </button>
+  <button mat-button (click)="onCancel()">Anuluj</button>
 </div>
