@@ -114,11 +114,11 @@ export class RecipesComponent implements OnInit {
   return {
     style: isExecutable
       ? {
-          background: 'lightgreen',
+        background: '#669f44',
           fontWeight: 'bold'
       }
       : {
-        background: 'red',
+        background: '#f44336',
       },
     isExecutable,
   };

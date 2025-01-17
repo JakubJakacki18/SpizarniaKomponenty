@@ -71,7 +71,7 @@ export class AllProductsComponent implements OnInit {
     // Jeśli data ważności jest mniejsza niż 3 dni, zmieniamy styl wiersza
     if (daysDifference <= 3 && daysDifference > 0) {
       return {
-        color: 'red',
+        color: '#f44336',
         fontWeight: 'bold'
       };
     }
