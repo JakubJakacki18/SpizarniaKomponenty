@@ -2,7 +2,9 @@
 @use 'sass:map';
 
 html, body {
-  height: 100vh
+  height: 100%; /* Ensure the HTML and body are full height */
+  margin: 0;
+  flex-grow: 1;
 }
 
 body {
@@ -22,10 +24,10 @@ body {
   --font-color-hover: #ffffff;
   @include mat.table-overrides((background-color: var(--font-color), header-headline-color: var(--background-color),row-item-outline-color: var(--font-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
   @include mat.expansion-overrides((container-text-color: var(--font-color), header-text-color: var(--font-color)));
-  @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red, filled-input-text-color: var(--font-color), enabled-select-arrow-color:var(--secondary-right), filled-hover-label-text-color: var(--secondary-right)));
+  @include mat.form-field-overrides((filled-focus-active-indicator-color: var(--primary-color), filled-label-text-color: var(--font-color), filled-error-label-text-color: red, filled-input-text-color: var(--font-color), enabled-select-arrow-color:var(--secondary-right), filled-hover-label-text-color: var(--secondary-right)));
   @include mat.datepicker-overrides((calendar-body-label-text-color:(var --secondary-right), toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
   @include mat.sort-overrides((arrow-color: var(---secondary-left)));
-  @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color)) );
+  @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color), actions-alignment:center));
   @include mat.select-overrides((panel-background-color: var(--primary-color)));
   // @include mat.snack-bar-overrides((
   //   container-color: var(--secondary-left),
@@ -56,10 +58,30 @@ a {
   box-sizing: border-box;
   border-radius: 10px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between; /* Dzieli przestrzeń między tytuł i przyciski */
   align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
+}
+.manage-header-container {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+.title-section {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  color: var(--primary-color);
+  text-align: center;
+  font-size: 34px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 //Lewy górny róg każdej strony, informacja o stronie na której się znajdujemy
 .title {
@@ -71,7 +93,7 @@ a {
   border: none;
   border-radius: 5px;
   margin-right: 30px;
-  margin-left: 30px;
+  margin-left: 50px;
   box-shadow: none;
   display: inline-block;
   white-space: nowrap;
@@ -94,13 +116,13 @@ a {
 }
 //główna zawartość strony
 .site-content {
-  flex-grow: 1;
   background-color: var(--primary-color);
-  padding: 10px;
-  height:86vh;
+  padding: 20px 0 50px 0 ;
   box-sizing: border-box;
-  border-radius: 50px 50px 0 0;
+  justify-content: center;
+  border-radius: 50px 50px 50px 50px;
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -108,7 +130,7 @@ a {
 }
 
 //przyciski na headerze
-.action-button, .mat-raised-button{
+.action-button, .mat-raised-button, snackbar-success button, .snackbar-info button, .snackbar-error button {
   cursor: pointer;
   font-size: 18px;
   color: var(--font-color);
@@ -137,7 +159,22 @@ a {
   text-transform: uppercase;
   font-family: "Poppins", "Arial Black";
 }
-.action-button:hover, .action-edit-button:hover {
+.snackbar-success button, .snackbar-info button, .snackbar-error button {
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--font-color);
+  padding: 2px;
+  width: 50px;
+  height: 30px;
+  border: 1px solid var(--background-color);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+}
+.action-button:hover, .action-edit-button:hover, .snackbar-success button:hover, .snackbar-info button:hover, .snackbar-error button:hover {
   background-color: var(--secondary-left);
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
   color: var(--font-color-hover);
@@ -210,41 +247,286 @@ a {
 }
 
 .snackbar-error {
-  background: #f44336; 
-  color: #fff;
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  background: #f44336;
+  color: var(--font-color);
 }
 
 .snackbar-success {
-  background-color: var(--secondary-right); 
-  color: #fff;
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  background-color: var(--secondary-right);
+  color: var(--font-color);
 }
 
 .snackbar-info {
-  background-color: var(--primary-color); 
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  background-color: var(--primary-color);
   color: var(--font-color);
 }
 
 .table-container {
-
+  position: relative;
+  height: 90%;
+  width: 70%;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 50px 50px;
+}
+.container-wrapper {
   position: relative;
   height: 90vh;
-  width: 150vh;
-  margin-top: 82px;
+  width: 100vh;
   background-color: var(--primary-color);
   overflow: auto;
   padding: 30px 20px;
 }
+.container-grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px;
+}
 
-.snackbar-error button:hover{
-  background-color: var(--primary-color); 
+.container-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.container-section {
+  height: 100%;
+}
+/* Półka pod rzędem kontenerów */
+.shelf {
+  width: 100%;
+  height: 10px;
+  background-color: var(--background-color);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Kontener z tekstem pod półką */
+.shelf-container {
+  position: relative;
+  margin-top: 20px;
+}
+
+.shelf-text {
+  position: relative;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--background-color);
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Kontener z gradientem */
+.container-box {
+  background-color: var(--secondary-left);
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  color: white;
+  text-align: center;
+  width: auto;
+  text-transform: uppercase;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 40px;
+  font-size: 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.manage-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--background-color);
   color: var(--font-color);
 }
-.snackbar-success button:hover{
-  background-color: var(--primary-color); 
-  color: var(--font-color);
+
+/* Efekt po najechaniu */
+.container-box:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
 }
-.snackbar-info button:hover{
-  background-color: var(--primary-color); 
+.error {
+  color: var(--secondary-left);
+  font-size: 16px;
+  margin-top: 5px;
+}
+.emptyWarning {
+  font-size: 16px;
+  color: var(--secondary-right);
+  margin-left: 15px;
+}
+
+.recipes-container {
+  margin-top: 20px;
+}
+
+.recipes-header {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: left;
+  background: var(--primary-color);
   color: var(--font-color);
+  padding: 10px;
+  border: 3px solid var(--background-color);
+}
+
+.recipes-cell {
+  padding: 10px;
+  border: 3px solid var(--background-color);
+  background: var(--font-color);
+  color: var(--primary-color);
+}
+@media (max-width: 1024px) {
+  .site-content {
+    margin: 5px 10px;
+    border-radius: 40px 40px 0 0;
+  }
+
+  .action-button {
+    font-size: 16px;
+    width: 200px;
+  }
+
+  .header-container {
+    padding: 10px;
+  }
+
+  .title, .title-manage {
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+
+  .search-bar input {
+    font-size: 14px;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .table-container {
+    padding: 8px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .site-content {
+    margin: 5px 5px;
+    padding: 8px;
+    border-radius: 30px 30px 0 0;
+  }
+
+  .action-button, .action-edit-button {
+    font-size: 14px;
+    width: 180px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .title, .title-manage {
+    font-size: 18px;
+    margin: 5px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .mat-header-cell, .mat-cell {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .mat-table {
+    font-size: 12px;
+  }
+
+  .table-container {
+    padding: 5px;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-content {
+    margin: 2px;
+    padding: 5px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .action-button, .action-edit-button {
+    font-size: 12px;
+    width: 150px;
+    padding: 8px;
+  }
+
+  .title, .title-manage {
+    font-size: 16px;
+    padding: 5px;
+  }
+
+  .header-container {
+    padding: 5px;
+  }
+
+  .search-bar input {
+    font-size: 12px;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .mat-table {
+    font-size: 10px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    padding: 2px;
+  }
+}
+
+.snackBar {
+  display: flex;  
+  justify-content: space-between;  
+  width: 100%;  
+}
+
+.snackBarData{
+  display: flex;
+  flex-direction: column;  
+  align-items: flex-start;  
+}
+
+.snackBarButton {
+  display: flex;
+  justify-content: center;  
+  align-items: center;  
+  width: 100px; 
 }
 
