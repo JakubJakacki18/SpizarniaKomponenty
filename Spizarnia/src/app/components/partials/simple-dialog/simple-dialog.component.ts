@@ -1,9 +1,10 @@
 import { Component, Inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-simple-dialog',
-  imports: [MatDialogModule],
+  imports: [MatDialogModule, MatButtonModule],
   templateUrl: './simple-dialog.component.html',
   styleUrl: './simple-dialog.component.css'
 })

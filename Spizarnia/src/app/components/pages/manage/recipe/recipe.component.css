@@ -1,65 +1,67 @@
+.background-container {
+  position: relative;
+  width: 120%;
+  height:100%;
+  background-color: var(--primary-color);
+}
+/* Form container, który będzie trzymany w background-container */
 .form-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  flex-direction: column;
-  gap: 25px;
-  background: var(--font-color);
-  border: 3px solid var(--background-color);
-  border-radius: 10px;
-  padding: 20px;
-  color: var(--primary-color);
-  box-sizing: border-box;
-  width: 380%;
-  height: 80%;
-}
-
-.form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.label-input-wrapper {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 10px;
-}
-
-label {
-  font-size: 19px;
-  font-weight: bold;
-  flex-basis: 20%;
-  text-align: left;
-}
-
-.form-input {
-  width: 200%;
-  padding: 10px;
+  gap: 25px;
+  background-color: var(--font-color);
   border: 3px solid var(--background-color);
-  border-radius: 5px;
-  background: var(--primary-color);
-  font-size: 16px;
-  color: var(--font-color);
+  border-radius: 15px;
+  padding: 25px;
   box-sizing: border-box;
-}
-
-  .form-input:focus {
-    outline: none;
-    background: #ffffff;
-  }
-
-.error-message {
-  font-size: 14px;
+  font-family: "Poppins", "Arial Black";
   color: var(--secondary-left);
-  text-align: center;
+  font-weight: bold;
 }
+
+  /* Pozostałe style jak wcześniej */
+  .form-container > label {
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--secondary-left);
+  }
 
 .button-group {
   display: flex;
   gap: 10px;
+  padding-top: 10px;
   justify-content: center;
   align-items: center;
   width: 100%;
   text-align: center;
+}
+
+/* Akordeon */
+mat-accordion {
+  background-color: var(--background-color);
+  border-radius: 10px;
+  width: 100%;
+  border: 2px solid #54473f;
+  overflow: hidden;
+}
+
+.emptyWarning {
+  font-size: 16px;
+  color: var(--secondary-right);
+  margin-left: 15px;
+}
+
+mat-form-field {
+  width: 100%;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.error {
+  color: var(--secondary-left);
+  font-size: 16px;
+  margin-top: 5px;
 }

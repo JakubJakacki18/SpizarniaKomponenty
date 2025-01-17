@@ -1,56 +1,7 @@
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--font-color);
-  border: 3px solid var(--background-color);
-  border-radius: 10px;
-  padding: 15px;
-  color: var(--primary-color);
+mat-accordion {
+  margin: 5px;
+  padding: 0;
 }
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.search-bar {
-  display: flex;
-  gap: 10px;
-}
-
-.action-button {
-  padding: 10px 20px;
-  border: 3px solid var(--background-color);
-  border-radius: 5px;
-  background: var(--primary-color);
-  color: var(--font-color);
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.action-button:hover {
-  background: #ffffff;
-}
-
-.dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--font-color);
-  border: 3px solid var(--background-color);
-  border-radius: 10px;
-  padding: 20px;
-  z-index: 1000;
-}
-
-.dialog-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .form-group {
   display: flex;
   flex-direction: column;
@@ -60,22 +11,6 @@
 label {
   font-size: 19px;
   font-weight: bold;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  border: 3px solid var(--background-color);
-  border-radius: 5px;
-  background: var(--primary-color);
-  color: var(--font-color);
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-input[type="text"]:focus {
-  outline: none;
-  background: #ffffff;
 }
 
 .dialog-actions {
@@ -110,26 +45,17 @@ input[type="text"]:focus {
   background: var(--font-color);
   color: var(--primary-color);
 }
-
-.action-edit-button,
-.action-delete-button {
-  padding: 5px 10px;
-  border: 3px solid var(--background-color);
-  border-radius: 5px;
-  background: var(--primary-color);
-  color: var(--font-color);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.action-edit-button:hover,
-.action-delete-button:hover {
-  background: #ffffff;
-}
-
 .no-data {
   padding: 20px;
   font-size: 18px;
   color: var(--secondary-color);
   text-align: center;
+}
+.background-container {
+  position: relative;
+  top:0;
+  width: 90%;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 30px 20px;
 }

@@ -157,4 +157,22 @@ export const ProductController = {
       res.status(500).json({ error: "Internal error: Product was not deleted" });
     }
   },
+  async getQuantityOfProduct(req: Request, res: Response){
+      const { id } = req.params;
+
+    try {
+      const productQuantity = await productRepository.count({
+        where: { productModel: { id: parseInt(id) } },
+      });
+      //console.log("productQuantity",productQuantity);
+      if (!productQuantity) {
+        res.status(404).json({ error: `Products with id: ${id} was not found` });
+        return
+      }
+      res.status(200).json({ message: `Product model with id: ${id} has ${productQuantity} entries in products` });
+    } catch (error) {
+      res.status(500).json({ error: "Internal error: Quantity of products is unknown" });
+    }
+  }
+
 };

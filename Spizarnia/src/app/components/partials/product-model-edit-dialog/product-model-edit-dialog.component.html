@@ -1,26 +1,26 @@
-<h2 mat-dialog-title>EDYTUJ</h2>
+<h1 mat-dialog-title>Edycja produktu</h1>
 
-<div mat-dialog-contentclass="box-dialog">
-    <form>
-      <mat-form-field appearance="fill">
-        <div class="form-title">Cena</div>
-        <input matInput [(ngModel)]="updatedPrice" name="price" type="number" required />
-      </mat-form-field>
+<div mat-dialog-content>
+  <!-- Formularz do edycji danych produktu -->
+  <form #editForm="ngForm">
+    <mat-form-field appearance="fill">
+      <div class="form-title">Cena</div>
+      <input matInput type="number" [(ngModel)]="updatedPrice" name="price" placeholder="Nowa cena" required />
+    </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <div class="form-title">Kategoria</div>
-        <input matInput [(ngModel)]="updatedCategory" name="category" required />
-      </mat-form-field>
+    <mat-form-field appearance="fill">
+      <div class="form-title">Kategoria</div>
+      <input matInput [(ngModel)]="updatedCategory" name="category" placeholder="Nowa kategoria" required />
+    </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <div class="form-title">Typ</div>
-        <input matInput [(ngModel)]="updatedType" name="type" required />
-      </mat-form-field>
-    </form>
-  </div>
+    <mat-form-field appearance="fill">
+      <div class="form-title">Typ</div>
+      <input matInput [(ngModel)]="updatedType" name="type" placeholder="Nowy typ" required />
+    </mat-form-field>
+  </form>
+</div>
 
-  <div mat-dialog-actions>
-    <button class="action-edit-button" mat-button (click)="onCancel()">Anuluj</button>
-    <button class="action-edit-button" mat-button color="primary" (click)="onSave()">Zapisz</button>
-  </div>
-
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Anuluj</button>
+  <button mat-button color="primary" [disabled]="editForm.invalid" (click)="onSave()">Zapisz</button>
+</div>

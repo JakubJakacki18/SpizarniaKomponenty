@@ -10,6 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { SnackBarService } from '../../../../services/snack-bar.service';
+import { ProductService } from '../../../../services/product.service';
+import { Product } from '../../../../../../../Spizarnia-backend/src/models/Product';
+import { SnackBarResultType } from '../../../../shared/constances/additional.types';
 
 @Component({
   selector: 'app-container',
@@ -38,7 +42,9 @@ export class ContainerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private snackBarService: SnackBarService,
+    private productService: ProductService
   ) {}
 
 ngOnInit() {
@@ -56,15 +62,11 @@ ngOnInit() {
 
 
 getAllProducts() {
-  this.http.get<any[]>('http://localhost:5000/api/product').subscribe(
-    (data) => {
+  this.productService.getAllProducts().subscribe({
+    next: (data) => {
       console.log('Fetched products:', data);
-      
-      // Sprawdzamy struktury kategorii
       data.forEach(product => {
       });
-
-      // Jeśli istnieje categoryName, filtrujemy
       if (this.categoryName) {
         this.products = data.filter(product => {
           const categoryName = product.category?.categoryName?.toLowerCase();
@@ -73,16 +75,13 @@ getAllProducts() {
       } else {
         this.products = data; 
       }
-
-      // Sprawdzamy, co zostało przefiltrowane
       console.log('Filtered products:', this.products);
-
-      // Ustawiamy dane w źródle tabeli
       this.dataSource.data = this.products;
     },
-    (error) => {
+    error: (error) => {
+      this.snackBarService.openSnackBar("Nie udało się pobrać produktów", SnackBarResultType.Error);
       console.error('Error fetching products:', error);
-    }
+    }}
   );
 }
 

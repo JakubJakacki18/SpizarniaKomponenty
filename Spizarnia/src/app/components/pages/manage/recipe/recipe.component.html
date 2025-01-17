@@ -1,8 +1,48 @@
-<div class="recipe-container">
-  <div class="site-content">
-    <div class="title">Dodaj przepis</div>
-    <form class="form-container">
-     
+<div class="site-content">
+  <div class="title-manage">Dodaj przepis do spiżarni</div>
+  <div class="background-container">
+
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="form-container">
+      <label>Wpisz szczegóły przepisu:</label>
+
+      <mat-form-field>
+        <mat-label>Nazwa</mat-label>
+        <input matInput type="text" formControlName="name" name="name" placeholder="Wpisz nazwę przepisu" required />
+      </mat-form-field>
+
+        <label>Dodaj składniki:</label>
+        <div formArrayName="ingredients">
+          <div *ngFor="let ingredient of ingredients.controls; let i = index;" [formGroupName]="i">
+                       Składnik {{ i + 1 }}
+              <mat-form-field>
+                <mat-label>Składnik</mat-label>
+                <mat-select formControlName="productModel" name="productModel" [disabled]="isSelectDisabled(i)">
+                  @for (category of availableCategories; track category) {
+                  <mat-optgroup [label]="category.categoryName">
+                    @for (productModel of category.productModels; track productModel) {
+                    <mat-option [value]="productModel" [disabled]="productModel['isDisabled']">
+                      {{productModel.name}}
+                    </mat-option>
+                    }
+                  </mat-optgroup>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Ilość</mat-label>
+                <input matInput type="number" formControlName="quantity" placeholder="Wpisz ilość" name="quantity" required [min]="1" />
+              </mat-form-field>
+              <div class="button-group">
+                <button class="action-button" (click)="removeProductModelFromReceipt($event, i)">Usuń składnik</button>
+                <button class="action-button" (click)="addProductModelToRecipe($event)">Dodaj składnik</button>
+
+              </div>
+          </div>
+
+        </div>
+      <div class="button-group">
+        <button class="action-button" (ngSubmit)="onSubmit()">Dodaj przepis</button>
+      </div>
     </form>
   </div>
 </div>

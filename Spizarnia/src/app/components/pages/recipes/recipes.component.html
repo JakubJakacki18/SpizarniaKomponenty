@@ -1,90 +1,37 @@
 <div class="header-container">
   <div class="title">Moje Przepisy</div>
   <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Wyszukaj przepis..."
-      [(ngModel)]="searchTerm"
-      (input)="onSearch()"
-    />
-    <button class="action-button" (click)="onSearch()">
+    <input type="text"
+           placeholder="Wyszukaj przepis..."
+           [(ngModel)]="searchTerm"
+           (input)="onSearch()" />
+    <button class="action-button" routerLinkActive="active-link" (click)="onSearch()">
       Szukaj
     </button>
-    <button class="action-button" (click)="resetSearch()">
-      Resetuj
-    </button>
-    <button class="action-button" (click)="showDialog = true">
-      Dodaj Przepis
-    </button>
+    <a [routerLink]="['/manage/recipe']" class="action-button" routerLinkActive="active-link">Dodaj przepis</a>
+
   </div>
 </div>
-
-<!-- Okienko dialogowe dodawania przepisu -->
-<div class="dialog" *ngIf="showDialog">
-  <div class="dialog-content">
-    <h2>Dodaj nowy przepis</h2>
-    <form (ngSubmit)="addRecipe()">
-      <div class="form-group">
-        <label for="recipeName">Nazwa</label>
-        <input
-          id="recipeName"
-          type="text"
-          [(ngModel)]="newRecipe.name"
-          name="name"
-          required
-          placeholder="Nazwa przepisu"
-        />
-      </div>
-      <div class="form-group">
-        <label for="recipeIngredients">Składniki (oddzielone przecinkiem)</label>
-        <input
-          id="recipeIngredients"
-          type="text"
-          [(ngModel)]="newRecipe.ingredients"
-          name="ingredients"
-          required
-          placeholder="Np. Mąka, Jajka, Cukier"
-        />
-      </div>
-      <div class="dialog-actions">
-        <button type="submit" class="action-button">Dodaj</button>
-        <button type="button" class="action-button" (click)="showDialog = false">Anuluj</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<app-add-recipe></app-add-recipe>
 
 <!-- Lista przepisów -->
-<div class="recipes-container">
+<div class="site-content">
+<div class="background-container">
   <div *ngIf="dataSource && dataSource.data && dataSource.data.length > 0; else noRecipes">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Nazwa Kolumna -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="recipes-header">Nazwa</th>
-        <td mat-cell *matCellDef="let recipe" class="recipes-cell">{{ recipe.name }}</td>
-      </ng-container>
-
-      <!-- Składniki Kolumna -->
-      <ng-container matColumnDef="ingredients">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="recipes-header">Składniki</th>
-        <td mat-cell *matCellDef="let recipe" class="recipes-cell">{{ recipe.ingredients.join(', ') }}</td>
-      </ng-container>
-
-      <!-- Akcje Kolumna -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="recipes-header">Akcje</th>
-        <td mat-cell *matCellDef="let recipe" class="recipes-cell">
-          <button class="action-edit-button" (click)="deleteRecipe(recipe)">
-            Usuń
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    @for (recipe of dataSource.data; track recipe) {
+    <mat-accordion>
+      <mat-expansion-panel [ngStyle]="recipeStyles[recipe.id].style">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ recipe.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+          Składniki:
+          @for(ingredient of recipe.ingredients; track ingredient){
+            <p>{{ingredient.productModel.name}} Ilość: {{ingredient.quantity}}</p>
+          }
+      </mat-expansion-panel>
+    </mat-accordion>
+  }
   </div>
 
   <!-- Wiadomość, gdy brak przepisów -->
@@ -92,3 +39,4 @@
     <div class="no-data">Brak przepisów do wyświetlenia.</div>
   </ng-template>
 </div>
+  </div>

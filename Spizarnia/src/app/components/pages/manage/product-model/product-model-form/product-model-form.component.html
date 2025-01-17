@@ -1,5 +1,5 @@
 <div class="site-content">
-  <div class="title">Dodaj produkt</div>
+  <div class="title-manage">Dodaj produkt</div>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
     <div class="form-row">
       <div class="label-input-wrapper">
@@ -19,7 +19,7 @@
       </div>
       @if(productForm.get('unit')?.invalid && productForm.get('unit')?.touched){
       <div class="error-message">
-        Jednostka jest wymagana
+        Jednostka jest wymagana, i nie może być ujemna.
       </div>
     }
     </div>
@@ -43,7 +43,7 @@
       </div>
       @if(productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched){
       <div class="error-message">
-        Ilość musi być liczbą większą od 0
+        Ilość musi być liczbą większą od 0.001
       </div>
     }
     </div>

@@ -5,12 +5,13 @@
              placeholder="Wyszukaj pyszności..."
              [(ngModel)]="searchTerm"
              (input)="onSearch()" />
-      <button class ="action-button"(click)="onSearch()">Szukaj</button>
+      <button class="action-button" (click)="onSearch()">Szukaj</button>
+      <a [routerLink]="['/manage/product']" class="action-button" routerLinkActive="active-link">Dodaj produkt</a>
     </div>
   </div>
     <!-- Tabela z produktami -->
-  <div class="site-content all-products-section">
-    <div class="all-products-container">
+  <div class="site-content">
+    <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- Kolumna: ID -->
         <ng-container matColumnDef="id">

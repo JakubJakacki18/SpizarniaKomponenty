@@ -36,14 +36,71 @@
 
 
 /* Responsywność */
+@media (max-width: 1024px) {
+  .header-container {
+    flex-wrap: wrap; /* Przyciski i tytuł układają się w kolumnę */
+    justify-content: center; /* Centrowanie elementów */
+    padding: 10px;
+  }
+
+  .title-section {
+    margin: 0;
+    justify-content: center;
+  }
+
+  .header-title {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .button-section {
+    justify-content: center;
+    margin: 10px 0;
+    gap: 15px; /* Zmniejszenie odstępów między przyciskami */
+  }
+
+  .action-button {
+    font-size: 16px;
+    padding: 8px 15px;
+    width: 180px; /* Zmniejszenie szerokości przycisków */
+  }
+}
+
 @media (max-width: 768px) {
   .header-title {
-    font-size: 28px;
+    font-size: 24px;
+  }
+
+  .button-section {
+    gap: 10px; /* Jeszcze mniejszy odstęp między przyciskami */
   }
 
   .action-button {
     font-size: 14px;
-    padding: 8px 15px;
-    width: 150px; /* Zmniejszenie szerokości przycisków na małych ekranach */
+    padding: 6px 10px;
+    width: 150px; /* Dalsze zmniejszenie szerokości */
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 5px;
+  }
+
+  .header-title {
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+
+  .button-section {
+    flex-wrap: wrap; /* Przyciski układają się w wiersze */
+    gap: 5px;
+    justify-content: center; /* Centrowanie przycisków */
+  }
+
+  .action-button {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: auto; /* Automatyczna szerokość dla małych ekranów */
   }
 }

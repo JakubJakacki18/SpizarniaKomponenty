@@ -40,7 +40,7 @@ export const IngredientController = {
   },
 
   async create(req: Request, res: Response) {
-    const { productModelId, quantity, recipeIds } = req.body;
+    const { productModelId, quantity,  } = req.body;
 
     try {
       const productModel = await productModelRepository.findOneBy({ id: productModelId });
@@ -49,19 +49,9 @@ export const IngredientController = {
         return;
       }
 
-      let recipes = [];
-      if (recipeIds && recipeIds.length > 0) {
-        recipes = await recipeRepository.findByIds(recipeIds);
-        if (recipes.length !== recipeIds.length) {
-          res.status(404).json({ error: "Some recipes were not found" });
-          return;
-        }
-      }
-
       const newIngredient = ingredientRepository.create({
         productModel,
         quantity,
-        recipes,
       });
 
       await ingredientRepository.save(newIngredient);
@@ -134,5 +124,7 @@ export const IngredientController = {
     } catch (error) {
       res.status(500).json({ error: "Internal error: Ingredient was not deleted" });
     }
-  },
+  },    
 };
+
+

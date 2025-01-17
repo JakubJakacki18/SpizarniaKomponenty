@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../../services/category.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SnackBarService } from '../../../../services/snack-bar.service';
+import { SnackBarResultType } from '../../../../shared/constances/additional.types';
 
 @Component({
   selector: 'app-containers',
@@ -13,7 +15,7 @@ export class ContainersComponent implements OnInit {
   categories: Array<{ categoryName: string }> = [];
   rows: Array<Array<{ categoryName: string }>> = [];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private snackBarService : SnackBarService) { }
 
   ngOnInit() {
     this.fetchCategories();
@@ -31,6 +33,7 @@ export class ContainersComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching categories:', err);
+        this.snackBarService.openSnackBar('Nie udało się pobrać kategorii',SnackBarResultType.Error);
       },
     });
   }

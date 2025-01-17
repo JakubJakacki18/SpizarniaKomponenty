@@ -2,7 +2,9 @@
 @use 'sass:map';
 
 html, body {
-  height: 100vh
+  height: 100%; /* Ensure the HTML and body are full height */
+  margin: 0;
+  flex-grow: 1;
 }
 
 body {
@@ -22,10 +24,15 @@ body {
   --font-color-hover: #ffffff;
   @include mat.table-overrides((background-color: var(--font-color), header-headline-color: var(--background-color),row-item-outline-color: var(--font-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
   @include mat.expansion-overrides((container-text-color: var(--font-color), header-text-color: var(--font-color)));
-  @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red));
-  @include mat.datepicker-overrides((toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
+  @include mat.form-field-overrides((filled-focus-active-indicator-color: var(--primary-color), filled-label-text-color: var(--font-color), filled-error-label-text-color: red, filled-input-text-color: var(--font-color), enabled-select-arrow-color:var(--secondary-right), filled-hover-label-text-color: var(--secondary-right)));
+  @include mat.datepicker-overrides((calendar-body-label-text-color:(var --secondary-right), toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
   @include mat.sort-overrides((arrow-color: var(---secondary-left)));
-  @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color)) );
+  @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color), actions-alignment:center));
+  @include mat.select-overrides((panel-background-color: var(--primary-color)));
+  // @include mat.snack-bar-overrides((
+  //   container-color: var(--secondary-left),
+  //   supporting-text-color: var(--font-color-hover),
+  // ));
 }
 :host {
   display: grid;
@@ -59,7 +66,22 @@ a {
 //Lewy górny róg każdej strony, informacja o stronie na której się znajdujemy
 .title {
   text-align: center;
-  font-size: 36px;
+  font-size: 24px;
+  color: var(--font-color);
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  margin-right: 30px;
+  margin-left: 30px;
+  box-shadow: none;
+  display: inline-block;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.title-manage {
+  text-align: center;
+  font-size: 30px;
   color: var(--font-color);
   padding: 10px 20px;
   background-color: var(--primary-color);
@@ -74,13 +96,13 @@ a {
 }
 //główna zawartość strony
 .site-content {
-  flex-grow: 1;
   background-color: var(--primary-color);
-  padding: 10px;
-  height:83vh;
+  padding: 20px 0 50px 0 ;
   box-sizing: border-box;
-  border-radius: 50px 50px 0 0;
+  justify-content: center;
+  border-radius: 50px 50px 50px 50px;
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -88,7 +110,7 @@ a {
 }
 
 //przyciski na headerze
-.action-button, .mat-raised-button{
+.action-button, .mat-raised-button, snackbar-success button, .snackbar-info button, .snackbar-error button {
   cursor: pointer;
   font-size: 18px;
   color: var(--font-color);
@@ -117,7 +139,22 @@ a {
   text-transform: uppercase;
   font-family: "Poppins", "Arial Black";
 }
-.action-button:hover, .action-edit-button:hover, {
+.snackbar-success button, .snackbar-info button, .snackbar-error button {
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--font-color);
+  padding: 2px;
+  width: 50px;
+  height: 30px;
+  border: 1px solid var(--background-color);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-family: "Poppins", "Arial Black";
+}
+.action-button:hover, .action-edit-button:hover, .snackbar-success button:hover, .snackbar-info button:hover, .snackbar-error button:hover {
   background-color: var(--secondary-left);
   background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
   color: var(--font-color-hover);
@@ -143,7 +180,26 @@ a {
   font-weight: bold;
   font-family: "Poppins", "Arial Black";
 }
-
+.total-button {
+  cursor: not-allowed;
+  font-size: 18px;
+  color: var(--background-color);
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  white-space: nowrap;
+  background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 0;
+  font-family: "Poppins", "Arial Black";
+}
+.summary-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
 .search-bar {
   display: flex;
   justify-content: flex-end;
@@ -168,4 +224,157 @@ a {
 .search-bar button:hover {
   color: var(--font-color);
   background-color: var(--primary-color);
+}
+
+.snackbar-error {
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  background: #f44336;
+  color: var(--font-color);
+}
+
+.snackbar-success {
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  background-color: var(--secondary-right);
+  color: var(--font-color);
+}
+
+.snackbar-info {
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  color: var(--font-color);
+}
+
+.table-container {
+  position: relative;
+  height: 90%;
+  width: 70%;
+  background-color: var(--primary-color);
+  overflow: auto;
+  padding: 50px 50px;
+}
+
+@media (max-width: 1024px) {
+  .site-content {
+    margin: 5px 10px;
+    border-radius: 40px 40px 0 0;
+  }
+
+  .action-button {
+    font-size: 16px;
+    width: 200px;
+  }
+
+  .header-container {
+    padding: 10px;
+  }
+
+  .title, .title-manage {
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+
+  .search-bar input {
+    font-size: 14px;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .table-container {
+    padding: 8px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .site-content {
+    margin: 5px 5px;
+    padding: 8px;
+    border-radius: 30px 30px 0 0;
+  }
+
+  .action-button, .action-edit-button {
+    font-size: 14px;
+    width: 180px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .title, .title-manage {
+    font-size: 18px;
+    margin: 5px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .mat-header-cell, .mat-cell {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .mat-table {
+    font-size: 12px;
+  }
+
+  .table-container {
+    padding: 5px;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-content {
+    margin: 2px;
+    padding: 5px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .action-button, .action-edit-button {
+    font-size: 12px;
+    width: 150px;
+    padding: 8px;
+  }
+
+  .title, .title-manage {
+    font-size: 16px;
+    padding: 5px;
+  }
+
+  .header-container {
+    padding: 5px;
+  }
+
+  .search-bar input {
+    font-size: 12px;
+  }
+  .mat-header-cell, .mat-cell {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .mat-table {
+    font-size: 10px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    padding: 2px;
+  }
 }

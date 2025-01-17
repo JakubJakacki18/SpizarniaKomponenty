@@ -4,9 +4,11 @@ import { ListOfProductsToBuyController } from "../controllers/listOfProductsToBu
 const router = Router();
 
 // CRUD 
-router.get("/", ListOfProductsToBuyController.getAll); 
+router.get("/", ListOfProductsToBuyController.getAll);
+router.get("/:id", ListOfProductsToBuyController.getOne); 
 router.post("/", ListOfProductsToBuyController.create);
-router.put("/:id", ListOfProductsToBuyController.update);
+router.patch("/:id", ListOfProductsToBuyController.updateQuantityById);
 router.delete("/:id", ListOfProductsToBuyController.delete);
+router.delete('/deleteAll', ListOfProductsToBuyController.deleteAll);
 
 export default router;

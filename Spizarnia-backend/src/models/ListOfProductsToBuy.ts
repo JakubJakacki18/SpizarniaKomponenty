@@ -13,7 +13,10 @@ import {
     @PrimaryGeneratedColumn()
     id!: number;
     
-    @ManyToOne(() => ProductModel, (productModel) => productModel.listOfProductsToBuy)
+    @ManyToOne(() => ProductModel, (productModel) => productModel.listOfProductsToBuy, {
+      onDelete: "CASCADE"
+    })
+    @JoinColumn()
     products?: ProductModel;
   
     @Column()

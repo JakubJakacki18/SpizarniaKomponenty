@@ -15,9 +15,9 @@ export class ProductService {
   }
 
   constructor(private http: HttpClient) {}
-  getAllProductModels():Observable<Product[]>
+  getAllProducts():Observable<any[]>
   {
-     return this.http.get<Product[]>(PRODUCTS);
+     return this.http.get<any[]>(PRODUCTS);
   }
   getProductByName(name : string):Observable<Product[]>
   {
@@ -35,6 +35,11 @@ export class ProductService {
   {
     return this.http.delete<Product>(PRODUCTS+`/${id}`);
   }
+  getQuantityOfProducts(id:number):Observable<number>
+  {
+    return this.http.get<number>(PRODUCTS+`getQuantity/${id}`);
+  }
+  
   
 }
 

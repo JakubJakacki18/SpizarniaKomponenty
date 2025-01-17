@@ -3,14 +3,16 @@ import { Repository } from "typeorm";
 import { Recipe } from "../models/Recipe";
 import { Ingredient } from "../models/Ingredient";
 import { AppDataSource } from "../data-source";
+import { ProductModel } from "../models/ProductModel";
 
 const recipeRepository: Repository<Recipe> = AppDataSource.getRepository(Recipe);
 const ingredientRepository: Repository<Ingredient> = AppDataSource.getRepository(Ingredient);
+const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
 
 export const RecipeController = {
   async getAll(req: Request, res: Response) {
     try {
-      const recipes = await recipeRepository.find({ relations: ["ingredients"] });
+      const recipes = await recipeRepository.find({ relations: ["ingredients", "ingredients.productModel"] });
       res.json(recipes);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot fetch recipes" });
@@ -38,22 +40,29 @@ export const RecipeController = {
   },
 
   async create(req: Request, res: Response) {
-    const { name, ingredientIds, finished } = req.body;
-
-    try {
-      let ingredients = [];
-      if (ingredientIds && ingredientIds.length > 0) {
-        ingredients = await ingredientRepository.findByIds(ingredientIds);
-        if (ingredients.length !== ingredientIds.length) {
-          res.status(404).json({ error: "Some ingredients were not found" });
-          return;
-        }
+    const { name, ingredients, finished } = req.body;
+    const ingredientsFromFront = ingredients;
+    try{
+      let ingredients =await RecipeController.createOrGetIngredients(ingredientsFromFront);
+     
+      if(ingredients.length !== ingredientsFromFront.length)
+      {
+        console.log("Some ingredients were not added to recipe");
+        res.status(500).json({error: "Some ingredients were not added to recipe"});
+        return;
       }
+      if(ingredients.length === 0)
+      {
+        console.log("No ingredients were added to recipe");
+        res.status(500).json({error: "No ingredients were added to recipe"});
+        return;
+      } 
 
+      console.log(finished);
       const newRecipe = recipeRepository.create({
         name,
         ingredients,
-        finished: finished !== undefined ? finished : false, //Defultowo false
+        finished: (finished !== undefined) ? finished : true, //Defultowo false
       });
 
       await recipeRepository.save(newRecipe);
@@ -116,10 +125,61 @@ export const RecipeController = {
         return;
       }
 
+
       await recipeRepository.remove(recipe);
       res.json({ message: `Recipe with id ${id} was removed successfully from database` });
     } catch (error) {
       res.status(500).json({ error: "Internal error: Recipe was not deleted" });
     }
   },
+  async createOrGetIngredients(ingredientsFromFront : any) : Promise<Ingredient[]>
+  {
+    console.log(ingredientsFromFront);
+    const ingredients : Ingredient[] = [];
+    for (const ingredient of ingredientsFromFront) {
+            const ingredientFromDb = await RecipeController.getIngredientFromDbOrCreateOne(ingredient.productModel.id, ingredient.quantity);
+            //console.log(ingredientFromDb, "ingredientFromDb");
+            if(!!ingredientFromDb)
+            {
+              ingredients.push(ingredientFromDb)
+              //console.log("Ingredient was created",ingredients);
+            } else
+            {
+              console.log("Ingredient was not created",ingredient);
+            }           
+              
+          }
+          //console.log(ingredients,"outside foreach");
+          return ingredients;
+          
+  },
+  async getIngredientFromDbOrCreateOne(productModelId: any, quantity: any) : Promise<Ingredient> {
+    const ingredientFromDb = await ingredientRepository
+    .createQueryBuilder("ingredient")
+    .where("ingredient.productModelId = :productModelId", { productModelId })
+    .andWhere("ingredient.quantity = :quantity", { quantity })
+    .getOne(); 
+    if(!!ingredientFromDb)
+    {
+      return ingredientFromDb;
+    } 
+    else
+    {
+      const productModel = await productModelRepository.findOne({ where: { id: productModelId } });
+      if (!productModel) {
+        return null;
+      }
+  
+      // Utwórz nowy Ingredient
+      const ingredient = ingredientRepository.create({
+        productModel,
+        quantity,
+      });
+  
+      // Zapisz w bazie danych
+      await ingredientRepository.save(ingredient);
+      return ingredient;
+    }           
+        
+  }
 };
