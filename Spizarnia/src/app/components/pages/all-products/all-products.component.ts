@@ -164,7 +164,7 @@ export class AllProductsComponent implements OnInit {
         })
         .catch((err) => console.error('Błąd podczas wyzwalania powiadomienia:', err));
     } else {
-      console.warn('Service Worker nie jest dostępny w tej przeglądarce.');
+      //console.warn('Service Worker nie jest dostępny w tej przeglądarce.');
     }
   }
 
