@@ -5,7 +5,8 @@ div[mat-dialog-actions] button {
   padding: 2px;
   width: auto;
   height: 30px;
-  margin-right:10px;
+  margin-left: 20px;
+  margin-bottom: 10px;
   border: 1px solid var(--background-color);
   text-align: center;
   white-space: nowrap;
@@ -21,3 +22,21 @@ div[mat-dialog-actions] button {
     background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
     color: var(--font-color-hover);
   }
+
+.box-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size:15px;
+}
+
+.dialog-title {
+  margin-top: 10px;
+  margin-left: 50px;
+  font-family: "Poppins", "Arial";
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  color: var(--font-color);
+}

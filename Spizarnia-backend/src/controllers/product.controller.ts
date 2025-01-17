@@ -164,7 +164,6 @@ export const ProductController = {
       const productQuantity = await productRepository.count({
         where: { productModel: { id: parseInt(id) } },
       });
-      //console.log("productQuantity",productQuantity);
       if (!productQuantity) {
         res.status(404).json({ error: `Products with id: ${id} was not found` });
         return

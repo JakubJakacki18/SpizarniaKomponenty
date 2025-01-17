@@ -99,10 +99,9 @@ export class GroceryListComponent implements OnInit {
           });
         });
   
-        // Execute all deletes
         Promise.all(deletePromises)
           .then(() => {
-            this.getAllCartItems(); // Refresh the list
+            this.getAllCartItems();
             console.log('Lista zakupów została wyczyszczona');
           })
           .catch(error => {

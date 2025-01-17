@@ -149,6 +149,8 @@ export class RecipeComponent {
       event.preventDefault();
       if(this.ingredients.length>1)
         this.ingredients.removeAt(productModelToDelete);
+      else 
+        this.snackBarService.openSnackBar("Nie możesz usunąć jedynego składnika",SnackBarResultType.Error);
       this.updateAvailableProducts();
 
     }

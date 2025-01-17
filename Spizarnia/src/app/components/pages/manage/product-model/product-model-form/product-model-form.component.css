@@ -9,7 +9,7 @@
   padding: 25px;
   color: var(--primary-color);
   box-sizing: border-box;
-  width: 200%; 
+  min-width: 200%; 
   height: 80%;
 }
 
