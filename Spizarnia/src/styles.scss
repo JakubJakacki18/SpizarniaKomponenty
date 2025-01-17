@@ -24,7 +24,7 @@ body {
   --font-color-hover: #ffffff;
   @include mat.table-overrides((background-color: var(--font-color), header-headline-color: var(--background-color),row-item-outline-color: var(--font-color), row-item-label-text-color: var(--primary-color), row-item-label-text-font: ("Poppins", "Arial Black"), header-headline-font: ("Poppins", "Arial Black"), header-headline-size: 15px, header-headline-weight: bold));
   @include mat.expansion-overrides((container-text-color: var(--font-color), header-text-color: var(--font-color)));
-  @include mat.form-field-overrides((filled-label-text-color: var(--font-color), filled-error-label-text-color: red, filled-input-text-color: var(--font-color), enabled-select-arrow-color:var(--secondary-right), filled-hover-label-text-color: var(--secondary-right)));
+  @include mat.form-field-overrides((filled-focus-active-indicator-color: var(--primary-color), filled-label-text-color: var(--font-color), filled-error-label-text-color: red, filled-input-text-color: var(--font-color), enabled-select-arrow-color:var(--secondary-right), filled-hover-label-text-color: var(--secondary-right)));
   @include mat.datepicker-overrides((calendar-body-label-text-color:(var --secondary-right), toggle-icon-color: var(--secondary-right), calendar-container-background-color: var(--secondary-left),calendar-date-disabled-state-text-color: var(--secondary-right), range-input-disabled-state-text-color: var(--secondary-right)));
   @include mat.sort-overrides((arrow-color: var(---secondary-left)));
   @include mat.dialog-overrides(( container-color: var(--primary-color), container-shape: 16px, content-padding:30px, actions-padding:30px, supporting-text-color:var(--background-color), actions-alignment:center));
@@ -97,12 +97,11 @@ a {
 //główna zawartość strony
 .site-content {
   background-color: var(--primary-color);
-  padding: 10px;
+  padding: 20px 0 50px 0 ;
   box-sizing: border-box;
   justify-content: center;
-  border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 50px 50px;
   display: flex;
-  height:100%;
   flex-grow: 1;
   justify-content: center;
   flex-direction: column;
@@ -252,10 +251,9 @@ a {
   position: relative;
   height: 90%;
   width: 70%;
-  margin-top: 82px;
   background-color: var(--primary-color);
   overflow: auto;
-  padding: 30px 20px;
+  padding: 50px 50px;
 }
 
 @media (max-width: 1024px) {
