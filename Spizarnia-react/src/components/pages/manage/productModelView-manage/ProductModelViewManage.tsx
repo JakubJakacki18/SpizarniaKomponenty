@@ -1,6 +1,6 @@
 import React from "react";
 
-function RecipeManage() {
+function ProductModelViewManage() {
     return (
         <div>
             <h1>Add Product Page</h1>
@@ -9,4 +9,4 @@ function RecipeManage() {
     );
 }
 
-export default RecipeManage;
+export default ProductModelViewManage;
