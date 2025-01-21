@@ -47,10 +47,18 @@ a {
   padding-left: 20px;
   padding-right: 20px;
 }
-
+.header-title {
+    color: var(--primary-color);
+    text-align: center;
+    font-size: 34px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
 .title {
   text-align: center;
-  font-size: 36px;
+  font-size: 24px;
   color: var(--font-color);
   padding: 10px 20px;
   background-color: var(--primary-color);
@@ -65,48 +73,48 @@ a {
 }
 
 .site-content {
-  flex-grow: 1;
-  background-color: var(--primary-color);
-  padding: 10px;
-  height:83vh;
-  box-sizing: border-box;
-  border-radius: 50px 50px 0 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  margin: 5px 15px 5px 15px;
+    background-color: var(--primary-color);
+    padding: 20px 0 50px 0;
+    box-sizing: border-box;
+    border-radius: 50px 50px 50px 50px;
+    display: grid;
+    overflow: auto;
+    grid-template-rows: auto 1fr;
+    height: calc(100vh - 130px);
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 15px 5px 15px;
+}
+.action-button, .mat-raised-button, snackbar-success button, .snackbar-info button, .snackbar-error button {
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--font-color);
+    padding: 10px;
+    width: 250px;
+    text-align: center;
+    margin-right: 10px;
+    white-space: nowrap;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: "Poppins", "Arial Black";
 }
 
-
-.action-button, .mat-raised-button{
-  cursor: pointer;
-  font-size: 18px;
-  color: var(--font-color);
-  padding: 10px;
-  width: 250px;
-  text-align: center;
-  margin-right: 10px;
-  white-space: nowrap;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-family: "Poppins", "Arial Black";
-}
-.action-edit-button{
-  cursor: pointer;
-  font-size: 15px;
-  color: var(--font-color);
-  padding: 5px;
-  width: 100px;
-  height: 40px;
-  text-align: center;
-  margin-right: 10px;
-  white-space: nowrap;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-family: "Poppins", "Arial Black";
+.action-edit-button {
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--font-color);
+    padding: 5px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    margin-right: 10px;
+    white-space: nowrap;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: "Poppins", "Arial Black";
 }
 .action-button:hover, .action-edit-button:hover {
   background-color: var(--secondary-left);
@@ -196,6 +204,44 @@ a {
   justify-content: flex-end; /* Przyciski wyrównane do prawej */
   gap: 20px; /* Odstęp między przyciskami */
   margin-right: 40px;
+}
+.table-header {
+    background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+    color: var(--font-color);
+}
+.MuiDataGrid-columnHeaderTitle {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.table-container {
+    position: relative;
+    padding: 20px 20px;
+    overflow: auto;
+    background-color: var(--primary-color);
+}
+/* Zielony - data ważności > 7 dni */
+.expiring {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Żółty - data ważności < 3 dni */
+.soon-expiring {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Czerwony - data ważności < 1 dnia */
+.almost-expired {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Szary i przekreślony - przeterminowane */
+.expired {
+    background-color: #e2e3e5;
+    color: #6c757d;
+    text-decoration: line-through;
 }
 
 /* Responsywność */
