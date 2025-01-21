@@ -1,6 +1,8 @@
 mat-accordion {
-  margin: 5px;
-  padding: 0;
+  margin: 10px;
+  display:block;
+  justify-content:center;
+  min-width:80vw;
 }
 .form-group {
   display: flex;
@@ -21,7 +23,7 @@ label {
 }
 
 .table {
-  width: 100%;
+  width: 200%;
   border-collapse: collapse;
 }
 
@@ -32,10 +34,8 @@ label {
   text-align: center;
 }
 .background-container {
-  position: relative;
   top:0;
-  width: 90%;
+  min-width: 200%;
   background-color: var(--primary-color);
-  overflow: auto;
   padding: 30px 20px;
 }
