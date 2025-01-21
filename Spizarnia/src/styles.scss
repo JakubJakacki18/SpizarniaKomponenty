@@ -118,16 +118,29 @@ a {
   background-color: var(--primary-color);
   padding: 20px 0 50px 0 ;
   box-sizing: border-box;
-  justify-content: center;
   border-radius: 50px 50px 50px 50px;
-  display: flex;
-  flex-grow: 1;
+  display:grid;
+  overflow:auto;
+  grid-template-rows: auto 1fr;
+  height:calc(100vh - 130px);
   justify-content: center;
   flex-direction: column;
   align-items: center;
   margin: 5px 15px 5px 15px;
 }
-
+.manage-content {
+  background-color: var(--primary-color);
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: center;
+  border-radius: 50px 50px 50px 50px;
+  display: flex;
+  height: calc(100vh - 230px);
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px 15px 5px 15px;
+}
 //przyciski na headerze
 .action-button, .mat-raised-button, snackbar-success button, .snackbar-info button, .snackbar-error button {
   cursor: pointer;
@@ -268,11 +281,9 @@ a {
 
 .table-container {
   position: relative;
-  height: 90%;
-  width: 70%;
-  background-color: var(--primary-color);
+  padding:20px 20px;
   overflow: auto;
-  padding: 50px 50px;
+  background-color: var(--primary-color);
 }
 .container-wrapper {
   position: relative;
