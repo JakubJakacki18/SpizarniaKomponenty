@@ -219,6 +219,31 @@ a {
     overflow: auto;
     background-color: var(--primary-color);
 }
+/* Zielony - data ważności > 7 dni */
+.expiring {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Żółty - data ważności < 3 dni */
+.soon-expiring {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Czerwony - data ważności < 1 dnia */
+.almost-expired {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Szary i przekreślony - przeterminowane */
+.expired {
+    background-color: #e2e3e5;
+    color: #6c757d;
+    text-decoration: line-through;
+}
+
 /* Responsywność */
 @media (max-width: 768px) {
   .header-title {

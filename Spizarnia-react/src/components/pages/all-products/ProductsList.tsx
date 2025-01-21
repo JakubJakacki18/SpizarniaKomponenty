@@ -4,7 +4,7 @@ import { getAllProducts } from '../../../features/products/productSlice.ts';
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { NavLink } from "react-router-dom";
-
+import dayjs from 'dayjs';
 function classNameSelectorNavButton(isActive: boolean) {
     return isActive ? "active-link" : "action-button"
 } 
@@ -37,36 +37,52 @@ const columns = [
 
 function ProductList()
 {
+    const today = dayjs(); 
     const products = useSelector(getAllProducts);
     console.log("Produkty",products);
     let renderProducts =<p></p>;
     renderProducts = products.length > 0 ? (
-        <div className="table-container">
-            <DataGrid
-                rows={products}
-                columns={columns}
+    <div className="table-container">
+        <DataGrid
+            rows={products}
+            columns={columns}
                 autoHeight
-                sx={{
-                    border: "2px solid var(--background-color)",
-                    fontFamily: '"Poppins", "Arial Black"', // Global font for the entire table
-                    '& .MuiDataGrid-cell': {
-                        border: '2px solid var(--background-color)', // Border for each cell
-                        fontFamily: '"Poppins", "Arial Black"', // Font for each cell
-                    },
-                    '& .MuiDataGrid-columnHeader': {
-                        border: '2px solid var(--background-color)', // Border for each column header
-                        fontFamily: '"Poppins", "Arial Black"', // Font for column headers
-                    },
-                    '& .MuiDataGrid-row': {
-                        borderBottom: '2px solid var(--background-color)', // Border for each row
-                        fontFamily: '"Poppins", "Arial Black"', // Font for row text
-                    },
+                getRowClassName={(params) => {
+                    const expirationDate = dayjs(params.row.expirationDate);
+                    const daysToExpiration = expirationDate.diff(today, 'day');
+
+                    if (daysToExpiration < 0) {
+                        return 'expired';
+                    } else if (daysToExpiration < 1) {
+                        return 'almost-expired';
+                    } else if (daysToExpiration < 3) {
+                        return 'soon-expiring';
+                    } else if (daysToExpiration <= 7) {
+                        return 'expiring';
+                    }
+                    return ''; 
                 }}
-            />
-        </div>
-    ) : (
-        <div className="no-data">Brak produktów w spiżarni.</div>
-    );
+            sx={{
+                border: "2px solid var(--background-color)",
+                fontFamily: '"Poppins", "Arial Black"', 
+                '& .MuiDataGrid-cell': {
+                    border: '2px solid var(--background-color)', 
+                    fontFamily: '"Poppins", "Arial Black"',
+                },
+                '& .MuiDataGrid-columnHeader': {
+                    border: '2px solid var(--background-color)', 
+                    fontFamily: '"Poppins", "Arial Black"', 
+                },
+                '& .MuiDataGrid-row': {
+                    borderBottom: '2px solid var(--background-color)', 
+                    fontFamily: '"Poppins", "Arial Black"',
+                },
+            }}
+        />
+    </div>
+) : (
+    <div className="no-data">Brak produktów w spiżarni.</div>
+);
 
     return (
         <div>
