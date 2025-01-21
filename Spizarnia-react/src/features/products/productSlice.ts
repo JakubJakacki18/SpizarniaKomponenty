@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {Product} from "../../../../Spizarnia-backend/src/models/Product";
 const initialState = {
     products: [],
 }
