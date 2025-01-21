@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import axiosProducts from "../../../api/axiosApi.ts";
+import AxiosApi from "../../../api/axiosApi.ts";
 import { useDispatch } from "react-redux";
 import { addProducts } from "../../../features/products/productSlice.ts";
-import { Product } from "../../../../../Spizarnia-backend/src/models/Product.ts";
 import { AxiosResponse } from "axios";
 import ProductList from "./ProductsList.tsx";
 
@@ -11,7 +10,7 @@ function AllProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
         try {
-            const response : AxiosResponse = await axiosProducts.get('')//.catch((error) => {console.error('Error: ', error)});
+            const response : AxiosResponse = await AxiosApi.axiosProducts.get('')//.catch((error) => {console.error('Error: ', error)});
             dispatch(addProducts(response.data));
             console.log(response.data);
         }
@@ -19,10 +18,9 @@ function AllProducts() {
             console.error('Error: ', error);
         }
         }
-
         fetchProducts();
         
-    }, []);
+    }, [dispatch]);
 
 
     return (
