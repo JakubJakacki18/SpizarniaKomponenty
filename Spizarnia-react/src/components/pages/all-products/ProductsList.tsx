@@ -4,8 +4,6 @@ import { getAllProducts } from "../../../features/products/productSlice.ts";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
-import { Category } from "../../../../../Spizarnia-backend/src/models/Category.ts";
-import { NavLink } from "react-router-dom";
 import dayjs from 'dayjs';
 
 
@@ -41,11 +39,7 @@ function ProductList() {
         ),
     },
   ];
-
-function ProductList()
-{
     const today = dayjs(); 
-    const products = useSelector(getAllProducts);
     console.log("Produkty",products);
     let renderProducts =<p></p>;
     renderProducts = products.length > 0 ? (
@@ -104,5 +98,5 @@ return (
   </>
 );
 }     
-}
+
 export default ProductList;
