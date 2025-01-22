@@ -28,7 +28,19 @@ function ProductModelViewManageTable()
                     variant="outlined"
                     onClick={() => {
                     }}
-                    className="action-edit-button"
+                        className="action-edit-button"
+                        sx={{
+                            color: 'var(--font-color)',
+                            backgroundColor: 'var(--primary-color)',
+                            borderColor: 'var(--font-color)',
+                            margin: '0 10px',                            
+                            fontFamily: '"Poppins", "Arial Black", sans-serif',
+                            '&:hover': {
+                                backgroundColor: 'var(--secondary-left)',
+                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                                color: 'var(--font-color-hover)',
+                            },
+                        }}
                 >
                     Edytuj
                 </Button>
@@ -36,7 +48,18 @@ function ProductModelViewManageTable()
                     variant="outlined"
                     onClick={() => {
                     }}
-                    className="action-edit-button"
+                        className="action-edit-button"
+                        sx={{
+                            color: 'var(--font-color)',
+                            backgroundColor: 'var(--primary-color)',
+                            borderColor: 'var(--font-color)',
+                            fontFamily: '"Poppins", "Arial Black", sans-serif',
+                            '&:hover': {
+                                backgroundColor: 'var(--secondary-left)',
+                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                                color: 'var(--font-color-hover)',
+                            },
+                        }}
                 >
                     Usuń
                 </Button>
@@ -52,6 +75,26 @@ function ProductModelViewManageTable()
             columns={columns}
             disableRowSelectionOnClick
             autoHeight
+                sx={{
+                    border: "1px solid var(--background-color)",
+                    fontFamily: '"Poppins", "Arial Black"',
+                    color:'var(--primary-color)',
+                    '& .MuiDataGrid-cell': {
+                        border: '1px solid var(--font-color)',
+                        backgroundColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black"',
+                    },
+                    '& .MuiDataGrid-columnHeader': {
+                        border: '1px solid var(--font-color)',
+                        backgroundColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black"',
+                    },
+                    '& .MuiDataGrid-row': {
+                        borderBottom: '1px solid var(--font-color)',
+                        backgroundColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black"',
+                    },
+                }}
         />
     </div>
     ) : (
@@ -59,9 +102,12 @@ function ProductModelViewManageTable()
     );
 
     return (
-        <>
-        {renderProductModels}
-        </>
+        <div className="manage-content">
+            <div className="title-manage">Zarządzaj produktami</div>
+
+            {renderProductModels}
+
+        </div>
     )
 }
 export default ProductModelViewManageTable;
