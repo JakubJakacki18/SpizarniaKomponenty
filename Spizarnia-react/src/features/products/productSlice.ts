@@ -14,7 +14,7 @@ const initialState : ProductState = {
     error: null,
 }
 
-export const deleteProduct = createAsyncThunk(
+export const deleteProduct = createAsyncThunk<string,string,{rejectValue:string}>(
     'products/deleteProduct',
     async (productId, { rejectWithValue }) => {
       try {
