@@ -30,7 +30,7 @@ function Recipes() {
     return (
         <>
         <div className="header-container">
-        <div className="title">Moja spiżarnia</div>
+        <div className="title">Przepisy</div>
         <div className="search-bar">
           <input type="text"
                  placeholder="Wyszukaj przepis..."/>

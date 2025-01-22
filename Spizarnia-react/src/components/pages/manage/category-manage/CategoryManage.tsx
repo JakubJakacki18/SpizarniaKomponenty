@@ -31,7 +31,7 @@ function CategoryManage() {
 
     useEffect(() => {
         fetchCategories();
-    }, []);
+    });
 
     const handleAddCategory = async (data: FormData) => {
         const { categoryName } = data;
@@ -42,15 +42,16 @@ function CategoryManage() {
         }
 
         try {
-            await AxiosApi.axiosCategories.post("", {
+            const response = await AxiosApi.axiosCategories.post("", {
                 categoryName: categoryName,
-                productModels: [],
             });
-
-            await fetchCategories();
+            console.log(response.data.category);
+            dispatch(addCategories([...categories, {id : response.data.category.id, categoryName : response.data.category.categoryName,productModels : []}]))
             alert(`Dodano kategorię: ${categoryName}`);
             reset();
         } catch (error) {
+
+
             console.error("Błąd podczas dodawania kategorii:", error);
             alert("Nie udało się dodać kategorii.");
         }

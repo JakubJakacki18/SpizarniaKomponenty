@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import AxiosApi from "../../../api/axiosApi.ts";
 import { addCategories } from "../../../features/category/categorySlice.ts";
+import HomeContainers from "./HomeContainers.tsx";
 
 function Home() {
     const dispatch = useDispatch();
@@ -22,10 +23,14 @@ function Home() {
     }, [dispatch]);
 
     return (
-        <div>
-            <h1>Home Page</h1>
-            <p>To jest strona główna aplikacji.</p>
+        <>
+        <div className="header-container">
+        <div className="title">Strona główna</div>
         </div>
+        <div className="site-content">
+            <HomeContainers/>
+        </div>
+        </>
     );
 }
 
