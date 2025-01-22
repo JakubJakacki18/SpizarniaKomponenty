@@ -7,7 +7,7 @@ import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 import dayjs from 'dayjs';
 
 
-function ProductList() {
+function ProductTable() {
   const products = useSelector(getAllProducts);
   const [openConfirmationDialog, setConfirmationDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string>(""); // Product for deletion dialog
@@ -27,7 +27,7 @@ function ProductList() {
         renderCell: (params) => (
             <Button
                 variant="outlined"
-                color="font-color"
+                color="inherit"
                 onClick={() => {
                   setSelectedProduct(params.row.name); // Store selected product name
                   setConfirmationDialog(true); // Open delete dialog
@@ -47,6 +47,7 @@ function ProductList() {
         <DataGrid
             rows={products}
             columns={columns}
+            disableRowSelectionOnClick
                 autoHeight
                 getRowClassName={(params) => {
                     const expirationDate = dayjs(params.row.expirationDate);
@@ -79,6 +80,7 @@ function ProductList() {
                     fontFamily: '"Poppins", "Arial Black"',
                 },
             }}
+            
         />
     </div>
 ) : (
@@ -99,4 +101,4 @@ return (
 );
 }     
 
-export default ProductList;
+export default ProductTable;

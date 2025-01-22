@@ -3,7 +3,7 @@ import AxiosApi from "../../../api/axiosApi.ts";
 import { useDispatch } from "react-redux";
 import { addProducts } from "../../../features/products/productSlice.ts";
 import { AxiosResponse } from "axios";
-import ProductList from "./ProductsList.tsx";
+import ProductTable from "./ProductsTable.tsx";
 import { NavLink } from "react-router-dom";
 import StyleFunctions from "../../../shared/styleFunctions.ts";
 
@@ -44,7 +44,7 @@ function AllProducts() {
         </div>
       </div>
       <div className="site-content">
-        <ProductList/>
+        <ProductTable/>
       </div>
         </>
     );
