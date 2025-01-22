@@ -1,66 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCategories, getAllCategories } from "../../../../features/category/categorySlice.ts";
-import { Box, Button, TextField, Typography, List, ListItem, Divider } from "@mui/material";
+import { Box, Button, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { useForm } from "react-hook-form";
 import AxiosApi from "../../../../api/axiosApi.ts";
 import { AxiosResponse } from "axios";
 
+interface FormData {
+  categoryName: string; 
+}
+
 function CategoryManage() {
-  const [newCategory, setNewCategory] = useState(""); // Stan lokalny dla nazwy nowej kategorii
-  const categories = useSelector(getAllCategories); // Pobieranie listy kategorii z Redux
+  const categories = useSelector(getAllCategories);
   const dispatch = useDispatch();
 
-  // Pobranie kategorii z serwera przy pierwszym renderze
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({ mode: "onChange" }); 
+ 
   const fetchCategories = async () => {
     try {
-      const response: AxiosResponse = await AxiosApi.axiosCategories.get(""); // Pobranie danych z serwera
-      dispatch(addCategories(response.data)); // Aktualizacja Redux Store
-      console.log("Pobrane kategorie:", response.data);
+      const response: AxiosResponse = await AxiosApi.axiosCategories.get(""); 
+      dispatch(addCategories(response.data)); 
     } catch (error) {
       console.error("Błąd podczas pobierania kategorii:", error);
     }
   };
 
-  // Pobranie kategorii przy pierwszym renderze
   useEffect(() => {
     fetchCategories();
   }, []);
 
-  // Obsługa zmiany w polu tekstowym
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewCategory(e.target.value); // Aktualizacja lokalnego stanu
-  };
+  const handleAddCategory = async (data: FormData) => {
+    const { categoryName } = data;
 
-  // Obsługa dodawania kategorii
-  const handleAddCategory = async () => {
-    if (!newCategory.trim()) {
-      alert("Nazwa kategorii nie może być pusta!");
-      return;
-    }
-
-    // Sprawdzenie, czy kategoria już istnieje
-    if (categories.some((category) => category.categoryName === newCategory)) {
+    if (categories.some((category) => category.categoryName === categoryName)) {
       alert("Kategoria już istnieje!");
       return;
     }
 
     try {
-      const response: AxiosResponse = await AxiosApi.axiosCategories.post("", {
-        categoryName: newCategory, 
+      await AxiosApi.axiosCategories.post("", {
+        categoryName: categoryName,
         productModels: [],
       });
 
-    //   const newCategoryObject = {
-    //     id: response.data.id, // ID z bazy danych
-    //     categoryName: response.data.categoryName, // Nazwa kategorii
-        // productModels: response.data.productModels, // Pusta tablica produktów (jeśli serwer zwraca tę właściwość)
-    //   };
-
-      // Aktualizacja stanu w Redux
       await fetchCategories();
-      console.log(response)
-      alert(`Dodano kategorię: ${newCategory}`);
-      setNewCategory(""); // Reset pola tekstowego
+      alert(`Dodano kategorię: ${categoryName}`);
+      reset(); 
     } catch (error) {
       console.error("Błąd podczas dodawania kategorii:", error);
       alert("Nie udało się dodać kategorii.");
@@ -88,51 +78,54 @@ function CategoryManage() {
       </Typography>
 
       {/* Formularz dodawania kategorii */}
-      <TextField
-        fullWidth
-        required
-        label="Dodaj nową kategorię"
-        value={newCategory}
-        onChange={handleCategoryChange}
-        sx={{
-          marginBottom: 3,
-          "& .MuiInputBase-input": { color: "#4d3c34" },
-        }}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={handleAddCategory}
-      >
-        Dodaj kategorię
-      </Button>
+      <form onSubmit={handleSubmit(handleAddCategory)}>
+        <TextField
+          fullWidth
+          label="Dodaj nową kategorię"
+          {...register("categoryName", {
+            required: "Nazwa kategorii jest wymagana.", // Walidacja: pole wymagane
+            pattern: {
+              value: /^[A-Z][a-zA-Z\s]*$/,
+              message: "Nazwa musi zaczynać się od wielkiej litery i zawierać tylko litery.",
+            },
+          })}
+          error={!!errors.categoryName} // Ustawienie błędu
+          helperText={errors.categoryName?.message} // Wyświetlenie komunikatu o błędzie
+          sx={{
+            marginBottom: 3,
+            "& .MuiInputBase-input": { color: "#4d3c34" },
+          }}
+        />
+        <Button variant="contained" color="primary" fullWidth type="submit">
+          Dodaj kategorię
+        </Button>
+      </form>
 
-      {/* Lista kategorii */}
+      {/* Tabela kategorii */}
       <Typography
         variant="h6"
         sx={{ marginTop: 4, marginBottom: 2, color: "#5d4037" }}
       >
         Istniejące kategorie:
       </Typography>
-      <List>
-        {categories.length > 0 ? (
-          categories.map((category) => (
-            <React.Fragment key={category.id}>
-              <ListItem>
-                <Typography sx={{ fontWeight: "bold" }}>
-                  {category.categoryName}
-                </Typography>
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          ))
-        ) : (
-          <Typography variant="body1" color="textSecondary">
-            Brak kategorii w systemie.
-          </Typography>
-        )}
-      </List>
+
+      {categories.length > 0 ? (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableBody>
+              {categories.map((category) => (
+                <TableRow key={category.id}>
+                  <TableCell>{category.categoryName}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography variant="body1" color="textSecondary">
+          Brak kategorii w systemie.
+        </Typography>
+      )}
     </Box>
   );
 }
