@@ -5,6 +5,7 @@ import AxiosApi from "../../../api/axiosApi.ts";
 import { addListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
 import { NavLink } from "react-router-dom";
 import StyleFunctions from "./../../../shared/styleFunctions.ts"
+import GroceryTable from "./GroceryTable.tsx";
 
  
 
@@ -18,7 +19,7 @@ function GroceryList() {
     useEffect(() => {
         const fetchListOfProductsToBuy = async () => {
         try {
-            const response : AxiosResponse = await AxiosApi.axiosRecipes.get('')//.catch((error) => {console.error('Error: ', error)});
+            const response : AxiosResponse = await AxiosApi.axiosListOfProductsToBuy.get('')//.catch((error) => {console.error('Error: ', error)});
             dispatch(addListOfProductsToBuy(response.data));
             console.log(response.data);
         }
@@ -43,7 +44,7 @@ function GroceryList() {
         </div>
       </div>
       <div className="site-content">
-
+        <GroceryTable/>
       </div>
         </>
     );

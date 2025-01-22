@@ -4,12 +4,10 @@ import { getAllProducts } from "../../../features/products/productSlice.ts";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
-import { Category } from "../../../../../Spizarnia-backend/src/models/Category.ts";
-import { NavLink } from "react-router-dom";
 import dayjs from 'dayjs';
 
 
-function ProductList() {
+function ProductTable() {
   const products = useSelector(getAllProducts);
   const [openConfirmationDialog, setConfirmationDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string>(""); // Product for deletion dialog
@@ -29,7 +27,7 @@ function ProductList() {
         renderCell: (params) => (
             <Button
                 variant="outlined"
-                color="font-color"
+                color="inherit"
                 onClick={() => {
                   setSelectedProduct(params.row.name); // Store selected product name
                   setConfirmationDialog(true); // Open delete dialog
@@ -41,11 +39,7 @@ function ProductList() {
         ),
     },
   ];
-
-function ProductList()
-{
     const today = dayjs(); 
-    const products = useSelector(getAllProducts);
     console.log("Produkty",products);
     let renderProducts =<p></p>;
     renderProducts = products.length > 0 ? (
@@ -53,6 +47,7 @@ function ProductList()
         <DataGrid
             rows={products}
             columns={columns}
+            disableRowSelectionOnClick
                 autoHeight
                 getRowClassName={(params) => {
                     const expirationDate = dayjs(params.row.expirationDate);
@@ -85,6 +80,7 @@ function ProductList()
                     fontFamily: '"Poppins", "Arial Black"',
                 },
             }}
+            
         />
     </div>
 ) : (
@@ -104,5 +100,5 @@ return (
   </>
 );
 }     
-}
-export default ProductList;
+
+export default ProductTable;
