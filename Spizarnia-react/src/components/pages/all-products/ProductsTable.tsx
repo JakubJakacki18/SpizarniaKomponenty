@@ -45,6 +45,7 @@ function ProductTable() {
                     backgroundColor: 'var(--primary-color)',
                     borderColor: 'var(--font-color)',
                     margin: '0 10px',
+                    marginBottom: '5px',
                     fontFamily: '"Poppins", "Arial Black", sans-serif',
                     '&:hover': {
                         backgroundColor: 'var(--secondary-left)',
@@ -78,9 +79,9 @@ function ProductTable() {
                         return 'expired';
                     } else if (daysToExpiration < 1) {
                         return 'almost-expired';
-                    } else if (daysToExpiration < 3) {
+                    } else if (daysToExpiration <= 3) {
                         return 'soon-expiring';
-                    } else if (daysToExpiration <= 7) {
+                    } else if (daysToExpiration > 3) {
                         return 'expiring';
                     }
                     return ''; 
