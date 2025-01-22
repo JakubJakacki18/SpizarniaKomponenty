@@ -289,26 +289,22 @@ a {
 }
 /* Zielony - data ważności > 7 dni */
 .expiring {
-    background-color: #d4edda;
-    color: #155724;
+    color: var(--primary-color);
 }
 
 /* Żółty - data ważności < 3 dni */
 .soon-expiring {
-    background-color: #fff3cd;
-    color: #856404;
+    color: yellow;
 }
 
 /* Czerwony - data ważności < 1 dnia */
 .almost-expired {
-    background-color: #f8d7da;
-    color: #721c24;
+    color: #f44336;
 }
 
 /* Szary i przekreślony - przeterminowane */
 .expired {
-    background-color: #e2e3e5;
-    color: #6c757d;
+    color: grey;
     text-decoration: line-through;
 }
 
