@@ -14,6 +14,7 @@
     "cra-template": "1.2.0",
     "css-select": "^5.1.0",
     "dayjs": "^1.11.13",
+    "mui": "^0.0.1",
     "nth-check": "^2.1.1",
     "postcss": "^8.4.49",
     "react": "^19.0.0",

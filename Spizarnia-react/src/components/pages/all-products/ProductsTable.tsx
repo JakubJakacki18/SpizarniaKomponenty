@@ -18,7 +18,7 @@ function ProductTable() {
     { field: "quantity", headerName: "Ilość", width: 100, headerClassName: 'table-header' },
     { field: "categoryName", headerName: "Kategoria", width: 150 , headerClassName: 'table-header' },
     { field: "purchaseDate", headerName: "Data Zakupu", width: 150, headerClassName: 'table-header' },
-    { field: "expirationDate", headerName: "Data Ważności", width: 150, headerClassName: 'table-header' },
+    { field: "expirationDate", headerName: "Data Ważności", width: 180, headerClassName: 'table-header' },
     {
       field: "akcje",
       headerName: "Akcje",
@@ -26,13 +26,25 @@ function ProductTable() {
       headerClassName: 'table-header',
         renderCell: (params) => (
             <Button
-                variant="outlined"
-                color="inherit"
                 onClick={() => {
                   setSelectedProduct(params.row.name); // Store selected product name
                   setConfirmationDialog(true); // Open delete dialog
                 }}
                 className="action-edit-button"
+                sx={{
+                    color: 'var(--font-color)',
+                    backgroundColor: 'var(--primary-color)',
+                    borderColor: 'var(--font-color)',
+                    margin: '0 10px',
+                    fontFamily: '"Poppins", "Arial Black", sans-serif',
+                    '&:hover': {
+                        backgroundColor: 'var(--secondary-left)',
+                        background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                        color: 'var(--font-color-hover)',
+                    },
+                }}
+
+
             >
                 Usuń
             </Button>
@@ -65,18 +77,21 @@ function ProductTable() {
                     return ''; 
                 }}
             sx={{
-                border: "2px solid var(--background-color)",
+                border: "1px solid var(--background-color)",
                 fontFamily: '"Poppins", "Arial Black"', 
                 '& .MuiDataGrid-cell': {
-                    border: '2px solid var(--background-color)', 
+                    border: '1px solid var(--font-color)', 
+                    backgroundColor: 'var(--font-color)',
                     fontFamily: '"Poppins", "Arial Black"',
                 },
                 '& .MuiDataGrid-columnHeader': {
-                    border: '2px solid var(--background-color)', 
+                    border: '1px solid var(--font-color)', 
+                    backgroundColor: 'var(--font-color)',
                     fontFamily: '"Poppins", "Arial Black"', 
                 },
                 '& .MuiDataGrid-row': {
-                    borderBottom: '2px solid var(--background-color)', 
+                    borderBottom: '1px solid var(--font-color)', 
+                    backgroundColor: 'var(--font-color)',
                     fontFamily: '"Poppins", "Arial Black"',
                 },
             }}

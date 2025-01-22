@@ -20,7 +20,7 @@ function GroceryTable()
     const columns = [
         { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header'},
         { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
-        { field: "productQuantity", headerName: "Ilość produktu", width: 100, headerClassName: 'table-header' },
+        { field: "productQuantity", headerName: "Ilość produktu", width: 200, headerClassName: 'table-header' },
         { field: "categoryName", headerName: "Kategoria", width: 150 , headerClassName: 'table-header' },
         { field: "quantity", headerName: "Ilość", width: 150, headerClassName: 'table-header' },
         { field: "price", headerName: "Cena", width: 150, headerClassName: 'table-header' },
@@ -36,7 +36,19 @@ function GroceryTable()
                     variant="outlined"
                     onClick={() => {
                     }}
-                    className="action-edit-button"
+                        className="action-edit-button"
+                        sx={{
+                            color: 'var(--font-color)',
+                            backgroundColor: 'var(--primary-color)',
+                            borderColor: 'var(--font-color)',
+                            margin: '0 10px',
+                            fontFamily: '"Poppins", "Arial Black", sans-serif',
+                            '&:hover': {
+                                backgroundColor: 'var(--secondary-left)',
+                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                                color: 'var(--font-color-hover)',
+                            },
+                        }}
                 >
                     Edytuj
                 </Button>
@@ -44,7 +56,18 @@ function GroceryTable()
                     variant="outlined"
                     onClick={() => {
                     }}
-                    className="action-edit-button"
+                        className="action-edit-button"
+                        sx={{
+                            color: 'var(--font-color)',
+                            backgroundColor: 'var(--primary-color)',
+                            borderColor: 'var(--font-color)',
+                            fontFamily: '"Poppins", "Arial Black", sans-serif',
+                            '&:hover': {
+                                backgroundColor: 'var(--secondary-left)',
+                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                                color: 'var(--font-color-hover)',
+                            },
+                        }}
                 >
                     Usuń
                 </Button>
@@ -60,6 +83,26 @@ function GroceryTable()
             columns={columns}
             disableRowSelectionOnClick
             autoHeight
+                sx={{
+                    border: "1px solid var(--background-color)",
+                    fontFamily: '"Poppins", "Arial Black"',
+                    color: 'var(--primary-color)',
+                    '& .MuiDataGrid-cell': {
+                        border: '1px solid var(--font-color)',
+                        backgroundColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black"',
+                    },
+                    '& .MuiDataGrid-columnHeader': {
+                        border: '1px solid var(--font-color)',
+                        backgroundColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black"',
+                    },
+                    '& .MuiDataGrid-row': {
+                        borderBottom: '1px solid var(--font-color)',
+                        backgroundColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black"',
+                    },
+                }}
         />
     </div>
     ) : (
