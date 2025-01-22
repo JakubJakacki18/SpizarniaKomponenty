@@ -1,129 +1,217 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  MenuItem,
-} from "@mui/material";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addCategories, getAllCategories } from "../../../../features/category/categorySlice.ts";
+import { Box, Button, TextField, Typography, MenuItem } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import AxiosApi from "../../../../api/axiosApi.ts";
+import { AxiosResponse } from "axios";
 
-const AddProductForm = () => {
-  const [category, setCategory] = useState<string>(""); // Wybrana kategoria
-  const [purchaseDate, setPurchaseDate] = useState<Dayjs | null>(null); // Data zakupu
-  const [expirationDate, setExpirationDate] = useState<Dayjs | null>(null); // Data ważności
+interface FormData {
+  productName: string;
+  unit: string;
+  price: number;
+  quantity: number;
+  categoryId: string;
+  subcategory?: string; // Opcjonalne pole
+}
 
-  // Obsługa zmiany kategorii
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.target.value);
+function CategoryManage() {
+  const categories = useSelector(getAllCategories);
+  const dispatch = useDispatch();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({ mode: "onChange" });
+
+  const fetchCategories = async () => {
+    try {
+      const response: AxiosResponse = await AxiosApi.axiosCategories.get(""); 
+      dispatch(addCategories(response.data)); 
+    } catch (error) {
+      console.error("Błąd podczas pobierania kategorii:", error);
+    }
   };
 
-  // Obsługa dodania produktu
-  const handleAddProduct = () => {
-    if (!category || !purchaseDate || !expirationDate) {
-      alert("Wszystkie pola są wymagane!");
-      return;
-    }
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-    console.log("Dodano produkt:", {
-      category,
-      purchaseDate: purchaseDate.format("YYYY-MM-DD"),
-      expirationDate: expirationDate.format("YYYY-MM-DD"),
-    });
-    alert("Produkt został dodany!");
+  const onSubmit = async (data: FormData) => {
+    try {
+      await AxiosApi.axiosProducts.post("", {
+        productName: data.productName,
+        quantity: data.quantity,
+        price: data.price,
+        unit: data.unit,
+        categoryId: data.categoryId,
+        subcategory: data.subcategory || null, // Ustawienie na null, jeśli puste
+      });
+
+      alert(`Dodano produkt: ${data.productName}`);
+      reset();
+    } catch (error) {
+      console.error("Błąd podczas dodawania produktu:", error);
+      alert("Nie udało się dodać produktu.");
+    }
   };
 
   return (
     <Box
       sx={{
+        maxWidth: 600,
+        margin: "auto",
+        padding: 3,
         backgroundColor: "#f9ece6",
         borderRadius: 2,
-        padding: 3,
-        maxWidth: 500,
-        margin: "auto",
         boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
       }}
     >
-      {/* Tytuł */}
       <Typography
         variant="h5"
         align="center"
         sx={{ fontWeight: "bold", marginBottom: 3, color: "#5d4037" }}
       >
-        DODAJ PRODUKT DO SPIŻARNI
+        DODAJ NOWY PRODUKT
       </Typography>
 
-      {/* Wybór kategorii */}
-      <Typography
-        variant="subtitle1"
-        sx={{ marginBottom: 1, color: "#7f4b3d" }}
-      >
-        Wybierz kategorię:
-      </Typography>
-      <TextField
-        select
-        required
-        fullWidth
-        label="Kategoria*"
-        value={category}
-        onChange={handleCategoryChange}
-        sx={{
-          marginBottom: 3,
-          "& .MuiInputBase-input": { color: "#4d3c34" },
-        }}
-      >
-        <MenuItem value="">Wybierz kategorię</MenuItem>
-        <MenuItem value="nabiał">Nabiał</MenuItem>
-        <MenuItem value="owoce">Owoce</MenuItem>
-        <MenuItem value="warzywa">Warzywa</MenuItem>
-        <MenuItem value="mięso">Mięso</MenuItem>
-        <MenuItem value="słodycze">Słodycze</MenuItem>
-      </TextField>
-
-      {/* Data zakupu */}
-      <Typography
-        variant="subtitle1"
-        sx={{ marginBottom: 1, color: "#7f4b3d" }}
-      >
-        Wybierz datę zakupu:*
-      </Typography>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="Data zakupu*"
-          value={purchaseDate}
-          onChange={(newValue) => setPurchaseDate(newValue)}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="productName"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: "Nazwa produktu jest wymagana.",
+            pattern: {
+              value: /^[A-Z][a-zA-Z\s]*$/,
+              message: "Nazwa musi zaczynać się od wielkiej litery i zawierać tylko litery.",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Nazwa produktu"
+              error={!!errors.productName}
+              helperText={errors.productName?.message}
+              sx={{ marginBottom: 3 }}
+            />
+          )}
         />
-      </LocalizationProvider>
 
-      {/* Data ważności */}
-      <Typography
-        variant="subtitle1"
-        sx={{ marginBottom: 1, color: "#7f4b3d" }}
-      >
-        Wybierz datę ważności:*
-      </Typography>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="Data ważności*"
-          value={expirationDate}
-          onChange={(newValue) => setExpirationDate(newValue)}
+<Controller
+          name="unit"
+          control={control}
+          defaultValue=""
+          rules={{
+            required: "Jednostka jest wymagana.",
+            pattern: {
+              value: /^[A-Za-z\s]+$/,
+              message: "Nazwa jednostki może zawierać tylko litery.",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Jednostka"
+              error={!!errors.unit}
+              helperText={errors.unit?.message}
+              sx={{ marginBottom: 3 }}
+            />
+          )}
         />
-      </LocalizationProvider>
 
-      {/* Dodaj produkt */}
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={handleAddProduct}
-        sx={{ marginTop: 2 }}
-      >
-        Dodaj produkt
-      </Button>
+        <Controller
+          name="quantity"
+          control={control}
+          defaultValue={0}
+          rules={{
+            required: "Ilość jest wymagana.",
+            min: { value: 1, message: "Ilość musi być większa niż 0." },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Ilość"
+              type="number"
+              error={!!errors.quantity}
+              helperText={errors.quantity?.message}
+              sx={{ marginBottom: 3 }}
+            />
+          )}
+        />
+
+        <Controller
+          name="price"
+          control={control}
+          defaultValue={0}
+          rules={{
+            required: "Cena jest wymagana.",
+            min: { value: 0.01, message: "Cena musi być większa niż 0." },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Cena"
+              type="number"
+              error={!!errors.price}
+              helperText={errors.price?.message}
+              sx={{ marginBottom: 3 }}
+            />
+          )}
+        />
+        
+        <Controller
+          name="categoryId"
+          control={control}
+          defaultValue=""
+          rules={{ required: "Kategoria jest wymagana." }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              fullWidth
+              label="Wybierz kategorię"
+              error={!!errors.categoryId}
+              helperText={errors.categoryId?.message}
+              sx={{ marginBottom: 3 }}
+            >
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.categoryName}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+
+        <Controller
+          name="subcategory"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              label="Podkategoria (opcjonalnie)"
+              error={!!errors.subcategory}
+              helperText={errors.subcategory?.message}
+              sx={{ marginBottom: 3 }}
+            />
+          )}
+        />
+
+        <Button variant="contained" color="primary" fullWidth type="submit">
+          Dodaj produkt
+        </Button>
+      </form>
     </Box>
   );
-};
+}
 
-export default AddProductForm;
+export default CategoryManage;
