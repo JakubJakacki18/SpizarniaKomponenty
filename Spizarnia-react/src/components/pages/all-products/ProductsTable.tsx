@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { getAllProducts } from "../../../features/products/productSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProduct, getAllProducts } from "../../../features/products/productSlice.ts";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 import dayjs from 'dayjs';
+import {AppDispatch} from './../../../features/store.ts'
+
+
 
 
 function ProductTable() {
   const products = useSelector(getAllProducts);
   const [openConfirmationDialog, setConfirmationDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string>(""); // Product for deletion dialog
-
+  const [selectedProductId, setSelectedProductId] = useState<string>("-1");
+  const dispatch = useDispatch<AppDispatch>();
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId));
+  };
   const columns = [
     { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header'},
     { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
@@ -30,7 +37,9 @@ function ProductTable() {
                 color="inherit"
                 onClick={() => {
                   setSelectedProduct(params.row.name); // Store selected product name
+                  setSelectedProductId(params.row.id)
                   setConfirmationDialog(true); // Open delete dialog
+
                 }}
                 className="action-edit-button"
             >
@@ -92,10 +101,12 @@ return (
       {renderProducts}
       
       <ConfirmationDialog
-        title={"produktu"}
-        content={"mleko - testowo"}
+        title={"Usuwanie produktu"}
+        content={`Czy chcesz usunąć produkt ${selectedProduct}`}
         openConfirmationDialog={openConfirmationDialog}
         setConfirmationDialog={setConfirmationDialog}
+        actionFunction={handleDelete}
+        dataToFunction={selectedProductId}
       />
   </>
 );
