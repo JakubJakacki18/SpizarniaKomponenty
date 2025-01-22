@@ -17,6 +17,10 @@ function GroceryTable()
     }));;
     const [openConfirmationDialog, setConfirmationDialog] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<string>("");
+    const totalSummaryPrice = groceries.reduce((acc, item) => {
+        const total = parseFloat(item.total.replace(',', '.')) || 0;
+        return acc + total;
+    }, 0).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const columns = [
         { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header'},
         { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
@@ -112,7 +116,22 @@ function GroceryTable()
     console.log("Groceries",groceries)
 
     return (<>
-    {renderGroceries}
+        {renderGroceries}
+        <div className="summary-container" style={{ marginTop: '20px', textAlign: 'right' }}>
+            <Button
+                variant="contained"
+                sx={{
+                    backgroundColor: 'var(--secondary-left)',
+                    background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',                    color: 'var(--font-color)',
+                    fontSize: '18px',
+                    fontFamily: '"Poppins", "Arial Black", sans-serif',
+                    padding: '10px 20px',
+                    cursor: 'not-allowed',
+                }}
+            >
+                <strong>Suma:</strong> {totalSummaryPrice} PLN
+            </Button>
+        </div>
     </>)
 }
 
