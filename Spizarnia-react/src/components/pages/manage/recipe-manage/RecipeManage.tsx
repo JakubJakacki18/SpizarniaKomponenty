@@ -48,7 +48,22 @@ const RecipeForm = () => {
       prevIngredients.filter((ingredient) => ingredient.id !== id)
     );
   };
-
+  const handleAddRecipe = () => {
+    if (!recipeName || ingredients.some((ingredient) => !ingredient.name)) {
+      alert("Wszystkie pola są wymagane!");
+      return;
+    }
+  
+    console.log("Dodano przepis:", {
+      recipeName,
+      ingredients: ingredients.map((ingredient) => ({
+        name: ingredient.name,
+        quantity: ingredient.quantity,
+      })),
+    });
+  
+    alert("Przepis został dodany!");
+  };
   return (
     <Box
       sx={{
@@ -180,6 +195,7 @@ const RecipeForm = () => {
           variant="contained"
           color="success"
           fullWidth
+          onClick={handleAddRecipe}
           sx={{ marginTop: 2 }}
         >
           Dodaj przepis
