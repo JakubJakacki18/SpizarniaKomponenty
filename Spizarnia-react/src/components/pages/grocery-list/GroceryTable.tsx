@@ -1,10 +1,14 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { editGroceryEntry, getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
 import { DataGrid } from "@mui/x-data-grid";
+import GroceryEditDialog from "./GroceryEditDialog.tsx";
+import { Product } from "../../../../../Spizarnia-backend/src/models/Product.ts";
+import { AppDispatch } from "../../../features/store.ts";
 function GroceryTable() 
 {
+    const dispatch = useDispatch<AppDispatch>();
     const groceries = useSelector(getAllListOfProductsToBuy).map(groceryItem => ({
         ...groceryItem,
         name: groceryItem.products?.name || "",
@@ -12,11 +16,18 @@ function GroceryTable()
         categoryName:groceryItem.products?.category?.categoryName || "",
         price: Number(groceryItem.products?.price).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0,
         total: (groceryItem.products?.price * groceryItem.quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0,
-
-
     }));;
     const [openConfirmationDialog, setConfirmationDialog] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState<string>("");
+    const [openEditDialog, setEditDialog] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState<string>("");
+
+    const handleDelete = (productToBuyId) => {
+        //dispatch(deleteProduct(productId));
+      };
+    const handleEdit = (productToBuyId,newQuantity) => {
+        dispatch(editGroceryEntry({productToBuyId,newQuantity}));
+    };
+
     const columns = [
         { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header'},
         { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
@@ -35,20 +46,22 @@ function GroceryTable()
                 <Button
                     variant="outlined"
                     onClick={() => {
+                        setEditDialog(true);
+                        setSelectedProductId(params.row.id);
                     }}
-                        className="action-edit-button"
-                        sx={{
-                            color: 'var(--font-color)',
-                            backgroundColor: 'var(--primary-color)',
-                            borderColor: 'var(--font-color)',
-                            margin: '0 10px',
-                            fontFamily: '"Poppins", "Arial Black", sans-serif',
-                            '&:hover': {
-                                backgroundColor: 'var(--secondary-left)',
-                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
-                                color: 'var(--font-color-hover)',
-                            },
-                        }}
+                    className="action-edit-button"
+                    sx={{
+                        color: 'var(--font-color)',
+                        backgroundColor: 'var(--primary-color)',
+                        borderColor: 'var(--font-color)',
+                        margin: '0 10px',
+                        fontFamily: '"Poppins", "Arial Black", sans-serif',
+                        '&:hover': {
+                            backgroundColor: 'var(--secondary-left)',
+                            background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                            color: 'var(--font-color-hover)',
+                        },
+                    }}
                 >
                     Edytuj
                 </Button>
@@ -56,18 +69,18 @@ function GroceryTable()
                     variant="outlined"
                     onClick={() => {
                     }}
-                        className="action-edit-button"
-                        sx={{
-                            color: 'var(--font-color)',
-                            backgroundColor: 'var(--primary-color)',
-                            borderColor: 'var(--font-color)',
-                            fontFamily: '"Poppins", "Arial Black", sans-serif',
-                            '&:hover': {
-                                backgroundColor: 'var(--secondary-left)',
-                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
-                                color: 'var(--font-color-hover)',
-                            },
-                        }}
+                    className="action-edit-button"
+                    sx={{
+                        color: 'var(--font-color)',
+                        backgroundColor: 'var(--primary-color)',
+                        borderColor: 'var(--font-color)',
+                        fontFamily: '"Poppins", "Arial Black", sans-serif',
+                        '&:hover': {
+                            backgroundColor: 'var(--secondary-left)',
+                            background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
+                            color: 'var(--font-color-hover)',
+                        },
+                    }}
                 >
                     Usuń
                 </Button>
@@ -113,9 +126,19 @@ function GroceryTable()
 
     return (<>
     {renderGroceries}
+    <GroceryEditDialog
+    handleEdit = {handleEdit}
+    productToBuyId = {selectedProductId}
+    openEditDialog = {openEditDialog}
+    setEditDialog = {setEditDialog}
+    />
     </>)
 }
 
 export default GroceryTable;
 
+
+function dispatch(arg0: any) {
+    throw new Error("Function not implemented.");
+}
 
