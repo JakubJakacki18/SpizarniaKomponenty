@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "Uruchomienie serwera: npm start,\r Konfiguracja: package.json,\r Główny plik: src/server.ts",
   "dependencies": {
+    "@angular/cli": "^19.1.4",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "mysql2": "^3.11.4",
