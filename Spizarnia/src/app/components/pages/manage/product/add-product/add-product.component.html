@@ -1,7 +1,5 @@
-  <div class="site-content">
+  <div class="manage-content">
   <div class="title-manage">Dodaj produkt do spiżarni</div>
-  <div class="background-container">
-
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
       <label>Wybierz kategorię:</label>
       <mat-accordion>
@@ -58,6 +56,5 @@
       <p>Wybrany produkt: {{ productForm.value.selectedProduct | json }}</p>
     </div>
   } -->
-    </div>
 
   </div>

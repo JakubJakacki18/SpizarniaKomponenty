@@ -3,7 +3,6 @@ import { RecipeController } from "../controllers/recipe.controller";
 
 const router = Router();
 
-// CRUD
 router.get("/", RecipeController.getAll);
 router.get("/:id", RecipeController.getOne);
 router.post("/", RecipeController.create);

@@ -3,7 +3,6 @@ import { ListOfProductsToBuyController } from "../controllers/listOfProductsToBu
 
 const router = Router();
 
-// CRUD 
 router.get("/", ListOfProductsToBuyController.getAll);
 router.get("/:id", ListOfProductsToBuyController.getOne); 
 router.post("/", ListOfProductsToBuyController.create);

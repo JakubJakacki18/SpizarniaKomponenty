@@ -1,3 +1,9 @@
-<div>
-    <strong>{{ data.title }}</strong> {{ data.message }}<button mat-button (click)="snackBarRef.dismissWithAction()">Ok</button>
+<div class="snackBar">
+    <div class="snackBarData">
+        <p><strong>{{ data.title }}</strong></p> 
+        <p>{{ data.message }}</p>
+    </div>
+    <div class="snackBarButton">
+        <button mat-button (click)="snackBarRef.dismissWithAction()">Ok</button>
+    </div>
 </div>

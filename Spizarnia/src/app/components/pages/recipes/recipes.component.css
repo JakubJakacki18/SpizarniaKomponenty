@@ -1,6 +1,8 @@
 mat-accordion {
-  margin: 5px;
-  padding: 0;
+  margin: 10px;
+  display:block;
+  justify-content:center;
+  min-width:80vw;
 }
 .form-group {
   display: flex;
@@ -20,31 +22,11 @@ label {
   align-items: center;
 }
 
-.recipes-container {
-  margin-top: 20px;
-}
-
 .table {
-  width: 100%;
+  width: 200%;
   border-collapse: collapse;
 }
 
-.recipes-header {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: left;
-  background: var(--primary-color);
-  color: var(--font-color);
-  padding: 10px;
-  border: 3px solid var(--background-color);
-}
-
-.recipes-cell {
-  padding: 10px;
-  border: 3px solid var(--background-color);
-  background: var(--font-color);
-  color: var(--primary-color);
-}
 .no-data {
   padding: 20px;
   font-size: 18px;
@@ -52,10 +34,8 @@ label {
   text-align: center;
 }
 .background-container {
-  position: relative;
   top:0;
-  width: 90%;
+  min-width: 200%;
   background-color: var(--primary-color);
-  overflow: auto;
   padding: 30px 20px;
 }

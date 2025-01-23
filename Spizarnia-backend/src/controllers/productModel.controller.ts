@@ -90,7 +90,7 @@ export const ProductModelController = {
         return;
       }
 
-      if (categoryName) {
+      if (categoryName !== null) {
         const category = await AppDataSource.getRepository(Category).findOne({
         where: { categoryName: categoryName } });
         if (category !== null) {
@@ -166,7 +166,6 @@ export const ProductModelController = {
         relations: ["category"]
       });
   
-      // If product exists, return true (it's a duplicate)
       res.json(existingProduct !== null);
     } catch (error) {
       res.status(500).json({ error: "Internal error: Cannot check for duplicate product" });

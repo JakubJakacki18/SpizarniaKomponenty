@@ -5,7 +5,8 @@ div[mat-dialog-actions] button {
   padding: 2px;
   width: auto;
   height: 30px;
-  margin-left: 10px;
+  margin-left: 80px;
+  margin-bottom:10px;
   border: 1px solid var(--background-color);
   text-align: center;
   white-space: nowrap;
@@ -26,19 +27,17 @@ div[mat-dialog-actions] button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 85px;
   margin-right: 20px;
 }
 
-.mat-form-field {
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.form-title {
+.dialog-title {
+  margin-top:10px;
+  margin-left:30px;
   font-family: "Poppins", "Arial";
-  font-size: 14px;
+  font-size: 20px;
   font-weight: bold;
+  text-transform: uppercase;
   margin-bottom: 5px;
   color: var(--font-color);
 }

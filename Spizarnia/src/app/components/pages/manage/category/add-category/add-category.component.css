@@ -22,21 +22,10 @@
     color: var(--secondary-right);
   }
 
-
-.emptyWarning {
-  font-size: 16px;
-  color: var(--secondary-right);
-  margin-left: 15px;
-}
-
 mat-form-field {
   width: 100%;
   background-color: var(--primary-color);
   border-radius: 5px;
 }
 
-.error {
-  color: var(--secondary-left);
-  font-size: 16px;
-  margin-top: 5px;
-}
+

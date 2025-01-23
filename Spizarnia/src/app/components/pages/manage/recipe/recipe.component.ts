@@ -11,8 +11,9 @@ import { CommonModule } from '@angular/common';
 import { elementAt } from 'rxjs';
 import { DialogService } from '../../../../services/dialog.service';
 import { ProductModel } from '../../../../../../../Spizarnia-backend/src/models/ProductModel';
-import { CategoryWithDisabledProductModels } from '../../../../shared/constances/additional.types';
+import { CategoryWithDisabledProductModels, SnackBarResultType } from '../../../../shared/constances/additional.types';
 import { RecipeService } from '../../../../services/recipe.service';
+import { SnackBarService } from '../../../../services/snack-bar.service';
 
 @Component({
   selector: 'app-recipe',
@@ -26,7 +27,8 @@ export class RecipeComponent {
 
    availableCategories: CategoryWithDisabledProductModels[]=[];
    recipeForm : FormGroup;
-      constructor(private categoryService : CategoryService,private fb: FormBuilder, private dialogService : DialogService, private recipeService : RecipeService)
+      constructor(private categoryService : CategoryService,private fb: FormBuilder, private dialogService : DialogService, private recipeService : RecipeService, private snackBarService : SnackBarService
+      )
       {
         this.fetchCategories();
         this.recipeForm = this.fb.group({
@@ -76,10 +78,12 @@ export class RecipeComponent {
      else {
       this.recipeService.createRecipe(this.recipeForm.value).subscribe({
         next: (response) => {
-          console.log('Produkt został utworzony:', response);          
+          console.log('Produkt został utworzony:', response);
+          this.snackBarService.openSnackBar('Produkt został utworzony!',SnackBarResultType.Success);
         },
         error: (error) => {
           console.error('Błąd podczas tworzenia produktu:', error);
+          this.snackBarService.openSnackBar('Tworzenie produktu nie powiodło się',SnackBarResultType.Error);
         }
      });
      }
@@ -143,8 +147,10 @@ export class RecipeComponent {
     {
       console.log(this.ingredients.length)
       event.preventDefault();
-      // if(this.ingredients.length>1)
+      if(this.ingredients.length>1)
         this.ingredients.removeAt(productModelToDelete);
+      else 
+        this.snackBarService.openSnackBar("Nie możesz usunąć jedynego składnika",SnackBarResultType.Error);
       this.updateAvailableProducts();
 
     }
