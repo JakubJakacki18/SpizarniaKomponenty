@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCategories, getAllCategories } from "../../../../features/category/categorySlice.ts";
+import { addProductModels, getAllProductModels } from "../../../../features/productModels/productModelSlice.ts";
 import { Box, Button, TextField, Typography, MenuItem } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import AxiosApi from "../../../../api/axiosApi.ts";
 import { AxiosResponse } from "axios";
 
 interface FormData {
-  productName: string;
+  name: string;
   unit: string;
   price: number;
   quantity: number;
   categoryId: string;
-  subcategory?: string; // Opcjonalne pole
+  type?: string; // Opcjonalne pole
 }
 
 function CategoryManage() {
   const categories = useSelector(getAllCategories);
+  const productModels = useSelector(getAllProductModels);
   const dispatch = useDispatch();
 
   const {
@@ -41,16 +43,28 @@ function CategoryManage() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      await AxiosApi.axiosProducts.post("", {
-        productName: data.productName,
+      const response = await AxiosApi.axiosProductModels.post("", {
+        name: data.name,
         quantity: data.quantity,
         price: data.price,
         unit: data.unit,
         categoryId: data.categoryId,
-        subcategory: data.subcategory || null, // Ustawienie na null, jeśli puste
+        type: data.type || null, 
       });
+      console.log(response);
+      console.log(response.data);
 
-      alert(`Dodano produkt: ${data.productName}`);
+
+      dispatch(addProductModels([...productModels, {id : response.data.id, 
+                      name : response.data.name,
+                      quantity : response.data.quantity,
+                      unit : response.data.unit,
+                      price : response.data.price,
+                      category : response.data.category,
+                      type : response.data.type,
+
+                      productModels : []}]))
+      alert(`Dodano produkt: ${data.name}`);
       reset();
     } catch (error) {
       console.error("Błąd podczas dodawania produktu:", error);
@@ -79,7 +93,7 @@ function CategoryManage() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="productName"
+          name="name"
           control={control}
           defaultValue=""
           rules={{
@@ -94,8 +108,8 @@ function CategoryManage() {
               {...field}
               fullWidth
               label="Nazwa produktu"
-              error={!!errors.productName}
-              helperText={errors.productName?.message}
+              error={!!errors.name}
+              helperText={errors.name?.message}
               sx={{ marginBottom: 3 }}
             />
           )}
@@ -191,7 +205,7 @@ function CategoryManage() {
         />
 
         <Controller
-          name="subcategory"
+          name="type"
           control={control}
           defaultValue=""
           render={({ field }) => (
@@ -199,8 +213,8 @@ function CategoryManage() {
               {...field}
               fullWidth
               label="Podkategoria (opcjonalnie)"
-              error={!!errors.subcategory}
-              helperText={errors.subcategory?.message}
+              error={!!errors.type}
+              helperText={errors.type?.message}
               sx={{ marginBottom: 3 }}
             />
           )}
