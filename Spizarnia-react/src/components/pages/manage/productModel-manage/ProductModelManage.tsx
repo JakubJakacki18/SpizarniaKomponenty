@@ -2,231 +2,126 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCategories, getAllCategories } from "../../../../features/category/categorySlice.ts";
 import { addProductModels, getAllProductModels } from "../../../../features/productModels/productModelSlice.ts";
-import { Box, Button, TextField, Typography, MenuItem } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import AxiosApi from "../../../../api/axiosApi.ts";
 import { AxiosResponse } from "axios";
 
 interface FormData {
-  name: string;
-  unit: string;
-  price: number;
-  quantity: number;
-  categoryId: string;
-  type?: string; // Opcjonalne pole
+    name: string;
+    unit: string;
+    price: number;
+    quantity: number;
+    categoryId: string;
+    type?: string;
 }
 
-function CategoryManage() {
-  const categories = useSelector(getAllCategories);
-  const productModels = useSelector(getAllProductModels);
-  const dispatch = useDispatch();
+function ProductManage() {
+    const categories = useSelector(getAllCategories);
+    const productModels = useSelector(getAllProductModels);
+    const dispatch = useDispatch();
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormData>({ mode: "onChange" });
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<FormData>({ mode: "onChange" });
 
-  const fetchCategories = async () => {
-    try {
-      const response: AxiosResponse = await AxiosApi.axiosCategories.get(""); 
-      dispatch(addCategories(response.data)); 
-    } catch (error) {
-      console.error("Błąd podczas pobierania kategorii:", error);
-    }
-  };
+    const fetchCategories = async () => {
+        try {
+            const response: AxiosResponse = await AxiosApi.axiosCategories.get("");
+            dispatch(addCategories(response.data));
+        } catch (error) {
+            console.error("Błąd podczas pobierania kategorii:", error);
+        }
+    };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      const response = await AxiosApi.axiosProductModels.post("", {
-        name: data.name,
-        quantity: data.quantity,
-        price: data.price,
-        unit: data.unit,
-        categoryId: data.categoryId,
-        type: data.type || null, 
-      });
-      console.log(response);
-      console.log(response.data);
+    const onSubmit = async (data: FormData) => {
+        try {
+            const response = await AxiosApi.axiosProductModels.post("", data);
+            dispatch(addProductModels([...productModels, response.data]));
+            alert(`Dodano produkt: ${data.name}`);
+            reset();
+        } catch (error) {
+            console.error("Błąd podczas dodawania produktu:", error);
+            alert("Nie udało się dodać produktu.");
+        }
+    };
 
+    return (
+        <div className="manage-content">
+            <div className="title-manage">Dodaj produkt</div>
+            <form onSubmit={handleSubmit(onSubmit)} className="form-product-model-container">
+                <input
+                    className="form-product-model-input"
+                    type="text"
+                    {...register("name", {
+                        required: "Nazwa produktu jest wymagana.",
+                        pattern: {
+                            value: /^[A-Z][a-zA-Z\s]*$/,
+                            message: "Nazwa musi zaczynać się od wielkiej litery i zawierać tylko litery.",
+                        },
+                    })}
+                    placeholder="Nazwa produktu"
+                />
+                {errors.name && <span className="error-message">{errors.name.message}</span>}
 
-      dispatch(addProductModels([...productModels, {id : response.data.id, 
-                      name : response.data.name,
-                      quantity : response.data.quantity,
-                      unit : response.data.unit,
-                      price : response.data.price,
-                      category : response.data.category,
-                      type : response.data.type,
+                <input
+                    className="form-product-model-input"
+                    type="text"
+                    {...register("unit", {
+                        required: "Jednostka jest wymagana.",
+                    })}
+                    placeholder="Jednostka"
+                />
+                {errors.unit && <span className="error-message">{errors.unit.message}</span>}
 
-                      productModels : []}]))
-      alert(`Dodano produkt: ${data.name}`);
-      reset();
-    } catch (error) {
-      console.error("Błąd podczas dodawania produktu:", error);
-      alert("Nie udało się dodać produktu.");
-    }
-  };
+                <input
+                    className="form-product-model-input"
+                    type="number"
+                    {...register("quantity", {
+                        required: "Ilość jest wymagana.",
+                        min: { value: 1, message: "Ilość musi być większa niż 0." },
+                    })}
+                    placeholder="Ilość"
+                />
+                {errors.quantity && <span className="error-message">{errors.quantity.message}</span>}
 
-  return (
-    <Box
-      sx={{
-        maxWidth: 600,
-        margin: "auto",
-        padding: 3,
-        backgroundColor: "#f9ece6",
-        borderRadius: 2,
-        boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
-      }}
-    >
-      <Typography
-        variant="h5"
-        align="center"
-        sx={{ fontWeight: "bold", marginBottom: 3, color: "#5d4037" }}
-      >
-        DODAJ NOWY PRODUKT
-      </Typography>
+                <input
+                    className="form-product-model-input"
+                    type="number"
+                    {...register("price", {
+                        required: "Cena jest wymagana.",
+                        min: { value: 0.01, message: "Cena musi być większa niż 0." },
+                    })}
+                    placeholder="Cena"
+                />
+                {errors.price && <span className="error-message">{errors.price.message}</span>}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="name"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: "Nazwa produktu jest wymagana.",
-            pattern: {
-              value: /^[A-Z][a-zA-Z\s]*$/,
-              message: "Nazwa musi zaczynać się od wielkiej litery i zawierać tylko litery.",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Nazwa produktu"
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              sx={{ marginBottom: 3 }}
-            />
-          )}
-        />
+                <select className="form-product-model-input" {...register("categoryId", { required: "Kategoria jest wymagana." })}>
+                    <option value="">Wybierz kategorię</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>{category.categoryName}</option>
+                    ))}
+                </select>
+                {errors.categoryId && <span className="error-message">{errors.categoryId.message}</span>}
 
-<Controller
-          name="unit"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: "Jednostka jest wymagana.",
-            pattern: {
-              value: /^[A-Za-z\s]+$/,
-              message: "Nazwa jednostki może zawierać tylko litery.",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Jednostka"
-              error={!!errors.unit}
-              helperText={errors.unit?.message}
-              sx={{ marginBottom: 3 }}
-            />
-          )}
-        />
-
-        <Controller
-          name="quantity"
-          control={control}
-          defaultValue={0}
-          rules={{
-            required: "Ilość jest wymagana.",
-            min: { value: 1, message: "Ilość musi być większa niż 0." },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Ilość"
-              type="number"
-              error={!!errors.quantity}
-              helperText={errors.quantity?.message}
-              sx={{ marginBottom: 3 }}
-            />
-          )}
-        />
-
-        <Controller
-          name="price"
-          control={control}
-          defaultValue={0}
-          rules={{
-            required: "Cena jest wymagana.",
-            min: { value: 0.01, message: "Cena musi być większa niż 0." },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Cena"
-              type="number"
-              error={!!errors.price}
-              helperText={errors.price?.message}
-              sx={{ marginBottom: 3 }}
-            />
-          )}
-        />
-        
-        <Controller
-          name="categoryId"
-          control={control}
-          defaultValue=""
-          rules={{ required: "Kategoria jest wymagana." }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              select
-              fullWidth
-              label="Wybierz kategorię"
-              error={!!errors.categoryId}
-              helperText={errors.categoryId?.message}
-              sx={{ marginBottom: 3 }}
-            >
-              {categories.map((category) => (
-                <MenuItem key={category.id} value={category.id}>
-                  {category.categoryName}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
-
-        <Controller
-          name="type"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label="Podkategoria (opcjonalnie)"
-              error={!!errors.type}
-              helperText={errors.type?.message}
-              sx={{ marginBottom: 3 }}
-            />
-          )}
-        />
-
-        <Button variant="contained" color="primary" fullWidth type="submit">
-          Dodaj produkt
-        </Button>
-      </form>
-    </Box>
-  );
+                <input
+                    className="form-product-model-input"
+                    type="text"
+                    {...register("type")}
+                    placeholder="Podkategoria (opcjonalnie)"
+                />
+                <div class="button-product-model-group">
+                    <button type="submit" className="action-button">Dodaj produkt</button>
+                </div>
+            </form>
+        </div>
+    );
 }
 
-export default CategoryManage;
-
+export default ProductManage;
