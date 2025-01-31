@@ -9,8 +9,8 @@
     padding: 25px;
     color: var(--primary-color);
     box-sizing: border-box;
-    width: 80vw;
-    max-width: 80vw;
+    width: 100%;
+    max-width: 600px;
     margin: auto;
 }
 
