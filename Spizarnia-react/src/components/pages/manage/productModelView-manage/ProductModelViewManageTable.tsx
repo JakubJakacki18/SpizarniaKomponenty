@@ -1,15 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { getAllProductModels } from "../../../../features/productModels/productModelSlice.ts";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProductModel, getAllProductModels } from "../../../../features/productModels/productModelSlice.ts";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
+import ConfirmationDialog from "../../shared/ConfirmationDialog.tsx";
+import { AppDispatch } from "../../../../features/store.ts";
 
 function ProductModelViewManageTable()
 {
+        const [deleteDialog, setDeleteDialog] = useState(false);
+        const [selectedProductModelName, setSelectedProductModelName] = useState<string>(""); // Product for deletion dialog
+        const [selectedProductModelId, setSelectedProductModelId] = useState<string>("-1");
     const productModels = useSelector(getAllProductModels).map(product => ({
         ...product,
         categoryName: product.category?.categoryName || "",
     }));
+    const dispatch : AppDispatch= useDispatch();
+    const handleDelete = (productModelId) => 
+        {
+            dispatch(deleteProductModel(productModelId))
+        }
+
     const columns = [
         { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header'},
         { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
@@ -47,6 +58,9 @@ function ProductModelViewManageTable()
                 <Button
                     variant="outlined"
                     onClick={() => {
+                        setSelectedProductModelName(params.row.name);
+                        setSelectedProductModelId(params.row.id);
+                        setDeleteDialog(true);
                     }}
                         className="action-edit-button"
                         sx={{
@@ -102,12 +116,22 @@ function ProductModelViewManageTable()
     );
 
     return (
+        <>
         <div className="manage-content">
             <div className="title-manage">Zarządzaj produktami</div>
-
             {renderProductModels}
 
         </div>
+        <ConfirmationDialog
+        title={"Usuwanie elementu"}
+        content={`Czy chcesz usunąć ${selectedProductModelName} z katalogu?`}
+        openConfirmationDialog={deleteDialog}
+        setConfirmationDialog={setDeleteDialog}
+        actionFunction={handleDelete}
+        dataToFunction={selectedProductModelId}
+        />
+        </>
+
     )
 }
 export default ProductModelViewManageTable;
