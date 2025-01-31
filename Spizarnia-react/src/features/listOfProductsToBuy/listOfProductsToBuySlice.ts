@@ -29,6 +29,7 @@ export const editGroceryEntry = createAsyncThunk<{productToBuyId : string, newQu
     }
   );
 
+
   export const deleteGroceryList = createAsyncThunk<void, void>(
     "listOfProductsToBuy/deleteAll",
     async (_, { rejectWithValue }) => {
@@ -36,11 +37,24 @@ export const editGroceryEntry = createAsyncThunk<{productToBuyId : string, newQu
         const response = await AxiosApi.axiosListOfProductsToBuy.post(`deleteAll`);
         console.log(response)
       } catch (error: any) {
-        return rejectWithValue(error.response?.data || "Błąd podczas usuwania listy zakupów");
+        return rejectWithValue(error.response?.data || 'Error occurred');
       }
     }
   );
 
+    export const deleteGroceryEntry = createAsyncThunk<{productToBuyId : string},{productToBuyId : string}>(
+      'listOfProductsToBuy/deleteGroceryEntry',
+      async ({productToBuyId},{ rejectWithValue }) => {
+        try{
+          console.log(productToBuyId)
+          await AxiosApi.axiosListOfProductsToBuy.delete(`/${productToBuyId}`)
+          return {productToBuyId}
+        }catch(error)
+        {
+          return rejectWithValue(error.response?.data || 'Error occurred');
+        }
+      }
+    );
 const listOfProductsToBuySlice = createSlice({
     name: "listOfProductsToBuy",
     initialState,
@@ -66,6 +80,19 @@ const listOfProductsToBuySlice = createSlice({
                 state.listOfProductsToBuy[groceryEntryIndex].quantity = action.payload.newQuantity;
             }})
             .addCase(editGroceryEntry.rejected, (state, action) => {
+              state.status = Status.error;
+              state.error = action.payload;
+            })
+
+            //deleteGroceryEntry
+            .addCase(deleteGroceryEntry.pending, (state) => {
+              state.status = Status.loading;
+            })
+            .addCase(deleteGroceryEntry.fulfilled, (state, action) => {
+              state.status = Status.success;
+              state.listOfProductsToBuy = state.listOfProductsToBuy.filter(item => item.id !== action.payload.productToBuyId);
+            })
+            .addCase(deleteGroceryEntry.rejected, (state, action) => {
               state.status = Status.error;
               state.error = action.payload;
             })

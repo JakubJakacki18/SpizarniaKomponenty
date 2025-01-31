@@ -1,11 +1,12 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editGroceryEntry, getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
+import { deleteGroceryEntry, editGroceryEntry, getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
 import { DataGrid } from "@mui/x-data-grid";
 import GroceryEditDialog from "./GroceryEditDialog.tsx";
 import { Product } from "../../../../../Spizarnia-backend/src/models/Product.ts";
 import { AppDispatch } from "../../../features/store.ts";
+import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 function GroceryTable() 
 {
     const dispatch = useDispatch<AppDispatch>();
@@ -17,12 +18,13 @@ function GroceryTable()
         price: Number(groceryItem.products?.price).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0,
         total: (groceryItem.products?.price * groceryItem.quantity).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0,
     }));;
-    const [openConfirmationDialog, setConfirmationDialog] = useState(false);
     const [openEditDialog, setEditDialog] = useState(false);
+    const [openDeleteDialog, setDeleteDialog] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState<string>("");
+    const [selectedProduct, setSelectedProduct] = useState<string>("")
 
     const handleDelete = (productToBuyId) => {
-        //dispatch(deleteProduct(productId));
+        dispatch(deleteGroceryEntry({productToBuyId}));
       };
     const handleEdit = (productToBuyId,newQuantity) => {
         dispatch(editGroceryEntry({productToBuyId,newQuantity}));
@@ -46,8 +48,9 @@ function GroceryTable()
                 <Button
                     variant="outlined"
                     onClick={() => {
-                        setEditDialog(true);
+                        setSelectedProduct(params.row.name);
                         setSelectedProductId(params.row.id);
+                        setEditDialog(true);
                     }}
                     className="action-edit-button"
                     sx={{
@@ -68,6 +71,9 @@ function GroceryTable()
                 <Button
                     variant="outlined"
                     onClick={() => {
+                        setSelectedProduct(params.row.name);
+                        setSelectedProductId(params.row.id);
+                        setDeleteDialog(true);
                     }}
                     className="action-edit-button"
                     sx={{
@@ -132,13 +138,18 @@ function GroceryTable()
     openEditDialog = {openEditDialog}
     setEditDialog = {setEditDialog}
     />
+   <ConfirmationDialog
+         title={"Usuwanie elementu"}
+         content={`Czy chcesz usunąć ${selectedProduct} z listy zakupów?`}
+         openConfirmationDialog={openDeleteDialog}
+         setConfirmationDialog={setDeleteDialog}
+         actionFunction={handleDelete}
+         dataToFunction={selectedProductId}
+   
+         />
+
     </>)
 }
 
 export default GroceryTable;
-
-
-function dispatch(arg0: any) {
-    throw new Error("Function not implemented.");
-}
 

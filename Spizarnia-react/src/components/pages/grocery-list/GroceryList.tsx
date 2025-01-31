@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AxiosApi from "../../../api/axiosApi.ts";
 import { addListOfProductsToBuy, deleteGroceryList } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
@@ -7,12 +7,13 @@ import { NavLink } from "react-router-dom";
 import StyleFunctions from "./../../../shared/styleFunctions.ts"
 import GroceryTable from "./GroceryTable.tsx";
 import { AppDispatch } from "../../../features/store.ts";
+import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 
 
 
 function GroceryList() {
     const dispatch : AppDispatch= useDispatch();
-    
+    const [openConfirmationDialog, setConfirmationDialog] = useState(false);
     const handleDeleteList = () => {
       dispatch(deleteGroceryList());
     };
@@ -40,7 +41,11 @@ function GroceryList() {
           <button className="action-button" >
             Szukaj
           </button>
-          <button className="action-button" onClick={handleDeleteList}>
+          <button className="action-button" onClick={()=>
+          {
+            setConfirmationDialog(true)
+          }
+          }>
           Usuń listę
           </button>
         </div>
@@ -48,6 +53,13 @@ function GroceryList() {
       <div className="site-content">
         <GroceryTable/>
       </div>
+      <ConfirmationDialog
+      title={"Usuwanie listy zakupów"}
+      content={`Czy chcesz usunąć całą listę produktów?`}
+      openConfirmationDialog={openConfirmationDialog}
+      setConfirmationDialog={setConfirmationDialog}
+      actionFunction={handleDeleteList}
+      />
         </>
     );
 }
@@ -55,4 +67,10 @@ function GroceryList() {
 export default GroceryList
 
 
+//  <ConfirmationDialog
 
+//         openConfirmationDialog={openConfirmationDialog}
+//         setConfirmationDialog={setConfirmationDialog}
+//         actionFunction={handleDelete}
+//         dataToFunction={selectedProductId}
+//       />
