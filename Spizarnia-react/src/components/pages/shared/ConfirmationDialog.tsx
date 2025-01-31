@@ -19,7 +19,7 @@ export default function ConfirmationDialog(props) {
       <DialogContent>{content}</DialogContent>
       <DialogActions>
         <Button onClick={handleAction} color="success">
-          Usuń
+          Ok
         </Button>
         <Button onClick={handleClose} color="primary">
           Anuluj

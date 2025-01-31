@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Status } from "../../shared/constances/statusType.ts";
 import AxiosApi from "../../api/axiosApi.ts";
 
-interface ProductState {
+export interface ProductState {
     products: any[]; 
     status: Status;
     error: any; 
