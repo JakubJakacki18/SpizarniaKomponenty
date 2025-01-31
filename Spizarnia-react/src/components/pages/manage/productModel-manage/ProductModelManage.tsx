@@ -116,7 +116,7 @@ function ProductManage() {
                     {...register("type")}
                     placeholder="Podkategoria (opcjonalnie)"
                 />
-                <div class="button-product-model-group">
+                <div className="button-product-model-group">
                     <button type="submit" className="action-button">Dodaj produkt</button>
                 </div>
             </form>

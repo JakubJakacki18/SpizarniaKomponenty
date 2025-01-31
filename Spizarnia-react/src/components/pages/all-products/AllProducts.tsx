@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import AxiosApi from "../../../api/axiosApi.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { addProducts } from "../../../features/products/productSlice.ts";
+import { addProducts, getAllProducts } from "../../../features/products/productSlice.ts";
 import { AxiosResponse } from "axios";
 import ProductTable from "./ProductsTable.tsx";
 import { NavLink } from "react-router-dom";
 import StyleFunctions from "../../../shared/styleFunctions.ts";
-import { RootState } from "../../../store";
+
 
 function AllProducts() {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
-    const products = useSelector((state: RootState) => state.products.products);
+    const products = useSelector(getAllProducts);
 
     useEffect(() => {
         const fetchProducts = async () => {
