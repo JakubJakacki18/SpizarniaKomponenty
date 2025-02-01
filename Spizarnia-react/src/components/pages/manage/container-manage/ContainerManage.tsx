@@ -29,7 +29,8 @@ function ContainerManage() {
                 { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header' },
                 { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
                 { field: "quantity", headerName: "Ilość", width: 100, headerClassName: 'table-header' },
-                { field: "categoryName", headerName: "Kategoria", width: 150, headerClassName: 'table-header' },
+                { field: "unit", headerName: "Jednostka", width: 50, headerClassName: 'table-header' },
+                { field: "type", headerName: "Podkategoria", width: 150, headerClassName: 'table-header' },
                 { field: "purchaseDate", headerName: "Data Zakupu", width: 150, headerClassName: 'table-header' },
                 { field: "expirationDate", headerName: "Data Ważności", width: 180, headerClassName: 'table-header' }]
 
