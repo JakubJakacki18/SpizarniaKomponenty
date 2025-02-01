@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getAllProducts } from "../../../features/products/productSlice.ts";
-import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 import dayjs from 'dayjs';
@@ -36,29 +35,15 @@ const ProductsTable = ({ productsfilter }: ProductsTableProps) => {
             width: 150,
             headerClassName: 'table-header',
             renderCell: (params) => (
-                <Button
+                <button
                     onClick={() => {
                         setSelectedProduct(params.row.name);
                         setSelectedProductId(params.row.id.toString());
                         setConfirmationDialog(true);
                     }}
-                    className="action-edit-button"
-                    sx={{
-                        color: 'var(--font-color)',
-                        backgroundColor: 'var(--primary-color)',
-                        borderColor: 'var(--font-color)',
-                        margin: '0 10px',
-                        marginBottom: '5px',
-                        fontFamily: '"Poppins", "Arial Black", sans-serif',
-                        '&:hover': {
-                            backgroundColor: 'var(--secondary-left)',
-                            background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
-                            color: 'var(--font-color-hover)',
-                        },
-                    }}
-                >
+                    className="action-edit-button">
                     Usuń
-                </Button>
+                </button>
             ),
         },
     ];
