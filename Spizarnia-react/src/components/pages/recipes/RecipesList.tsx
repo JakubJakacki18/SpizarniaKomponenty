@@ -4,17 +4,17 @@ import { useSelector } from "react-redux";
 import RecipeAccordion from "./RecipeAccordion.tsx";
 
 function RecipesList() {
-    const recipes = useSelector(getAllRecipes) || []; // Zapewnienie, ¿e recipes to zawsze tablica
+    const recipes = useSelector(getAllRecipes) || []; 
 
     console.log("Aktualne przepisy w Redux:", recipes);
 
     if (!Array.isArray(recipes)) {
-        console.error("B³¹d: recipes nie jest tablic¹", recipes);
-        return <p className="error-message">Wyst¹pi³ b³¹d, nie mo¿na za³adowaæ przepisów.</p>;
+        console.error("BÅ‚Ä…d: recipes nie jest tablicÄ…", recipes);
+        return <p className="error-message">WystÄ…piÅ‚ bÅ‚Ä…d, nie moÅ¼na zaÅ‚adowaÄ‡ przepisÃ³w.</p>;
     }
 
     if (recipes.length === 0) {
-        return <p className="no-recipes">Brak dostêpnych przepisów</p>;
+        return <p className="no-recipes">Brak dostÄ™pnych przepisÃ³w</p>;
     }
 
     return (
