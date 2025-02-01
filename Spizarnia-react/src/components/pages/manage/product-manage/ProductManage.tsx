@@ -44,7 +44,6 @@ const AddProductForm = () => {
     control,
     handleSubmit,
     reset,
-    watch,
     formState: { errors },
   } = useForm<FormData>({ mode: "onChange" });
 

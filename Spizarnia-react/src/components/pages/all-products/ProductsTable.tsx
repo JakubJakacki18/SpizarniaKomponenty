@@ -11,7 +11,6 @@ type ProductsTableProps = {
 };
 
 const ProductsTable = ({ productsfilter }: ProductsTableProps) => {
-    const products = useSelector(getAllProducts);
     const [openConfirmationDialog, setConfirmationDialog] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<string>(""); // Product for deletion dialog
     const [selectedProductId, setSelectedProductId] = useState<string>("-1");
