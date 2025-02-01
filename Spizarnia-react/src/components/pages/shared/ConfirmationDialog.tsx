@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogContent, DialogActions } from "@mui/material";
 import React from "react";
 
 export default function ConfirmationDialog(props) {
@@ -19,18 +19,18 @@ export default function ConfirmationDialog(props) {
             onClose={handleClose}
             sx={{ "& .MuiPaper-root": { backgroundColor: "var(--primary-color)" }, display: "flex", flexDirection: "column", alignItems: "center" }}
         >
-            <DialogTitle class="title-dialog">{title}</DialogTitle>
+            <h1 className="title-dialog">{title}</h1>
             <DialogContent>
                 <p>{content}</p>
             </DialogContent>
             <DialogActions>
-                <div class="button-confirm-section">
-                    <Button onClick={handleAction} class="action-edit-button">
+                <div className="button-confirm-section">
+                    <button onClick={handleAction} className="action-edit-button">
                         Ok
-                    </Button>
-                    <Button onClick={handleClose} class="action-edit-button">
+                    </button>
+                    <button onClick={handleClose} className="action-edit-button">
                         Anuluj
-                    </Button>
+                    </button>
                 </div>
             </DialogActions>
         </Dialog>
