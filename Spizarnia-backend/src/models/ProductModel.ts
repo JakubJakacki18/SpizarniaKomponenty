@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, BeforeRemove } from "typeorm";
 import { Product } from "./Product";
 import { Ingredient } from "./Ingredient";
 import { Category } from "./Category";
@@ -38,5 +38,4 @@ export class ProductModel {
 
     @OneToMany(() => ListOfProductsToBuy, (list) => list.products, {})
     listOfProductsToBuy?: ListOfProductsToBuy[];
-    
 }
