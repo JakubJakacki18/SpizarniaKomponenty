@@ -148,12 +148,12 @@ const RecipeForm = () => {
                         },
                     }}
             />
-            <Typography variant="subtitle1" sx={{ fontSize: 20, fontWeight: 'bold', color: 'var(--secondary-left)', fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
+                        <Typography variant="subtitle1" sx={{ fontSize: 20, textTransform: 'uppercase', fontWeight: 'bold', color: 'var(--secondary-left)', fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                 Dodaj składniki:
             </Typography>
             {ingredients.map((ingredient, index) => (
                 <Box key={ingredient.id} sx={{ display: "flex", flexDirection: "column", marginBottom: 3, padding: 2, backgroundColor: "var(--primary-color)", borderRadius: 2, boxShadow: "0px 2px 4px rgba(0,0,0,0.1)" }}>
-                    <Typography sx={{ fontWeight: "bold", fontSize: 16, marginBottom: 1, color: "var(--font-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
+                    <Typography sx={{ fontWeight: "bold", textTransform: 'uppercase', fontSize: 16, marginBottom: 1, color: "var(--font-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                         Składnik {index + 1}
                     </Typography>
                     <TextField
