@@ -160,22 +160,29 @@ const RecipeForm = () => {
                         required
                         select
                         label="Składnik"
-                        value={ingredient.productModelId}// Pobranie danych przy pierwszym kliknięciu
+                        value={ingredient.productModelId}
                         onChange={(e) => handleIngredientChange(ingredient.id, "productModelId", e.target.value)}
                         fullWidth
                         margin="normal"
                     >
-                        <MenuItem value="" sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>Wybierz składnik</MenuItem>
+                        <MenuItem value="" sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
+                            Wybierz składnik
+                        </MenuItem>
                         {categories.flatMap((category: Category) => [
                             <ListSubheader key={`header-${category.categoryName}`} sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                                 {category.categoryName}
                             </ListSubheader>,
                             ...category.productModels?.map((product: ProductModel) => (
-                                <MenuItem key={product.id} value={product.id} sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }} >
+                                <MenuItem
+                                    key={product.id}
+                                    value={product.id}
+                                    disabled={ingredients.some(i => i.productModelId === product.id)}
+                                    sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}
+                                >
                                     {product.name}
                                 </MenuItem>
                             )) || []
-    ])}
+                        ])}
                     </TextField>
                     <TextField
                         required
