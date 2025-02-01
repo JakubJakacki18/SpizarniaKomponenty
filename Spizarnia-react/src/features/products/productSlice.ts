@@ -43,7 +43,7 @@ const productSlice = createSlice({
         .addCase(deleteProduct.fulfilled, (state, action) => {
           state.status = Status.success;
           // Usuwamy produkt z listy po ID
-          state.products = state.products.filter((item) => item.id !== action.payload);
+          state.products = state.products.filter((item) => item.id !== parseInt(action.payload));
         })
         .addCase(deleteProduct.rejected, (state, action) => {
           state.status = Status.error;
