@@ -125,57 +125,53 @@ const RecipeForm = () => {
 
 
     return (
-        <Box
-            sx={{
-                backgroundColor: "#f9ece6",
-                borderRadius: 2,
-                padding: 3,
-                maxWidth: 600,
-                margin: "auto",
-                boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
-            }}
-        >
-            <Typography
-                variant="h5"
-                align="center"
-                sx={{ fontWeight: "bold", marginBottom: 3, color: "#5d4037" }}
-            >
-                DODAJ PRZEPIS DO SPIŻARNI
-            </Typography>
+        <>
+            <div class="manage-content">
 
-            <TextField
+            <div class="title-manage">Dodaj kategorię</div>
+            <div class="background-recipe-container">
+
+        <Box class="form-recipe-container">
+            <TextField 
                 required
                 fullWidth
-                label="Nazwa*"
+                label="Nazwa"
                 value={recipeName}
                 onChange={handleRecipeNameChange}
-                sx={{ marginBottom: 3, "& .MuiInputBase-input": { color: "#4d3c34" } }}
+                    sx={{
+                        "& .MuiInputBase-root": {
+                            backgroundColor: "var(--primary-color)",  // Set background color for the root
+                        },
+                        "& .MuiInputBase-input": {
+                            color: "var(--font-color)",  // Ensure text is readable on top of the background color
+                            fontFamily: "'Poppins', 'Arial Black', sans-serif",  // Correct font family array
+                        },
+                    }}
             />
-
-            <Typography variant="subtitle1" sx={{ marginBottom: 1, color: "#7f4b3d" }}>
+            <Typography variant="subtitle1" sx={{ fontSize: 20, fontWeight: 'bold', color: 'var(--secondary-left)', fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                 Dodaj składniki:
             </Typography>
             {ingredients.map((ingredient, index) => (
-                <Box key={ingredient.id} sx={{ display: "flex", flexDirection: "column", marginBottom: 3, padding: 2, backgroundColor: "#fff", borderRadius: 2, boxShadow: "0px 2px 4px rgba(0,0,0,0.1)" }}>
-                    <Typography sx={{ fontWeight: "bold", marginBottom: 1, color: "#5d4037" }}>
+                <Box key={ingredient.id} sx={{ display: "flex", flexDirection: "column", marginBottom: 3, padding: 2, backgroundColor: "var(--primary-color)", borderRadius: 2, boxShadow: "0px 2px 4px rgba(0,0,0,0.1)" }}>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 16, marginBottom: 1, color: "var(--font-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                         Składnik {index + 1}
                     </Typography>
                     <TextField
                         required
                         select
-                        label="Składnik*"
+                        label="Składnik"
                         value={ingredient.productModelId}// Pobranie danych przy pierwszym kliknięciu
                         onChange={(e) => handleIngredientChange(ingredient.id, "productModelId", e.target.value)}
                         fullWidth
                         margin="normal"
                     >
-                        <MenuItem value="">Wybierz składnik</MenuItem>
+                        <MenuItem value="" sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>Wybierz składnik</MenuItem>
                         {categories.flatMap((category: Category) => [
-                            <ListSubheader key={`header-${category.categoryName}`}>
+                            <ListSubheader key={`header-${category.categoryName}`} sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                                 {category.categoryName}
                             </ListSubheader>,
                             ...category.productModels?.map((product: ProductModel) => (
-                                <MenuItem key={product.id} value={product.id}>
+                                <MenuItem key={product.id} value={product.id} sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }} >
                                     {product.name}
                                 </MenuItem>
                             )) || []
@@ -183,29 +179,32 @@ const RecipeForm = () => {
                     </TextField>
                     <TextField
                         required
-                        label="Ilość*"
+                        label="Ilość"
                         type="number"
                         value={ingredient.quantity}
                         onChange={(e) => handleIngredientChange(ingredient.id, "quantity", Number(e.target.value))}
                         fullWidth
                         margin="normal"
                     />
-                    <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-                        <Button variant="outlined" color="error" onClick={() => handleRemoveIngredient(ingredient.id)} fullWidth sx={{ marginTop: 1 }}>
+                    <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+                        <Button variant="outlined" class="action-recipe-button" onClick={() => handleRemoveIngredient(ingredient.id)} fullWidth sx={{ marginTop: 1 }}>
                             Usuń składnik
                         </Button>
                     </Box>
                 </Box>
             ))}
             <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-                <Button variant="outlined" color="primary" onClick={handleAddIngredient} fullWidth>
+                <Button variant="outlined" class="action-recipe-button" onClick={handleAddIngredient} fullWidth>
                     Dodaj składnik
                 </Button>
-                <Button variant="contained" color="success" fullWidth onClick={handleAddRecipe} sx={{ marginTop: 2 }}>
+                <Button variant="contained" class="action-recipe-button" fullWidth onClick={handleAddRecipe} sx={{ marginTop: 2 }}>
                     Dodaj przepis
                 </Button>
             </Box>
-        </Box>
+                </Box>
+                </div>
+            </div>
+        </>
     );
 };
 
