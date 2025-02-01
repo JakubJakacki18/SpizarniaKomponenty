@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProductModel, getAllProductModels } from "../../../../features/productModels/productModelSlice.ts";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
 import ConfirmationDialog from "../../shared/ConfirmationDialog.tsx";
 import { AppDispatch } from "../../../../features/store.ts";
 
@@ -35,11 +34,11 @@ function ProductModelViewManageTable()
           headerClassName: 'table-header',
             renderCell: (params) => (
                 <>
-                <Button
+                <button
                     variant="outlined"
                     onClick={() => {
                     }}
-                        class="action-edit-button"
+                        className="action-edit-button"
                         sx={{
                             color: 'var(--font-color)',
                             backgroundColor: 'var(--primary-color)',
@@ -54,15 +53,15 @@ function ProductModelViewManageTable()
                         }}
                 >
                     Edytuj
-                </Button>
-                <Button
+                </button>
+                <button
                     variant="outlined"
                     onClick={() => {
                         setSelectedProductModelName(params.row.name);
                         setSelectedProductModelId(params.row.id);
                         setDeleteDialog(true);
                     }}
-                        class="action-edit-button"
+                        className="action-edit-button"
                         sx={{
                             color: 'var(--font-color)',
                             backgroundColor: 'var(--primary-color)',
@@ -76,14 +75,14 @@ function ProductModelViewManageTable()
                         }}
                 >
                     Usuń
-                </Button>
+                </button>
                 </>
             ),
         },
       ];
     let renderProductModels =<p></p>;
     renderProductModels = productModels.length > 0 ? (
-    <div class="table-container">
+    <div className="table-container">
         <DataGrid
             rows={productModels}
             columns={columns}
@@ -117,8 +116,8 @@ function ProductModelViewManageTable()
 
     return (
         <>
-        <div class="manage-content">
-            <div class="title-manage">Zarządzaj produktami</div>
+        <div className="manage-content">
+            <div className="title-manage">Zarządzaj produktami</div>
             {renderProductModels}
 
         </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   TextField,
   Typography,
   MenuItem,
@@ -113,7 +112,7 @@ const AddProducModelForm = () => {
       </LocalizationProvider>
 
       {/* Dodaj produkt */}
-      <Button
+      <button
         variant="contained"
         color="primary"
         fullWidth
@@ -121,7 +120,7 @@ const AddProducModelForm = () => {
         sx={{ marginTop: 2 }}
       >
         Dodaj produkt
-      </Button>
+      </button>
     </Box>
   );
 };

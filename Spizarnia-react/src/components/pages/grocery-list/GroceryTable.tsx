@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteGroceryEntry, editGroceryEntry, getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
@@ -59,7 +58,7 @@ function GroceryTable({ searchTerm }: GroceryTableProps) {
             headerClassName: 'table-header',
             renderCell: (params) => (
                 <>
-                    <Button
+                    <button
                         variant="outlined"
                         onClick={() => {
                             setSelectedProduct(params.row.name);
@@ -81,8 +80,8 @@ function GroceryTable({ searchTerm }: GroceryTableProps) {
                         }}
                     >
                         Edytuj
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                         variant="outlined"
                         onClick={() => {
                             setSelectedProduct(params.row.name);
@@ -103,7 +102,7 @@ function GroceryTable({ searchTerm }: GroceryTableProps) {
                         }}
                     >
                         Usuń
-                    </Button>
+                    </button>
                 </>
             ),
         },
