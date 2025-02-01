@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, DialogActions, Button, TextField } from "@mui/material";
+import { Dialog, DialogContent, DialogActions, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
 import { useSelector } from "react-redux";
@@ -43,9 +43,9 @@ export default function GroceryEditDialog(props) {
 
   return (
       <Dialog open={openEditDialog} onClose={handleClose} sx={{ "& .MuiPaper-root": { backgroundColor: "var(--primary-color)" } }}>
-          <DialogTitle class="title-dialog">
+          <h1 className="title-dialog">
               Edycja ilości produktu
-          </DialogTitle>
+          </h1>
 
       <DialogContent>
         <p>Nazwa produktu: {}</p>
@@ -53,7 +53,7 @@ export default function GroceryEditDialog(props) {
         <p>Cena: {}</p>    
         
       {/* <p>Podaj nową ilość produktu:</p> */}
-     <div class="input-dialog-section">
+     <div className="input-dialog-section">
         <TextField
       label="Podaj nową ilość produktu"
       variant="outlined"
@@ -67,12 +67,12 @@ export default function GroceryEditDialog(props) {
       </DialogContent>
           <DialogActions>
       <div class="button-dialog-section">
-        <Button onClick={handleAction} class="action-edit-button">
+        <button onClick={handleAction} className="action-edit-button">
           Zatwierdź
-        </Button>
-        <Button onClick={handleClose} class="action-edit-button">
+        </button>
+        <button onClick={handleClose} className="action-edit-button">
           Anuluj
-        </Button>
+        </button>
       </div>
       </DialogActions>
     </Dialog>

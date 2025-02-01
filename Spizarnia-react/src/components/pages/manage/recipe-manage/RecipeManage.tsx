@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
     Box,
-    Button,
     ListSubheader,
     MenuItem,
     TextField,
@@ -126,12 +125,11 @@ const RecipeForm = () => {
 
     return (
         <>
-            <div class="manage-content">
+            <div className="manage-content">
+            <div className="title-manage">Dodaj kategorię</div>
+            <div className="background-recipe-container">
 
-            <div class="title-manage">Dodaj kategorię</div>
-            <div class="background-recipe-container">
-
-        <Box class="form-recipe-container">
+        <Box className="form-recipe-container">
             <TextField 
                 required
                 fullWidth
@@ -194,19 +192,19 @@ const RecipeForm = () => {
                         margin="normal"
                     />
                     <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-                        <Button variant="outlined" class="action-recipe-button" onClick={() => handleRemoveIngredient(ingredient.id)} fullWidth sx={{ marginTop: 1 }}>
+                        <button variant="outlined" className="action-recipe-button" onClick={() => handleRemoveIngredient(ingredient.id)} fullWidth sx={{ marginTop: 1 }}>
                             Usuń składnik
-                        </Button>
+                        </button>
                     </Box>
                 </Box>
             ))}
             <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-                <Button variant="outlined" class="action-recipe-button" onClick={handleAddIngredient} fullWidth>
+                <button variant="outlined" className="action-recipe-button" onClick={handleAddIngredient} fullWidth>
                     Dodaj składnik
-                </Button>
-                <Button variant="contained" class="action-recipe-button" fullWidth onClick={handleAddRecipe} sx={{ marginTop: 2 }}>
+                </button>
+                <button variant="contained" className="action-recipe-button" fullWidth onClick={handleAddRecipe} sx={{ marginTop: 2 }}>
                     Dodaj przepis
-                </Button>
+                </button>
             </Box>
                 </Box>
                 </div>
