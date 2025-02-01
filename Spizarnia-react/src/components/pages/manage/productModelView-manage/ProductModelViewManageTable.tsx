@@ -39,7 +39,7 @@ function ProductModelViewManageTable()
                     variant="outlined"
                     onClick={() => {
                     }}
-                        className="action-edit-button"
+                        class="action-edit-button"
                         sx={{
                             color: 'var(--font-color)',
                             backgroundColor: 'var(--primary-color)',
@@ -62,7 +62,7 @@ function ProductModelViewManageTable()
                         setSelectedProductModelId(params.row.id);
                         setDeleteDialog(true);
                     }}
-                        className="action-edit-button"
+                        class="action-edit-button"
                         sx={{
                             color: 'var(--font-color)',
                             backgroundColor: 'var(--primary-color)',
@@ -83,7 +83,7 @@ function ProductModelViewManageTable()
       ];
     let renderProductModels =<p></p>;
     renderProductModels = productModels.length > 0 ? (
-    <div className="table-container">
+    <div class="table-container">
         <DataGrid
             rows={productModels}
             columns={columns}
@@ -112,13 +112,13 @@ function ProductModelViewManageTable()
         />
     </div>
     ) : (
-    <div className="no-data">Brak produktów w spiżarni.</div>
+    <div class="no-data">Brak produktów w spiżarni.</div>
     );
 
     return (
         <>
-        <div className="manage-content">
-            <div className="title-manage">Zarządzaj produktami</div>
+        <div class="manage-content">
+            <div class="title-manage">Zarządzaj produktami</div>
             {renderProductModels}
 
         </div>
