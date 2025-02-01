@@ -1,13 +1,11 @@
 import React from "react";
-import { getAllRecipes } from "../../../features/recipes/recipeSlice.ts";
-import { useSelector } from "react-redux";
 import RecipeAccordion from "./RecipeAccordion.tsx";
 
-function RecipesList() {
-    const recipes = useSelector(getAllRecipes) || []; 
+type RecipesListProps = {
+    recipes: any[];
+};
 
-    console.log("Aktualne przepisy w Redux:", recipes);
-
+function RecipesList({ recipes }: RecipesListProps) {
     if (!Array.isArray(recipes)) {
         console.error("Błąd: recipes nie jest tablicą", recipes);
         return <p className="error-message">Wystąpił błąd, nie można załadować przepisów.</p>;
