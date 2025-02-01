@@ -394,6 +394,7 @@ a {
     position: relative;
     height: 90vh;
     width: 100vh;
+    justify-content: center;
     background-color: var(--primary-color);
     overflow: auto;
     padding: 30px 20px;
