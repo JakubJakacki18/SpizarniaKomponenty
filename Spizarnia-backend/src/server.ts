@@ -36,7 +36,6 @@ app.get("/api",(req,res) =>
 
 
 AppDataSource.initialize().then(async () => {
-    Ingredient.dataSource = AppDataSource;
     console.log("Server is running!")
     app.listen(port, () =>
         {
