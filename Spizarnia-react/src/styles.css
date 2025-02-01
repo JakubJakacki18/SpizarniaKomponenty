@@ -57,6 +57,22 @@ a {
     display: flex;
     align-items: center;
 }
+.form-recipe-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    background-color: var(--font-color);
+    border: 3px solid var(--background-color);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top:40px;
+    box-sizing: border-box;
+    font-family: "Poppins", "Arial Black";
+    color: var(--secondary-left);
+    font-weight: bold;
+}
 
 .title-manage {
     text-align: center;
@@ -73,7 +89,21 @@ a {
     white-space: nowrap;
     text-transform: uppercase;
 }
-
+.title-manage {
+    text-align: center;
+    font-size: 30px;
+    color: var(--font-color);
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    margin-right: 30px;
+    margin-left: 30px;
+    box-shadow: none;
+    display: inline-block;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
 .title-dialog {
     text-align: center;
     font-size: 20px;
@@ -122,7 +152,12 @@ a {
     white-space: nowrap;
     text-transform: uppercase;
 }
-
+.background-recipe-container {
+    position: relative;
+    width: 120%;
+    height: 90%;
+    background-color: var(--primary-color);
+}
 .site-content {
     background-color: var(--primary-color);
     padding: 20px 0 50px 0;
@@ -182,12 +217,27 @@ a {
     text-transform: uppercase;
     font-family: "Poppins", "Arial Black";
 }
+.action-recipe-button {
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--font-color);
+    padding: 10px;
+    width: auto;
+    height: 40px;
+    text-align: center;
+    margin-right: 10px;
+    white-space: nowrap;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family: "Poppins", "Arial Black";
+}
 
-    .action-button:hover, .action-edit-button:hover {
-        background-color: var(--secondary-left);
-        background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
-        color: var(--font-color-hover);
-    }
+.action-button:hover, .action-edit-button:hover, .action-recipe-button:hover {
+    background-color: var(--secondary-left);
+    background: linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%);
+    color: var(--font-color-hover);
+}
 
 .active-link {
     cursor: pointer;
@@ -541,7 +591,6 @@ label-product-model {
     width: 100%;
     text-align: center;
 }
-
 
 /* Responsywność */
 @media (max-width: 768px) {
