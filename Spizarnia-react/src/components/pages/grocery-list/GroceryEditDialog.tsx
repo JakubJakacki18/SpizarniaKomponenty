@@ -42,14 +42,18 @@ export default function GroceryEditDialog(props) {
   };
 
   return (
-    <Dialog open={openEditDialog} onClose={handleClose}>
-      <DialogTitle>Edycja ilości produktu</DialogTitle>
+      <Dialog open={openEditDialog} onClose={handleClose} sx={{ "& .MuiPaper-root": { backgroundColor: "var(--primary-color)" } }}>
+          <DialogTitle class="title-dialog">
+              Edycja ilości produktu
+          </DialogTitle>
+
       <DialogContent>
         <p>Nazwa produktu: {}</p>
         <p>Aktualna ilość: {}</p>
         <p>Cena: {}</p>    
         
-        {/* <p>Podaj nową ilość produktu:</p> */}
+      {/* <p>Podaj nową ilość produktu:</p> */}
+     <div class="input-dialog-section">
         <TextField
       label="Podaj nową ilość produktu"
       variant="outlined"
@@ -57,16 +61,19 @@ export default function GroceryEditDialog(props) {
       onChange={handleChange}
       error={!!error}
       helperText={error} // Wyświetlenie komunikatu błędu
-    />
+      />
+     </div>
 
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleAction} color="success">
+          <DialogActions>
+      <div class="button-dialog-section">
+        <Button onClick={handleAction} class="action-edit-button">
           Zatwierdź
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} class="action-edit-button">
           Anuluj
         </Button>
+      </div>
       </DialogActions>
     </Dialog>
   );
