@@ -5,8 +5,20 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+type RecipeProps = {
+    id: string;
+    name: string;
+    ingredients: any[];
+    isExecutable?: boolean;
+    finished?: boolean;
+};
 
-function RecipeAccordion(recipe: Recipe) {
+function RecipeAccordion({ name, ingredients, isExecutable, finished }: RecipeProps) {
+    if (finished === false) {
+        return null;
+    }
+
+    const backgroundColor = isExecutable ? "#4caf50" : "#f44336";
   return (
     <div
       style={{
@@ -19,7 +31,7 @@ function RecipeAccordion(recipe: Recipe) {
     >
       <Accordion
         style={{
-          backgroundColor: "#4caf50",
+          backgroundColor,
           color: "#fff",
           borderRadius: "10px",
           border: "1px solid #388e3c",
@@ -35,7 +47,7 @@ function RecipeAccordion(recipe: Recipe) {
             component="span"
             style={{ fontWeight: "bold", fontSize: "18px" }}
           >
-            {recipe.name || "Brak nazwy przepisu"}
+            {name || "Brak nazwy przepisu"}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -51,7 +63,7 @@ function RecipeAccordion(recipe: Recipe) {
             backgroundColor: "#e8f5e9",
             borderRadius: "10px",
           }}>
-            {recipe.ingredients?.map((ingredient, index) => (
+            {ingredients?.map((ingredient, index) => (
               <Typography
                 key={index}
                 component="p"

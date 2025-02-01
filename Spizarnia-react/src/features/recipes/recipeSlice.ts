@@ -48,25 +48,32 @@ async function isExecutable(ingredients : Ingredient[]) : Promise<Boolean>
 export const fetchRecipesWithExecutionStatus = createAsyncThunk<RecipeWithStatus[], void>(
     "recipes/fetchWithIsExecutable",
     async (_, { rejectWithValue }) => {
-        try{
-            const recipesResponse = await AxiosApi.axiosRecipes.get("")
+        try {
+            const recipesResponse = await AxiosApi.axiosRecipes.get("");
             const recipes = recipesResponse.data;
+
             const recipesWithExecutable: RecipeWithStatus[] = await Promise.all(
                 recipes.map(async (recipe) => {
-                let isRecipeExecutable : Boolean | undefined;
-                if (recipe.ingredients) {
-                    isRecipeExecutable = await isExecutable(recipe.ingredients)
-                }
-                console.log("zwracana wartość",{ ...recipe,isRecipeExecutable })
-                  return { ...recipe,isRecipeExecutable };
+                    console.log("Checking ingredients for:", recipe.name, "Ingredients:", recipe.ingredients); // Debugging
+
+                    let isRecipeExecutable: boolean | undefined = false;
+                    if (recipe.ingredients) {
+                        isRecipeExecutable = await isExecutable(recipe.ingredients);
+                    }
+
+                    console.log("Recipe:", recipe.name, "Executable:", isRecipeExecutable); // Debugging result
+
+                    return { ...recipe, isExecutable: isRecipeExecutable };
                 })
-              );
-              return recipesWithExecutable;
-            } catch (error) {
-                return rejectWithValue(error.response?.data || "Unknown error");
-            }
+            );
+
+            return recipesWithExecutable;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Unknown error");
+        }
     }
 );
+
 
 const recipeSlice = createSlice({
     name: "recipes",
