@@ -5,9 +5,11 @@ import { AppDataSource } from "../data-source";
 import { Category } from "../models/Category";
 import { Like } from "typeorm";
 import { Product } from "../models/Product";
+import { Recipe } from "../models/Recipe";
 
 
 const productModelRepository: Repository<ProductModel> = AppDataSource.getRepository(ProductModel);
+const recipeRepository: Repository<Recipe> = AppDataSource.getRepository(Recipe)
 
 export const ProductModelController = {
   async getAll(req: Request, res: Response) {
@@ -122,7 +124,7 @@ export const ProductModelController = {
     try {
       const productModel = await productModelRepository.findOne({
         where: { id: parseInt(id) },
-        relations: ["products", "ingredients"],
+        relations: ["products", "ingredients", "ingredients.recipes"],
       });
   
       if (!productModel) {
@@ -132,6 +134,16 @@ export const ProductModelController = {
       }
   
       try {
+        for (const ingredient of productModel.ingredients) {
+          console.log("Ingredient:",ingredient)
+          if (ingredient.recipes) {
+              for (const recipe of ingredient.recipes) {
+                  recipe.finished = false; 
+                  await recipeRepository.save(recipe);
+                  console.log(`Recipe ${recipe.id} has been updated with isFinished set to false`);
+              }
+          }
+      }
         await productModelRepository.remove(productModel);
         console.log(`Successfully deleted product model ${id}`);
       } catch (deleteError) {

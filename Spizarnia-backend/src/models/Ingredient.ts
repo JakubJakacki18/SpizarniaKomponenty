@@ -21,21 +21,4 @@ export class Ingredient {
     @ManyToMany(() => Recipe, (recipe) => recipe.ingredients)
     @JoinTable() 
     recipes?: Recipe[];
-
-    @BeforeRemove()
-    async updateRecipesBeforeRemove() {
-        const dataSource = Ingredient.dataSource;
-        const recipeRepository = dataSource.getRepository(Recipe);
-    
-
-        if(this.recipes===undefined)
-          return
-        for (const recipe of this.recipes) {
-          recipe.finished = false; 
-          await recipeRepository.save(recipe); 
-        }
-      }
-
-      static dataSource: DataSource;
-
 }
