@@ -59,48 +59,21 @@ function GroceryTable({ searchTerm }: GroceryTableProps) {
             renderCell: (params) => (
                 <>
                     <button
-                        variant="outlined"
                         onClick={() => {
                             setSelectedProduct(params.row.name);
                             setSelectedProductId(params.row.id);
                             setEditDialog(true);
                         }}
-                        className="action-edit-button"
-                        sx={{
-                            color: 'var(--font-color)',
-                            backgroundColor: 'var(--primary-color)',
-                            borderColor: 'var(--font-color)',
-                            margin: '0 10px',
-                            fontFamily: '"Poppins", "Arial Black", sans-serif',
-                            '&:hover': {
-                                backgroundColor: 'var(--secondary-left)',
-                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
-                                color: 'var(--font-color-hover)',
-                            },
-                        }}
-                    >
+                        className="action-edit-button">
                         Edytuj
                     </button>
                     <button
-                        variant="outlined"
                         onClick={() => {
                             setSelectedProduct(params.row.name);
                             setSelectedProductId(params.row.id);
                             setDeleteDialog(true);
                         }}
-                        className="action-edit-button"
-                        sx={{
-                            color: 'var(--font-color)',
-                            backgroundColor: 'var(--primary-color)',
-                            borderColor: 'var(--font-color)',
-                            fontFamily: '"Poppins", "Arial Black", sans-serif',
-                            '&:hover': {
-                                backgroundColor: 'var(--secondary-left)',
-                                background: 'linear-gradient(90deg, var(--secondary-left) 0%, var(--secondary-right) 100%)',
-                                color: 'var(--font-color-hover)',
-                            },
-                        }}
-                    >
+                        className="action-edit-button">
                         Usuń
                     </button>
                 </>

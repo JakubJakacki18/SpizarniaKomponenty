@@ -52,7 +52,7 @@ function AllProducts() {
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
-                    <NavLink to="/manage/recipe" className={({ isActive }) => StyleFunctions.classNameSelectorNavButton(isActive)}>Dodaj przepis</NavLink>
+                    <NavLink to="/manage/product" className={({ isActive }) => StyleFunctions.classNameSelectorNavButton(isActive)}>Dodaj produkt</NavLink>
                 </div>
             </div>
 
