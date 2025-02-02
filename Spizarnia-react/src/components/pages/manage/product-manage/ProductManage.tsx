@@ -128,18 +128,18 @@ const AddProductForm = () => {
                         display: "flex",
                         flexDirection: "column",
                         color: "var(--font-color)",
-                        backgroundColor: "var(--secondary-left)",
+                        backgroundColor: "var(--primary-color)",
                         fontFamily: "'Poppins', 'Arial Black', sans-serif",
                       }}
                     >
                       Wybierz produkt
                     </MenuItem>
                     {categories.flatMap((category: Category) => [
-                      <ListSubheader key={category.categoryName}>
+                      <ListSubheader key={category.categoryName}  sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                         {category.categoryName}
                       </ListSubheader>,
                       ...(category.productModels?.map((product: ProductModel) => (
-                        <MenuItem key={product.id} value={product.id}>
+                        <MenuItem key={product.id} value={product.id} sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
                           {product.name}
                         </MenuItem>
                       )) || []),
