@@ -4,9 +4,12 @@ import { deleteProductModel, getAllProductModels } from "../../../../features/pr
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "../../shared/ConfirmationDialog.tsx";
 import { AppDispatch } from "../../../../features/store.ts";
+import EditProductModelDialog from "../../shared/EditDialog.tsx";
 
 function ProductModelViewManageTable()
 {
+    const [editDialog, setEditDialog] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
         const [deleteDialog, setDeleteDialog] = useState(false);
         const [selectedProductModelName, setSelectedProductModelName] = useState<string>(""); // Product for deletion dialog
         const [selectedProductModelId, setSelectedProductModelId] = useState<string>("-1");
@@ -34,12 +37,15 @@ function ProductModelViewManageTable()
           headerClassName: 'table-header',
             renderCell: (params) => (
                 <>
-                <button
-                    onClick={() => {
-                    }}
-                        className="action-edit-button">
-                    Edytuj
-                </button>
+                    <button
+                        onClick={() => {
+                            setSelectedProduct(params.row);
+                            setEditDialog(true);
+                        }}
+                        className="action-edit-button"
+                    >
+                        Edytuj
+                    </button>
                 <button
                     onClick={() => {
                         setSelectedProductModelName(params.row.name);
@@ -101,8 +107,14 @@ function ProductModelViewManageTable()
         setConfirmationDialog={setDeleteDialog}
         actionFunction={handleDelete}
         dataToFunction={selectedProductModelId}
-        />
+            />
+            <EditProductModelDialog
+                openEditDialog={editDialog}
+                setEditDialog={setEditDialog}
+                selectedProduct={selectedProduct}
+            />
         </>
+
 
     )
 }
