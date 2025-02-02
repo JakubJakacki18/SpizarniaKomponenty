@@ -30,6 +30,8 @@ function GroceryList() {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [openDeleteListDialog, setDeleteListDialog] = useState(false);
     const [openOutdatedProductsDialog, setOutdatedProductsDialog] = useState(false);
+    const [hasDialogBeenOpened, setHasDialogBeenOpened] = useState(false);
+
     const currentDate = new Date();
     const expiredProducts = useSelector(getAllProducts).filter(product  => {
         const expirationDate = new Date(product.expirationDate);
@@ -37,10 +39,11 @@ function GroceryList() {
       });
       useEffect(() => {
 
-        if (expiredProducts.length > 0  && !openOutdatedProductsDialog) {
+        if (!hasDialogBeenOpened && expiredProducts.length > 0  && !openOutdatedProductsDialog) {
             setOutdatedProductsDialog(true);
+            setHasDialogBeenOpened(true);
         }
-    }, [expiredProducts.length,openOutdatedProductsDialog]);
+    }, [expiredProducts.length]);
 
 
     const handleDeleteExpiredProducts = () => {
