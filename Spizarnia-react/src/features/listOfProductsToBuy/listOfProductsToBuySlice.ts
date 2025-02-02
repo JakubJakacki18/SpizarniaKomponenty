@@ -1,18 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AxiosApi from "../../api/axiosApi.ts";
 import { Status } from "../../shared/constances/statusType.ts";
+import { ListOfProductsToBuy } from "../../../../Spizarnia-backend/src/models/ListOfProductsToBuy.ts";
 
 interface ListOfProductsToBuyState {
     listOfProductsToBuy : any[]; 
     status: Status;
     error: any; 
 }
+interface newEntry {
+  idProductModel: number
+  quantity: number
+};
 
 const initialState : ListOfProductsToBuyState = {
     listOfProductsToBuy: [],
     status: Status.idle,
-    error: null,
-    
+    error: null,   
 }
 
 export const editGroceryEntry = createAsyncThunk<{productToBuyId : string, newQuantity : string},{productToBuyId : string, newQuantity : string},{rejectValue:string}>(
@@ -55,6 +59,21 @@ export const editGroceryEntry = createAsyncThunk<{productToBuyId : string, newQu
         }
       }
     );
+
+    export const addOrUpdateGroceryEntry = createAsyncThunk<newEntry,newEntry>(
+      'listOfProductsToBuy/addOrUpdateGroceryEntry',
+      async (newEntry, { rejectWithValue }) => 
+        {
+          try{
+            await AxiosApi.axiosListOfProductsToBuy.post(``,{...newEntry})
+            return newEntry
+          }catch(error){
+            console.error(error.response || 'Error occurred')
+            return rejectWithValue(error.response?.data || 'Error occurred');
+          }
+        }
+    );
+
 const listOfProductsToBuySlice = createSlice({
     name: "listOfProductsToBuy",
     initialState,
@@ -107,6 +126,38 @@ const listOfProductsToBuySlice = createSlice({
               state.listOfProductsToBuy = []; 
             })
             .addCase(deleteGroceryList.rejected, (state, action) => {
+              state.status = Status.error;
+              state.error = action.payload;
+            })
+
+            //addOrUpdateGroceryEntry
+            .addCase(addOrUpdateGroceryEntry.pending,(state) => {
+              state.status = Status.loading;
+            })
+            .addCase(addOrUpdateGroceryEntry.fulfilled,(state,action) => {
+              state.status = Status.success;
+              console.log(action)
+              const newEntry = action.payload;
+              const existingEntry : ListOfProductsToBuy = state.listOfProductsToBuy.find((entry : ListOfProductsToBuy) => entry.products?.id === newEntry.idProductModel)
+              if(existingEntry){
+                existingEntry.quantity +=newEntry.quantity
+              }
+              else{
+                state.listOfProductsToBuy.push({
+                  productsId: newEntry.idProductModel,
+                  quantity: newEntry.quantity ?? 1, 
+                });
+              }
+
+
+              
+
+
+
+
+
+            })
+            .addCase(addOrUpdateGroceryEntry.rejected,(state,action) => {
               state.status = Status.error;
               state.error = action.payload;
             });
