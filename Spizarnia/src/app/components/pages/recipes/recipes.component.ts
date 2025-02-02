@@ -125,10 +125,14 @@ export class RecipesComponent implements OnInit {
   }
   async isRecipeExecutable(recipe: Recipe)
   {
+    // console.log("Przepis",recipe)
     for (const ingredient of recipe.ingredients ?? []) {
       const productModelId = ingredient.productModel?.id ?? -1;
       try {
-      const quantityOfProductModel = await firstValueFrom(this.productService.getQuantityOfProducts(productModelId));
+      const response = await firstValueFrom(this.productService.getQuantityOfProducts(productModelId));
+      const quantityOfProductModel = response.productQuantity
+      // console.log("quantityOfProductModel",quantityOfProductModel)
+      // console.log(`Przepis if ${ingredient.quantity} > ${quantityOfProductModel}`)
       if(ingredient.quantity>quantityOfProductModel)
         return false;
     } catch (err) {

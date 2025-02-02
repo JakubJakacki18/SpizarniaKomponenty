@@ -168,7 +168,7 @@ export const ProductController = {
         res.status(404).json({ error: `Products with id: ${id} was not found` });
         return
       }
-      res.status(200).json({ message: `Product model with id: ${id} has ${productQuantity} entries in products` });
+      res.status(200).json({ productQuantity: productQuantity, message: `Product model with id: ${id} has ${productQuantity} entries in products`});
     } catch (error) {
       res.status(500).json({ error: "Internal error: Quantity of products is unknown" });
     }

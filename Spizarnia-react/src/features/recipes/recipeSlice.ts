@@ -26,9 +26,10 @@ async function isExecutable(ingredients : Ingredient[]) : Promise<Boolean>
     let isExecutable = true;
     try{
         for (const ingredient of ingredients) {
-            console.log(ingredient)
+            //console.log(ingredient)
           const productCountResponse = await AxiosApi.axiosProducts(`getQuantity/${ingredient.productModel?.id}`)
-          if (productCountResponse.data < ingredient.quantity) {
+          //console.log(productCountResponse)
+          if (productCountResponse.data.productQuantity < ingredient.quantity) {
             isExecutable = false;
             break;
           }
@@ -57,7 +58,7 @@ export const fetchRecipesWithExecutionStatus = createAsyncThunk<RecipeWithStatus
                 if (recipe.ingredients) {
                     isRecipeExecutable = await isExecutable(recipe.ingredients)
                 }
-                console.log("zwracana wartość",{ ...recipe,isRecipeExecutable })
+                //console.log("zwracana wartość",{ ...recipe,isRecipeExecutable })
                   return { ...recipe,isRecipeExecutable };
                 })
               );

@@ -174,7 +174,7 @@ const RecipeForm = () => {
                                 <MenuItem
                                     key={product.id}
                                     value={product.id}
-                                    disabled={ingredients.some(i => i.productModelId === product.id)}
+                                    disabled={ingredients.some(i => parseInt(i.productModelId) === product.id)}
                                     sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}
                                 >
                                     {product.name}
