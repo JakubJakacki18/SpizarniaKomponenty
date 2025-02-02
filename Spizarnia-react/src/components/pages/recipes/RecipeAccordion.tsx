@@ -6,7 +6,12 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-function RecipeAccordion(recipe: Recipe) {
+function RecipeAccordion(recipe: Recipe & { isExecutable: boolean }) {
+    if (recipe.finished === false) {
+        return null;
+    }
+
+    const backgroundColor = recipe.isExecutable ? "#4caf50" : "#f44336";
   return (
     <div
       style={{
@@ -19,7 +24,7 @@ function RecipeAccordion(recipe: Recipe) {
     >
       <Accordion
         style={{
-          backgroundColor: "#4caf50",
+          backgroundColor,
           color: "#fff",
           borderRadius: "10px",
           border: "1px solid #388e3c",

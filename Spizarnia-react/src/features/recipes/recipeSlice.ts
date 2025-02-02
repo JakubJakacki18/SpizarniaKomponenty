@@ -21,7 +21,7 @@ interface RecipeWithStatus extends Recipe {
     isExecutable: boolean | undefined;
   }
 
-async function isExecutable(ingredients : Ingredient[]) : Promise<Boolean> 
+async function isRecipeExecutable(ingredients : Ingredient[]) : Promise<boolean> 
 {
     let isExecutable = true;
     try{
@@ -53,18 +53,18 @@ export const fetchRecipesWithExecutionStatus = createAsyncThunk<RecipeWithStatus
             const recipes = recipesResponse.data;
             const recipesWithExecutable: RecipeWithStatus[] = await Promise.all(
                 recipes.map(async (recipe) => {
-                let isRecipeExecutable : Boolean | undefined;
-                if (recipe.ingredients) {
-                    isRecipeExecutable = await isExecutable(recipe.ingredients)
-                }
-                console.log("zwracana wartość",{ ...recipe,isRecipeExecutable })
-                  return { ...recipe,isRecipeExecutable };
+                let isExecutable : boolean | undefined = false;
+                    if (recipe.ingredients) {
+                    isExecutable = await isRecipeExecutable(recipe.ingredients)
+                    }
+                //console.log("zwracana wartość",{ ...recipe, isExecutable })
+                  return { ...recipe,isExecutable };
                 })
-              );
-              return recipesWithExecutable;
-            } catch (error) {
-                return rejectWithValue(error.response?.data || "Unknown error");
-            }
+            );
+            return recipesWithExecutable;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Unknown error");
+        }
     }
 );
 
