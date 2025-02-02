@@ -17,7 +17,6 @@ import AxiosApi from "../../../../api/axiosApi.ts";
 import { AxiosResponse } from "axios";
 import {
   Box,
-  Button,
   TextField,
   Typography,
   MenuItem,
@@ -28,16 +27,17 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { Category } from "../../../../../../Spizarnia-backend/src/models/Category.ts";
 import { ProductModel } from "../../../../../../Spizarnia-backend/src/models/ProductModel.ts";
+
 interface FormData {
-  productId: ProductModel;
+  productId: string;
   purchaseDate: string;
   expirationDate: string;
 }
 
 const AddProductForm = () => {
-  const categories = useSelector(getAllCategories); // Pobieranie kategorii
-  const productModels = useSelector(getAllProductModels); // Produkty do dodania do spiżarni
-  const products = useSelector(getAllProducts); // Produkty już w spiżarni
+  const categories = useSelector(getAllCategories);
+  const productModels = useSelector(getAllProductModels);
+  const products = useSelector(getAllProducts);
   const dispatch = useDispatch();
 
   const {
@@ -51,35 +51,12 @@ const AddProductForm = () => {
     const fetchCategories = async () => {
       try {
         const response: AxiosResponse = await AxiosApi.axiosCategories.get("");
-        dispatch(addCategories(response.data)); // Aktualizacja store
+        dispatch(addCategories(response.data));
       } catch (error) {
         console.error("Błąd podczas pobierania kategorii:", error);
       }
     };
-
-    const fetchProductModels = async () => {
-      try {
-        const response: AxiosResponse = await AxiosApi.axiosProductModels.get(
-          ""
-        );
-        dispatch(addProductModels(response.data)); // Pobieranie dostępnych produktów
-      } catch (error) {
-        console.error("Błąd podczas pobierania produktów:", error);
-      }
-    };
-
-    const fetchProducts = async () => {
-      try {
-        const response: AxiosResponse = await AxiosApi.axiosProducts.get("");
-        dispatch(addProducts(response.data)); // Pobieranie produktów w spiżarni
-      } catch (error) {
-        console.error("Błąd podczas pobierania produktów w spiżarni:", error);
-      }
-    };
-
     fetchCategories();
-    fetchProductModels();
-    fetchProducts();
   }, [dispatch]);
 
   const onSubmit = async (data: FormData) => {
@@ -87,13 +64,13 @@ const AddProductForm = () => {
       const selectedProductModel = productModels.find(
         (product) => product.id === data.productId
       );
-      const productModelList = [selectedProductModel];
 
       const response = await AxiosApi.axiosProducts.post("", {
         purchaseDate: data.purchaseDate,
         expirationDate: data.expirationDate,
-        selectedProduct: productModelList,
+        selectedProduct: selectedProductModel,
       });
+
       dispatch(
         addProducts([
           ...products,
@@ -101,7 +78,7 @@ const AddProductForm = () => {
             id: response.data.id,
             expirationDate: data.expirationDate,
             purchaseDate: data.purchaseDate,
-            productModels: productModelList,
+            productModels: [selectedProductModel],
           },
         ])
       );
@@ -112,150 +89,143 @@ const AddProductForm = () => {
       alert("Nie udało się dodać produktu.");
     }
   };
-  const validatePurchaseDate = (value: string) => {
-    return dayjs(value).isAfter(dayjs())
-      ? "Data zakupu nie może być późniejsza niż dzisiaj!"
-      : true;
-  };
-
-  const validateExpirationDate = (value: string, purchaseDate: string) => {
-    return dayjs(value).isBefore(dayjs(purchaseDate))
-      ? "Data ważności musi być późniejsza niż data zakupu!"
-      : true;
-  };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f9ece6",
-        borderRadius: 2,
-        padding: 3,
-        maxWidth: 500,
-        margin: "auto",
-        boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
-      }}
-    >
-      <Typography
-        variant="h5"
-        align="center"
-        sx={{ fontWeight: "bold", marginBottom: 3, color: "#5d4037" }}
-      >
-        DODAJ PRODUKT DO SPIŻARNI
-      </Typography>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Wybór produktu (kategorie jako nagłówki) */}
-        <Controller
-          name="productId"
-          control={control}
-          rules={{ required: "Produkt jest wymagany." }}
-          render={({ field }) => (
-            <TextField
-              select
-              fullWidth
-              label="Wybierz produkt"
-              {...field}
-              error={!!errors.productId}
-              helperText={errors.productId?.message}
-              sx={{ marginBottom: 3 }}
-            >
-              <MenuItem value="">Wybierz produkt</MenuItem>
-              {categories.flatMap((category: Category) => [
-                <ListSubheader
-                  key={`header-${category.categoryName}`}
-                  sx={{
-                    fontWeight: "bold",
-                    display: "flex",
-                    flexDirection: "column",
-                    backgroundColor: "var(--primary-color)",
-                    fontFamily: "'Poppins', 'Arial Black', sans-serif",
-                  }}
-                >
-                  {category.categoryName}
-                </ListSubheader>,
-                ...(category.productModels?.map((product: ProductModel) => (
-                  <MenuItem
-                    key={product.id}
-                    value={product.id}
+    <>
+      <div className="manage-content">
+        <div className="title-manage">Dodaj produkt</div>
+        <Box className="form-product-container">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="productId"
+              control={control}
+              rules={{ required: "Produkt jest wymagany." }}
+              render={({ field }) => (
+                <>
+                  {errors.productId && (
+                    <span className="error-message">{errors.productId.message}</span>
+                  )}
+                  <TextField
+                    select
+                    fullWidth
+                    label="Wybierz produkt"
+                    {...field}
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      color: "var(--font-color)",
-                      backgroundColor: "var(--secondary-left)",
-                      fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                      "& .MuiInputBase-root": {
+                        marginBottom: 1,
+                        width: 550,
+                        backgroundColor: "var(--primary-color)",
+                      },
+                      "& .MuiInputBase-input": {
+                        color: "var(--font-color)",
+                        fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                      },
                     }}
                   >
-                    {product.name}
-                  </MenuItem>
-                )) || []),
-              ])}
-            </TextField>
-          )}
-        />
+                    <MenuItem
+                      value=""
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        color: "var(--font-color)",
+                        backgroundColor: "var(--secondary-left)",
+                        fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                      }}
+                    >
+                      Wybierz produkt
+                    </MenuItem>
+                    {categories.flatMap((category: Category) => [
+                      <ListSubheader key={category.categoryName}>
+                        {category.categoryName}
+                      </ListSubheader>,
+                      ...(category.productModels?.map((product: ProductModel) => (
+                        <MenuItem key={product.id} value={product.id}>
+                          {product.name}
+                        </MenuItem>
+                      )) || []),
+                    ])}
+                  </TextField>
+                </>
+              )}
+            />
 
-        {/* Data zakupu */}
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Controller
-            name="purchaseDate"
-            control={control}
-            rules={{
-              required: "Data zakupu jest wymagana.",
-              validate: validatePurchaseDate,
-            }}
-            render={({ field }) => (
-              <DatePicker
-                {...field}
-                label="Data zakupu"
-                value={field.value ? dayjs(field.value) : null}
-                onChange={(newValue) =>
-                  field.onChange(newValue?.format("YYYY-MM-DD"))
-                }
-                shouldDisableDate={(date) => dayjs(date).isAfter(dayjs())} // 🔹 Blokuje przyszłe daty
-              />
-            )}
-          />
-        </LocalizationProvider>
+            <div className="form-product-model-row">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Controller
+                  name="purchaseDate"
+                  control={control}
+                  rules={{ required: "Data zakupu jest wymagana." }}
+                  render={({ field }) => (
+                    <>
+                      <DatePicker
+                        {...field}
+                        label="Data zakupu"
+                        value={field.value ? dayjs(field.value) : null}
+                        onChange={(newValue) =>
+                          field.onChange(newValue?.format("YYYY-MM-DD"))
+                        }
+                        sx={{
+                          "& .MuiInputBase-root": {
+                            width: 270,
+                            backgroundColor: "var(--primary-color)",
+                          },
+                          "& .MuiInputBase-input": {
+                            color: "var(--font-color)",
+                            fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                          },
+                        }}
+                      />
+                      {errors.purchaseDate && (
+                        <span className="error-message">{errors.purchaseDate.message}</span>
+                      )}
+                    </>
+                  )}
+                />
+              </LocalizationProvider>
 
-        {/* Data ważności */}
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Controller
-            name="expirationDate"
-            control={control}
-            rules={{
-              required: "Data ważności jest wymagana.",
-              validate: (value) =>
-                validateExpirationDate(value, control._formValues.purchaseDate),
-            }}
-            render={({ field }) => (
-              <DatePicker
-                {...field}
-                label="Data ważności"
-                value={field.value ? dayjs(field.value) : null}
-                onChange={(newValue) =>
-                  field.onChange(newValue?.format("YYYY-MM-DD"))
-                }
-                shouldDisableDate={(date) => {
-                  const purchaseDate = control._formValues.purchaseDate;
-                  return purchaseDate
-                    ? dayjs(date).isBefore(dayjs(purchaseDate))
-                    : false;
-                }}
-              />
-            )}
-          />
-        </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Controller
+                  name="expirationDate"
+                  control={control}
+                  rules={{ required: "Data ważności jest wymagana." }}
+                  render={({ field }) => (
+                    <>
+                      <DatePicker
+                        {...field}
+                        label="Data ważności"
+                        value={field.value ? dayjs(field.value) : null}
+                        onChange={(newValue) =>
+                          field.onChange(newValue?.format("YYYY-MM-DD"))
+                        }
+                        sx={{
+                          "& .MuiInputBase-root": {
+                            width: 270,
+                            backgroundColor: "var(--primary-color)",
+                          },
+                          "& .MuiInputBase-input": {
+                            color: "var(--font-color)",
+                            fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                          },
+                        }}
+                      />
+                      {errors.expirationDate && (
+                        <span className="error-message">{errors.expirationDate.message}</span>
+                      )}
+                    </>
+                  )}
+                />
+              </LocalizationProvider>
+            </div>
 
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          type="submit"
-          sx={{ marginTop: 2 }}
-        >
-          Dodaj produkt
-        </Button>
-      </form>
-    </Box>
+            <div className="button-product-model-group">
+              <button type="submit" className="action-button">
+                Dodaj produkt
+              </button>
+            </div>
+          </form>
+        </Box>
+      </div>
+    </>
   );
 };
 

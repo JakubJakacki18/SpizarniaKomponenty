@@ -385,9 +385,9 @@ a {
 }
 .error-message {
     color: #f44336;
-    font-size: 16px;
+    font-size: 14px;
     white-space: nowrap;
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 .container-wrapper {
@@ -550,11 +550,27 @@ a {
     color: var(--secondary-right);
     font-weight: bold;
 }
-
-.form-product-model-row {
+.form-product-container {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    justify-content: center;
+    background-color: var(--font-color);
+    border: 3px solid var(--background-color);
+    border-radius: 15px;
+    padding: 25px;
+    width: 30vw;
+    height: 40vh;
+    box-sizing: border-box;
+    font-family: "Poppins", "Arial Black";
+    color: var(--secondary-right);
+    font-weight: bold;
+}
+.form-product-model-row {
+    display: flex;
+    align-content:center;
+    flex-direction: row;
+    margin-bottom:20px;
+    gap: 10px;
 }
 
 .label-product-model-input-wrapper {
@@ -573,6 +589,16 @@ label-product-model {
 
 .form-product-model-input {
     width: 100%;
+    padding: 10px;
+    border: 3px solid var(--background-color);
+    border-radius: 5px;
+    background: var(--primary-color);
+    font-size: 16px;
+    color: var(--font-color);
+    box-sizing: border-box;
+    font-family: "Poppins", "Arial Black";
+}
+.form-product-input {
     padding: 10px;
     border: 3px solid var(--background-color);
     border-radius: 5px;
