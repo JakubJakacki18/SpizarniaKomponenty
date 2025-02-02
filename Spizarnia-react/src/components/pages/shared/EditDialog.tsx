@@ -51,7 +51,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
     };
 
     const handleSave = async () => {
-        const updatedProduct = {
+        await dispatch(updateProductModel({
             id: formData.id,
             name: formData.name,
             quantity: parseInt(formData.quantity, 10) || 0,
@@ -59,37 +59,22 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
             categoryId: parseInt(formData.categoryId, 10) || null,
             type: formData.type,
             unit: formData.unit,
-        };
+        }));
 
-        console.log("Sending update request with data:", updatedProduct); // Debugging log
-
-        await dispatch(updateProductModel(updatedProduct));
-        await dispatch(fetchProductModels()); 
+        await dispatch(fetchProductModels());
         setEditDialog(false);
     };
 
-
     return (
-        <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="sm">
+        <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="xs" PaperProps={{
+            style: {
+                backgroundColor: "#F5D5C2",
+                borderRadius: "10px",
+                padding: "15px",
+            }
+        }}>
             <DialogContent>
-                <h2 className="title-dialog">Edytuj produkt</h2>
-                <TextField
-                    label="Nazwa"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
-                <TextField
-                    label="Iloœæ"
-                    name="quantity"
-                    type="number"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
+                <h2 style={{ textAlign: "center", fontWeight: "bold" }}>EDYCJA PRODUKTU Z KATALOGU</h2>
                 <TextField
                     label="Cena"
                     name="price"
@@ -98,6 +83,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 />
                 <TextField
                     select
@@ -107,6 +93,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 >
                     {categories.length > 0 ? (
                         categories.map((category) => (
@@ -123,19 +110,12 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
-                />
-                <TextField
-                    label="Jednostka"
-                    name="unit"
-                    value={formData.unit}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 />
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleSave} variant="contained" color="primary">Zapisz</Button>
-                <Button onClick={handleClose} variant="outlined" color="secondary">Anuluj</Button>
+            <DialogActions style={{ justifyContent: "center" }}>
+                <Button onClick={handleSave} variant="contained" style={{ backgroundColor: "black", color: "white", borderRadius: "5px" }}>ZAPISZ</Button>
+                <Button onClick={handleClose} variant="outlined" style={{ borderColor: "black", color: "black", borderRadius: "5px" }}>ANULUJ</Button>
             </DialogActions>
         </Dialog>
     );
