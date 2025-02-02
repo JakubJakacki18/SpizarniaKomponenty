@@ -192,17 +192,17 @@ const RecipeForm = () => {
                         margin="normal"
                     />
                     <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-                        <button variant="outlined" className="action-recipe-button" onClick={() => handleRemoveIngredient(ingredient.id)} fullWidth sx={{ marginTop: 1 }}>
+                        <button className="action-recipe-button" onClick={() => handleRemoveIngredient(ingredient.id)}>
                             Usuń składnik
+                        </button>
+                        <button className="action-recipe-button" onClick={handleAddIngredient}>
+                        Dodaj składnik
                         </button>
                     </Box>
                 </Box>
             ))}
             <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-                <button variant="outlined" className="action-recipe-button" onClick={handleAddIngredient} fullWidth>
-                    Dodaj składnik
-                </button>
-                <button variant="contained" className="action-recipe-button" fullWidth onClick={handleAddRecipe} sx={{ marginTop: 2 }}>
+                <button className="action-button" onClick={handleAddRecipe}>
                     Dodaj przepis
                 </button>
             </Box>

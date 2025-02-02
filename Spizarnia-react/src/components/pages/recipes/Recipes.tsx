@@ -34,8 +34,7 @@ function Recipes() {
                     />
                     <NavLink
                         to="/manage/recipe"
-                        className={({ isActive }) => StyleFunctions.classNameSelectorNavButton(isActive)}
-                    >
+                        className={({ isActive }) => StyleFunctions.classNameSelectorNavButton(isActive)}>
                         Dodaj przepis
                     </NavLink>
                 </div>

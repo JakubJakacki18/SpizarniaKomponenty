@@ -67,6 +67,11 @@ function CategoryManage() {
                 onSubmit={handleSubmit(handleAddCategory)}
                 className="form-category-container"
             >
+                            {errors.categoryName && (
+                    <span style={{ color: "red", marginTop: "5px", fontSize: "14px" }}>
+                        {errors.categoryName.message}
+                    </span>
+                )}
                 <input
                     id="categoryName"
                     className="form-category-input"
@@ -91,11 +96,6 @@ function CategoryManage() {
                         boxSizing: "border-box",
                     }}
                 />
-                {errors.categoryName && (
-                    <span style={{ color: "red", marginTop: "5px", fontSize: "14px" }}>
-                        {errors.categoryName.message}
-                    </span>
-                )}
                 <button type="submit" className="action-button">
                     Dodaj kategorię
                 </button>
