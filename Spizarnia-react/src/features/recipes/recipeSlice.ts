@@ -48,11 +48,13 @@ async function isRecipeExecutable(ingredients : Ingredient[]) : Promise<boolean>
 export const fetchRecipesWithExecutionStatus = createAsyncThunk<RecipeWithStatus[], void>(
     "recipes/fetchWithIsExecutable",
     async (_, { rejectWithValue }) => {
-        try{
-            const recipesResponse = await AxiosApi.axiosRecipes.get("")
+        try {
+            const recipesResponse = await AxiosApi.axiosRecipes.get("");
             const recipes = recipesResponse.data;
+
             const recipesWithExecutable: RecipeWithStatus[] = await Promise.all(
                 recipes.map(async (recipe) => {
+
                 let isExecutable : boolean | undefined = false;
                     if (recipe.ingredients) {
                     isExecutable = await isRecipeExecutable(recipe.ingredients)
@@ -67,6 +69,7 @@ export const fetchRecipesWithExecutionStatus = createAsyncThunk<RecipeWithStatus
         }
     }
 );
+
 
 const recipeSlice = createSlice({
     name: "recipes",
