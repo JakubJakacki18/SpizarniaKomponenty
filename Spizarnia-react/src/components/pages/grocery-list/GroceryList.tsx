@@ -36,10 +36,12 @@ function GroceryList() {
         return expirationDate.getTime() < currentDate.getTime();
       });
       useEffect(() => {
+
         if (expiredProducts.length > 0  && !openOutdatedProductsDialog) {
             setOutdatedProductsDialog(true);
         }
     }, [expiredProducts.length,openOutdatedProductsDialog]);
+
 
     const handleDeleteExpiredProducts = () => {
         expiredProducts.forEach((product) => {
