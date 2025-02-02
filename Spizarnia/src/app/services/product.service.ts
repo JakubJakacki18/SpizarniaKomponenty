@@ -35,9 +35,9 @@ export class ProductService {
   {
     return this.http.delete<Product>(PRODUCTS+`/${id}`);
   }
-  getQuantityOfProducts(id:number):Observable<number>
+  getQuantityOfProducts(id:number):Observable<{productQuantity : number, message : string}>
   {
-    return this.http.get<number>(PRODUCTS+`getQuantity/${id}`);
+    return this.http.get<{productQuantity : number, message : string}>(PRODUCTS+`getQuantity/${id}`);
   }
   
   
