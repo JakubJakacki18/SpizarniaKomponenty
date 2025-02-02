@@ -66,7 +66,7 @@ export default function GroceryEditDialog(props) {
 
       </DialogContent>
           <DialogActions>
-      <div class="button-dialog-section">
+      <div className="button-dialog-section">
         <button onClick={handleAction} className="action-edit-button">
           Zatwierdź
         </button>
