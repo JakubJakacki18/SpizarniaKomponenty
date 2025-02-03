@@ -103,7 +103,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
     return (
         <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="xs" PaperProps={{
             style: {
-                backgroundColor: "#F5D5C2",
+                backgroundColor: "var(--primary-color)  ",
                 borderRadius: "10px",
                 padding: "15px",
             }
@@ -122,7 +122,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     margin="dense"
                     error={!!formData.priceError} // Ustawienie błędu
                     helperText={formData.priceError} // Komunikat walidacyjny
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+ InputProps={{ style: { backgroundColor: "white", borderRadius: "5px",  fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)"} }}
                 />
 
                 {/* Pole wyboru kategorii */}
@@ -134,11 +134,11 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleCategoryChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
-                >
+ InputProps={{ style: { backgroundColor: "white", borderRadius: "5px",  fontFamily: "'Poppins', 'Arial Black', sans-serif", color:"var(--font-color)" } }}                >
                     {categories.length > 0 ? (
                         categories.map((category) => (
-                            <MenuItem key={category.id} value={category.categoryName}>{category.categoryName}</MenuItem>
+<MenuItem key={category.id} value={category.categoryName} sx={{fontFamily: "'Poppins', 'Arial Black', sans-serif", color: "var(--font-color)"}}>{category.categoryName}
+                            </MenuItem>
                         ))
                     ) : (
                         <MenuItem disabled>Brak dostępnych kategorii</MenuItem>
@@ -153,13 +153,13 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+InputProps={{ style: { backgroundColor: "white", borderRadius: "5px", fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)" } }}
                 />
             </DialogContent>
 
             <DialogActions style={{ justifyContent: "center" }}>
-                <Button onClick={handleSave} variant="contained" style={{ backgroundColor: "black", color: "white", borderRadius: "5px" }}>ZAPISZ</Button>
-                <Button onClick={handleClose} variant="outlined" style={{ borderColor: "black", color: "black", borderRadius: "5px" }}>ANULUJ</Button>
+               <button onClick={handleSave} className="action-edit-button">ZAPISZ</button>
+                <button onClick={handleClose} className="action-edit-button">ANULUJ</button>
             </DialogActions>
         </Dialog>
     );
