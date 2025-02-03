@@ -5,10 +5,7 @@ import {
   getAllCategories,
   addCategories,
 } from "../../../../features/category/categorySlice.ts";
-import {
-  getAllProductModels,
-  addProductModels,
-} from "../../../../features/productModels/productModelSlice.ts";
+import { getAllProductModels } from "../../../../features/productModels/productModelSlice.ts";
 import {
   addProducts,
   getAllProducts,
@@ -18,7 +15,6 @@ import { AxiosResponse } from "axios";
 import {
   Box,
   TextField,
-  Typography,
   MenuItem,
   ListSubheader,
 } from "@mui/material";
@@ -89,6 +85,16 @@ const AddProductForm = () => {
       alert("Nie udało się dodać produktu.");
     }
   };
+  const validateExpirationDate = (value: string, purchaseDate: string) => {
+    return dayjs(value).isBefore(dayjs(purchaseDate))
+      ? "Data ważności nie może być wcześniejsza niż data zakupu."
+      : true;
+  };
+  const validatePurchaseDate = (value: string) => {
+    return dayjs(value).isAfter(dayjs())
+      ? "Data zakupu nie może być w przyszłości."
+      : true;
+  };
 
   return (
     <>
@@ -103,7 +109,9 @@ const AddProductForm = () => {
               render={({ field }) => (
                 <>
                   {errors.productId && (
-                    <span className="error-message">{errors.productId.message}</span>
+                    <span className="error-message">
+                      {errors.productId.message}
+                    </span>
                   )}
                   <TextField
                     select
@@ -134,14 +142,36 @@ const AddProductForm = () => {
                       Wybierz produkt
                     </MenuItem>
                     {categories.flatMap((category: Category) => [
-                      <ListSubheader key={category.categoryName}  sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
+                      <ListSubheader
+                        key={category.categoryName}
+                        sx={{
+                          fontWeight: "bold",
+                          display: "flex",
+                          flexDirection: "column",
+                          backgroundColor: "var(--primary-color)",
+                          fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                        }}
+                      >
                         {category.categoryName}
                       </ListSubheader>,
-                      ...(category.productModels?.map((product: ProductModel) => (
-                        <MenuItem key={product.id} value={product.id} sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
-                          {product.name}
-                        </MenuItem>
-                      )) || []),
+                      ...(category.productModels?.map(
+                        (product: ProductModel) => (
+                          <MenuItem
+                            key={product.id}
+                            value={product.id}
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              color: "var(--font-color)",
+                              backgroundColor: "var(--secondary-left)",
+                              fontFamily:
+                                "'Poppins', 'Arial Black', sans-serif",
+                            }}
+                          >
+                            {product.name}
+                          </MenuItem>
+                        )
+                      ) || []),
                     ])}
                   </TextField>
                 </>
@@ -149,66 +179,57 @@ const AddProductForm = () => {
             />
 
             <div className="form-product-model-row">
+              {/* Data zakupu */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   name="purchaseDate"
                   control={control}
-                  rules={{ required: "Data zakupu jest wymagana." }}
+                  rules={{
+                    required: "Data zakupu jest wymagana.",
+                    validate: validatePurchaseDate,
+                  }}
                   render={({ field }) => (
-                    <>
-                      <DatePicker
-                        {...field}
-                        label="Data zakupu"
-                        value={field.value ? dayjs(field.value) : null}
-                        onChange={(newValue) =>
-                          field.onChange(newValue?.format("YYYY-MM-DD"))
-                        }
-                        sx={{
-                          "& .MuiInputBase-root": {
-                            backgroundColor: "var(--primary-color)",
-                          },
-                          "& .MuiInputBase-input": {
-                            color: "var(--font-color)",
-                            fontFamily: "'Poppins', 'Arial Black', sans-serif",
-                          },
-                        }}
-                      />
-                      {errors.purchaseDate && (
-                        <span className="error-message">{errors.purchaseDate.message}</span>
-                      )}
-                    </>
+                    <DatePicker
+                      {...field}
+                      label="Data zakupu"
+                      value={field.value ? dayjs(field.value) : null}
+                      onChange={(newValue) =>
+                        field.onChange(newValue?.format("YYYY-MM-DD"))
+                      }
+                      shouldDisableDate={(date) => dayjs(date).isAfter(dayjs())} // 🔹 Blokuje przyszłe daty
+                    />
                   )}
                 />
               </LocalizationProvider>
 
+              {/* Data ważności */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   name="expirationDate"
                   control={control}
-                  rules={{ required: "Data ważności jest wymagana." }}
+                  rules={{
+                    required: "Data ważności jest wymagana.",
+                    validate: (value) =>
+                      validateExpirationDate(
+                        value,
+                        control._formValues.purchaseDate
+                      ),
+                  }}
                   render={({ field }) => (
-                    <>
-                      <DatePicker
-                        {...field}
-                        label="Data ważności"
-                        value={field.value ? dayjs(field.value) : null}
-                        onChange={(newValue) =>
-                          field.onChange(newValue?.format("YYYY-MM-DD"))
-                        }
-                        sx={{
-                          "& .MuiInputBase-root": {
-                            backgroundColor: "var(--primary-color)",
-                          },
-                          "& .MuiInputBase-input": {
-                            color: "var(--font-color)",
-                            fontFamily: "'Poppins', 'Arial Black', sans-serif",
-                          },
-                        }}
-                      />
-                      {errors.expirationDate && (
-                        <span className="error-message">{errors.expirationDate.message}</span>
-                      )}
-                    </>
+                    <DatePicker
+                      {...field}
+                      label="Data ważności"
+                      value={field.value ? dayjs(field.value) : null}
+                      onChange={(newValue) =>
+                        field.onChange(newValue?.format("YYYY-MM-DD"))
+                      }
+                      shouldDisableDate={(date) => {
+                        const purchaseDate = control._formValues.purchaseDate;
+                        return purchaseDate
+                          ? dayjs(date).isBefore(dayjs(purchaseDate))
+                          : false;
+                      }} // 🔹 Blokuje daty wcześniejsze niż zakup
+                    />
                   )}
                 />
               </LocalizationProvider>
