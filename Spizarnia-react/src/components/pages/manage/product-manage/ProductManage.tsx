@@ -113,7 +113,6 @@ const AddProductForm = () => {
                     sx={{
                       "& .MuiInputBase-root": {
                         marginBottom: 1,
-                        width: 550,
                         backgroundColor: "var(--primary-color)",
                       },
                       "& .MuiInputBase-input": {
@@ -166,7 +165,6 @@ const AddProductForm = () => {
                         }
                         sx={{
                           "& .MuiInputBase-root": {
-                            width: 270,
                             backgroundColor: "var(--primary-color)",
                           },
                           "& .MuiInputBase-input": {
@@ -199,7 +197,6 @@ const AddProductForm = () => {
                         }
                         sx={{
                           "& .MuiInputBase-root": {
-                            width: 270,
                             backgroundColor: "var(--primary-color)",
                           },
                           "& .MuiInputBase-input": {

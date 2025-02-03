@@ -26,10 +26,16 @@ function ProductModelViewManageTable()
     const columns = [
         { field: "id", headerName: "ID", width: 50, headerClassName: 'table-header'},
         { field: "name", headerName: "Nazwa", width: 150, headerClassName: 'table-header' },
-        { field: "quantity", headerName: "Ilość", width: 100, headerClassName: 'table-header' },
+        { field: "quantity", headerName: "Ilość", width: 100, headerClassName: 'table-header', renderCell: (params) => {
+            const quantity = params.row.quantity || 0;
+            const unit = params.row.unit || "";
+            return `${quantity} ${unit}`;} },
         { field: "categoryName", headerName: "Kategoria", width: 150 , headerClassName: 'table-header' },
         { field: "type", headerName: "Typu", width: 150, headerClassName: 'table-header' },
-        { field: "price", headerName: "Cena", width: 150, headerClassName: 'table-header' },
+        { field: "price", headerName: "Cena", width: 150, headerClassName: 'table-header', renderCell: (params) => {
+            const price = params.row.price || 0;
+            return `${price} zł`;
+        }},
         {
           field: "akcje",
           headerName: "Akcje",
