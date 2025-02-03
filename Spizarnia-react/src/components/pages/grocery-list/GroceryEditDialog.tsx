@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 
 export default function GroceryEditDialog(props) {
   const { openEditDialog, setEditDialog,handleEdit,productToBuyId } = props;
-  const forbiddenValue = useSelector(getAllListOfProductsToBuy).find(
+  const groceryEntry = useSelector(getAllListOfProductsToBuy).find(
     (item) => item.id === productToBuyId
-  )?.quantity;
+  )
+  const forbiddenValue =groceryEntry?.quantity;
   const [newQuantity, setNewQuantity] = useState<string>(""); // Przechowuje wartość pola
   const [error, setError] = useState<string>(""); // Przechowuje komunikat błędu
   const handleClose = () => {
@@ -47,11 +48,11 @@ export default function GroceryEditDialog(props) {
               Edycja ilości produktu
           </h1>
 
-      <DialogContent>
-        <p>Nazwa produktu: {}</p>
-        <p>Aktualna ilość: {}</p>
-        <p>Cena: {}</p>    
-        
+      <DialogContent><p>Nazwa produktu: {groceryEntry?.products?.name ?? ""}</p>
+        <p>Aktualna ilość: {groceryEntry?.quantity}</p>
+        <p>Cena: {Number(groceryEntry?.products?.price ?? 0)
+            .toLocaleString("pl-PL", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || "0" }{" zł"}</p>    
+                
       {/* <p>Podaj nową ilość produktu:</p> */}
      <div className="input-dialog-section">
         <TextField
