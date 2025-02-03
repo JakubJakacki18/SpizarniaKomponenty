@@ -19,6 +19,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
         name: "",
         quantity: "",
         price: "",
+        categoryName: "",
         categoryId: "",
         type: "",
         unit: "",
@@ -31,7 +32,8 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                 name: selectedProduct.name || "",
                 quantity: selectedProduct.quantity ? selectedProduct.quantity.toString() : "",
                 price: selectedProduct.price ? selectedProduct.price.toString() : "",
-                categoryId: selectedProduct.category?.id ? selectedProduct.category.id.toString() : "",
+                categoryName: selectedProduct.category?.categoryName || "",
+                categoryId: selectedProduct.category?.id || "",
                 type: selectedProduct.type || "",
                 unit: selectedProduct.unit || "",
             });
@@ -46,122 +48,86 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
         }));
     };
 
+    const handleCategoryChange = (e) => {
+        const selectedCategory = categories.find(cat => cat.categoryName === e.target.value);
+        setFormData((prevData) => ({
+            ...prevData,
+            categoryName: e.target.value,
+            categoryId: selectedCategory ? selectedCategory.id : "",
+        }));
+    };
+
     const handleClose = () => {
         setEditDialog(false);
     };
 
     const handleSave = async () => {
-        const updatedProduct = {
+        await dispatch(updateProductModel({
             id: formData.id,
             name: formData.name,
             quantity: parseInt(formData.quantity, 10) || 0,
             price: parseFloat(formData.price) || 0,
-            categoryId: parseInt(formData.categoryId, 10) || null,
+            categoryId: formData.categoryId,
+            categoryName: formData.categoryName,
             type: formData.type,
             unit: formData.unit,
-        };
+        }));
 
-        console.log("Sending update request with data:", updatedProduct);
-
-        await dispatch(updateProductModel(updatedProduct));
         await dispatch(fetchProductModels());
         setEditDialog(false);
     };
 
     return (
-        <Dialog open={openEditDialog} onClose={handleClose} sx={{ "& .MuiPaper-root": { backgroundColor: "var(--primary-color)" } }}>
-            <h1 className="title-dialog">Edytuj produkt</h1>
-
+        <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="xs" PaperProps={{
+            style: {
+                backgroundColor: "#F5D5C2",
+                borderRadius: "10px",
+                padding: "15px",
+            }
+        }}>
             <DialogContent>
-                <div className="input-dialog-section">
-                    <TextField
-                        label="Nazwa"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="dense"
-                    />
-                </div>
-
-                <div className="input-dialog-section">
-                    <TextField
-                        label="Ilość"
-                        name="quantity"
-                        type="number"
-                        value={formData.quantity}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="dense"
-                    />
-                </div>
-
-                <div className="input-dialog-section">
-                    <TextField
-                        label="Cena"
-                        name="price"
-                        type="number"
-                        value={formData.price}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="dense"
-                    />
-                </div>
-
-                <div className="input-dialog-section">
-                    <TextField
-                        select
-                        label="Kategoria"
-                        name="categoryId"
-                        value={formData.categoryId}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="dense"
-                    >
-                        {categories.length > 0 ? (
-                            categories.map((category) => (
-                                <MenuItem key={category.id} value={category.id.toString()}>
-                                    {category.categoryName}
-                                </MenuItem>
-                            ))
-                        ) : (
-                            <MenuItem disabled>Brak dostępnych kategorii</MenuItem>
-                        )}
-                    </TextField>
-                </div>
-
-                <div className="input-dialog-section">
-                    <TextField
-                        label="Typ"
-                        name="type"
-                        value={formData.type}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="dense"
-                    />
-                </div>
-
-                <div className="input-dialog-section">
-                    <TextField
-                        label="Jednostka"
-                        name="unit"
-                        value={formData.unit}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="dense"
-                    />
-                </div>
+                <h2 style={{ textAlign: "center", fontWeight: "bold" }}>EDYCJA PRODUKTU Z KATALOGU</h2>
+                <TextField
+                    label="Cena"
+                    name="price"
+                    type="number"
+                    value={formData.price}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="dense"
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+                />
+                <TextField
+                    select
+                    label="Kategoria"
+                    name="categoryName"
+                    value={formData.categoryName}
+                    onChange={handleCategoryChange}
+                    fullWidth
+                    margin="dense"
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+                >
+                    {categories.length > 0 ? (
+                        categories.map((category) => (
+                            <MenuItem key={category.id} value={category.categoryName}>{category.categoryName}</MenuItem>
+                        ))
+                    ) : (
+                        <MenuItem disabled>Brak dost�pnych kategorii</MenuItem>
+                    )}
+                </TextField>
+                <TextField
+                    label="Typ"
+                    name="type"
+                    value={formData.type}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="dense"
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+                />
             </DialogContent>
-
-            <DialogActions>
-                <div className="button-dialog-section">
-                    <button onClick={handleSave} variant="contained" className="action-edit-button">
-                        Zapisz
-                    </button>
-                    <button onClick={handleClose} variant="outlined" className="action-edit-button">
-                        Anuluj
-                    </button>
-                </div>
+            <DialogActions style={{ justifyContent: "center" }}>
+                <Button onClick={handleSave} variant="contained" style={{ backgroundColor: "black", color: "white", borderRadius: "5px" }}>ZAPISZ</Button>
+                <Button onClick={handleClose} variant="outlined" style={{ borderColor: "black", color: "black", borderRadius: "5px" }}>ANULUJ</Button>
             </DialogActions>
         </Dialog>
     );
