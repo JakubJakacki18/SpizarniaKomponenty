@@ -38,7 +38,7 @@ function GroceryTable({ searchTerm }: GroceryTableProps) {
         setDeleteDialog(false); // Zamknij okno dialogowe po usunięciu
     };
 
-    const handleEdit = (productToBuyId: string, newQuantity: number) => {
+    const handleEdit = (productToBuyId: string, newQuantity: string) => {
         dispatch(editGroceryEntry({ productToBuyId, newQuantity }));
         setEditDialog(false); // Zamknij okno dialogowe po edytowaniu
     };

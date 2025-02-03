@@ -9,13 +9,11 @@ import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 import { deleteProduct, getAllProducts } from "../../../features/products/productSlice.ts";
 import { Product } from "../../../../../Spizarnia-backend/src/models/Product.ts";
 
-function deleteProductFromPantry(product : Product, dispatch : AppDispatch)
-{
+function deleteProductFromPantry(product: Product, dispatch: AppDispatch) {
     dispatch(deleteProduct(product.id.toString()))
 }
-function addProductToShoppingCart(product : Product, dispatch : AppDispatch)
-{
-    
+function addProductToShoppingCart(product: Product, dispatch: AppDispatch) {
+
     const newEntry = {
         idProductModel: product.productModel?.id ?? -1,
         quantity: 1
@@ -33,13 +31,13 @@ function GroceryList() {
     const [hasDialogBeenOpened, setHasDialogBeenOpened] = useState(false);
 
     const currentDate = new Date();
-    const expiredProducts = useSelector(getAllProducts).filter(product  => {
+    const expiredProducts = useSelector(getAllProducts).filter(product => {
         const expirationDate = new Date(product.expirationDate);
         return expirationDate.getTime() < currentDate.getTime();
-      });
-      useEffect(() => {
+    });
+    useEffect(() => {
 
-        if (!hasDialogBeenOpened && expiredProducts.length > 0  && !openOutdatedProductsDialog) {
+        if (!hasDialogBeenOpened && expiredProducts.length > 0 && !openOutdatedProductsDialog) {
             setOutdatedProductsDialog(true);
             setHasDialogBeenOpened(true);
         }
@@ -48,13 +46,12 @@ function GroceryList() {
 
     const handleDeleteExpiredProducts = () => {
         expiredProducts.forEach((product) => {
-            try{
-                deleteProductFromPantry(product,dispatch);
-                addProductToShoppingCart(product,dispatch)
+            try {
+                deleteProductFromPantry(product, dispatch);
+                addProductToShoppingCart(product, dispatch)
             }
-            catch(error)
-            {
-                console.error("Wystąpił błąd: ",error)
+            catch (error) {
+                console.error("Wystąpił błąd: ", error)
             }
 
         })
