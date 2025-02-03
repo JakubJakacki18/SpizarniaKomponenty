@@ -163,11 +163,25 @@ const RecipeForm = () => {
                         fullWidth
                         margin="normal"
                     >
-                        <MenuItem value="" sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
+                        <MenuItem value="" sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        color: "var(--font-color)",
+                        fontSize:20,
+                        backgroundColor: "var(--secondary-right)",
+                        fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                      }}>
                             Wybierz składnik
                         </MenuItem>
                         {categories.flatMap((category: Category) => [
-                            <ListSubheader key={`header-${category.categoryName}`} sx={{ fontWeight: 'bold', display: "flex", flexDirection: "column", backgroundColor: "var(--primary-color)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}>
+                            <ListSubheader key={`header-${category.categoryName}`} sx={{
+                          fontWeight: "bold",
+                          display: "flex",
+                          fontSize:18,
+                          flexDirection: "column",
+                              backgroundColor: "var(--secondary-left)",
+                          fontFamily: "'Poppins', 'Arial Black', sans-serif",
+                        }}>
                                 {category.categoryName}
                             </ListSubheader>,
                             ...category.productModels?.map((product: ProductModel) => (
@@ -175,8 +189,14 @@ const RecipeForm = () => {
                                     key={product.id}
                                     value={product.id}
                                     disabled={ingredients.some(i => parseInt(i.productModelId) === product.id)}
-                                    sx={{ display: "flex", flexDirection: "column", color: "var(--font-color)", backgroundColor: "var(--secondary-left)", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}
-                                >
+                                    sx={{
+                              display: "flex",
+                              color: "var(--font-color)",
+                                                        backgroundColor: "var(--primary-color)",
+
+                              fontFamily:
+                                "'Poppins', 'Arial Black', sans-serif",
+                            }}                                >
                                     {product.name}
                                 </MenuItem>
                             )) || []
