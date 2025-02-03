@@ -59,6 +59,7 @@ export default function GroceryEditDialog(props) {
       variant="outlined"
       value={newQuantity}
       onChange={handleChange}
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px", fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)" } }}
       error={!!error}
       helperText={error} // Wyświetlenie komunikatu błędu
       />
