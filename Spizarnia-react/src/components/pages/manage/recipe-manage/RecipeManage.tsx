@@ -7,7 +7,7 @@ import {
     Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addRecipes } from "../../../../features/recipes/recipeSlice.ts";
+import { addRecipes, getAllRecipes } from "../../../../features/recipes/recipeSlice.ts";
 import AxiosApi from "../../../../api/axiosApi.ts";
 import { AxiosResponse } from "axios";
 import { addCategories, getAllCategories } from "../../../../features/category/categorySlice.ts";
@@ -21,6 +21,7 @@ const RecipeForm = () => {
     ]);
     const [productModels, setProductModels] = useState([]);
     const categories : Category[] = useSelector(getAllCategories)
+    const recipes = useSelector(getAllRecipes)
     const dispatch = useDispatch();
 
     // const fetchProductModels = async () => {
@@ -52,6 +53,7 @@ const RecipeForm = () => {
         fetchCategories()
         },[dispatch])
 
+    
     // if (productModels.length === 0) {
     //     fetchProductModels();
     // }
@@ -112,7 +114,7 @@ const RecipeForm = () => {
         try {
             const response = await AxiosApi.axiosRecipes.post("/", newRecipe);
             console.log("Dodano przepis:", response.data);
-            dispatch(addRecipes(response.data));
+            dispatch(addRecipes([...recipes,response.data]));
             alert("Przepis został dodany!");
             setRecipeName("");
             setIngredients([{ id: 1, productModelId: "", quantity: 1 }]);
