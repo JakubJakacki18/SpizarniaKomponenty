@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, fetchCategories } from "../../../features/category/categorySlice.ts";
 import { updateProductModel, fetchProductModels } from "../../../features/productModels/productModelSlice.ts";
+import { AppDispatch } from "../../../features/store.ts";
 
 export default function EditProductModelDialog({ openEditDialog, setEditDialog, selectedProduct }) {
-    const dispatch = useDispatch();
-    const categories = useSelector(getAllCategories) || [];
+    const dispatch : AppDispatch = useDispatch();
+    const categories = useSelector(getAllCategories);
 
     useEffect(() => {
         if (categories.length === 0) {
