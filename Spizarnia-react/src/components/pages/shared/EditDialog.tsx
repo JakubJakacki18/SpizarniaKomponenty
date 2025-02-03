@@ -19,6 +19,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
         name: "",
         quantity: "",
         price: "",
+        categoryName: "",
         categoryId: "",
         type: "",
         unit: "",
@@ -31,7 +32,8 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                 name: selectedProduct.name || "",
                 quantity: selectedProduct.quantity ? selectedProduct.quantity.toString() : "",
                 price: selectedProduct.price ? selectedProduct.price.toString() : "",
-                categoryId: selectedProduct.category?.id ? selectedProduct.category.id.toString() : "",
+                categoryName: selectedProduct.category?.categoryName || "",
+                categoryId: selectedProduct.category?.id || "",
                 type: selectedProduct.type || "",
                 unit: selectedProduct.unit || "",
             });
@@ -46,6 +48,15 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
         }));
     };
 
+    const handleCategoryChange = (e) => {
+        const selectedCategory = categories.find(cat => cat.categoryName === e.target.value);
+        setFormData((prevData) => ({
+            ...prevData,
+            categoryName: e.target.value,
+            categoryId: selectedCategory ? selectedCategory.id : "",
+        }));
+    };
+
     const handleClose = () => {
         setEditDialog(false);
     };
@@ -56,7 +67,8 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
             name: formData.name,
             quantity: parseInt(formData.quantity, 10) || 0,
             price: parseFloat(formData.price) || 0,
-            categoryId: parseInt(formData.categoryId, 10) || null,
+            categoryId: formData.categoryId,
+            categoryName: formData.categoryName,
             type: formData.type,
             unit: formData.unit,
         }));
@@ -88,16 +100,16 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                 <TextField
                     select
                     label="Kategoria"
-                    name="categoryId"
-                    value={formData.categoryId}
-                    onChange={handleChange}
+                    name="categoryName"
+                    value={formData.categoryName}
+                    onChange={handleCategoryChange}
                     fullWidth
                     margin="dense"
                     InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 >
                     {categories.length > 0 ? (
                         categories.map((category) => (
-                            <MenuItem key={category.id} value={category.id.toString()}>{category.categoryName}</MenuItem>
+                            <MenuItem key={category.id} value={category.categoryName}>{category.categoryName}</MenuItem>
                         ))
                     ) : (
                         <MenuItem disabled>Brak dostêpnych kategorii</MenuItem>
