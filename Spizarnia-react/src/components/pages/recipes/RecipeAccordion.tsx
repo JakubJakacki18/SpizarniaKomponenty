@@ -46,7 +46,7 @@ function RecipeAccordion(recipe: Recipe & { isExecutable: boolean }) {
         <AccordionDetails>
           <Typography
             component="span"
-            style={{ fontWeight: "bold", fontSize: "16px", marginBottom: "10px" }}
+            style={{ fontWeight: "bold", fontSize: "16px", marginBottom: "10px",  fontFamily: "'Poppins', 'Arial Black', sans-serif"  }}
           >
             Składniki:
           </Typography>
@@ -60,7 +60,7 @@ function RecipeAccordion(recipe: Recipe & { isExecutable: boolean }) {
               <Typography
                 key={index}
                 component="p"
-                style={{ fontSize: "14px", margin: "5px 0", color: "#2e7d32" }}
+                style={{ fontSize: "14px", margin: "5px 0", color: "#2e7d32", fontFamily: "'Poppins', 'Arial Black', sans-serif" }}
               >
                 {ingredient.productModel?.name || "Nieznany składnik"} - Ilość: {ingredient.quantity || "Brak danych"}
               </Typography>
