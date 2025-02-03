@@ -44,7 +44,10 @@ export const ListOfProductsToBuyController = {
             return
           }
           try {
-          const productModel = await productModelsRepository.findOne({ where: { id: parseInt(idProductModel) } });
+          const productModel = await productModelsRepository.findOne({
+             where: { id: parseInt(idProductModel) },
+             relations: ['category']  
+          });
           if(!productModel)
             {
                 res.status(404).json({ error: `ProductModel with id: ${idProductModel} was not found` });
@@ -54,8 +57,10 @@ export const ListOfProductsToBuyController = {
                 where: { 
                     products: { id: parseInt(idProductModel) } 
                 },
-                relations: ['products'] 
+                relations: ['products','products.category'] 
+                
             });
+            
             if(existingEntry)
                 {
                     existingEntry.quantity += quantity ?? 1;
@@ -70,6 +75,7 @@ export const ListOfProductsToBuyController = {
                     });
               
                     await listOfProductsToBuyRepository.save(newCartElement);
+                    
                     res.status(201).json(newCartElement);
 
                 }}
