@@ -542,7 +542,6 @@ a {
     background-color: var(--font-color);
     border: 3px solid var(--background-color);
     border-radius: 15px;
-    overflow:auto;
     padding: 25px;
     width: 50vw;
     height: 80%;
