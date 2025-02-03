@@ -130,7 +130,8 @@ const AddProductForm = () => {
                         display: "flex",
                         flexDirection: "column",
                         color: "var(--font-color)",
-                        backgroundColor: "var(--primary-color)",
+                        fontSize:20,
+                        backgroundColor: "var(--secondary-right)",
                         fontFamily: "'Poppins', 'Arial Black', sans-serif",
                       }}
                     >
@@ -142,8 +143,9 @@ const AddProductForm = () => {
                         sx={{
                           fontWeight: "bold",
                           display: "flex",
+                          fontSize:18,
                           flexDirection: "column",
-                          backgroundColor: "var(--primary-color)",
+                              backgroundColor: "var(--secondary-left)",
                           fontFamily: "'Poppins', 'Arial Black', sans-serif",
                         }}
                       >
@@ -156,9 +158,9 @@ const AddProductForm = () => {
                             value={product.id}
                             sx={{
                               display: "flex",
-                              flexDirection: "column",
                               color: "var(--font-color)",
-                              backgroundColor: "var(--secondary-left)",
+                                                        backgroundColor: "var(--primary-color)",
+
                               fontFamily:
                                 "'Poppins', 'Arial Black', sans-serif",
                             }}
