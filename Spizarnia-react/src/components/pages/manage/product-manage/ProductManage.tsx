@@ -12,12 +12,7 @@ import {
 } from "../../../../features/products/productSlice.ts";
 import AxiosApi from "../../../../api/axiosApi.ts";
 import { AxiosResponse } from "axios";
-import {
-  Box,
-  TextField,
-  MenuItem,
-  ListSubheader,
-} from "@mui/material";
+import { Box, TextField, MenuItem, ListSubheader } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
