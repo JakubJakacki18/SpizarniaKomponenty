@@ -1,4 +1,4 @@
-﻿import { Dialog, DialogContent, DialogActions, TextField, MenuItem, Button } from "@mui/material";
+﻿import { Dialog, DialogContent, DialogActions, TextField, MenuItem} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, fetchCategories } from "../../../features/category/categorySlice.ts";
@@ -81,13 +81,13 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
     return (
         <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="xs" PaperProps={{
             style: {
-                backgroundColor: "#F5D5C2",
+                backgroundColor: "var(--primary-color)  ",
                 borderRadius: "10px",
                 padding: "15px",
             }
         }}>
             <DialogContent>
-                <h2 style={{ textAlign: "center", fontWeight: "bold" }}>EDYCJA PRODUKTU Z KATALOGU</h2>
+                <h2 className="title-dialog">EDYCJA PRODUKTU Z KATALOGU</h2>
                 <TextField
                     label="Cena"
                     name="price"
@@ -96,7 +96,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px",  fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)"} }}
                 />
                 <TextField
                     select
@@ -106,11 +106,12 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleCategoryChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px",  fontFamily: "'Poppins', 'Arial Black', sans-serif", color:"var(--font-color)" } }}
                 >
                     {categories.length > 0 ? (
                         categories.map((category) => (
-                            <MenuItem key={category.id} value={category.categoryName}>{category.categoryName}</MenuItem>
+                            <MenuItem key={category.id} value={category.categoryName} sx={{fontFamily: "'Poppins', 'Arial Black', sans-serif", color: "var(--font-color)"}}>{category.categoryName}
+                            </MenuItem>
                         ))
                     ) : (
                         <MenuItem disabled>Brak dost�pnych kategorii</MenuItem>
@@ -123,12 +124,12 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px", fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)" } }}
                 />
             </DialogContent>
             <DialogActions style={{ justifyContent: "center" }}>
-                <Button onClick={handleSave} variant="contained" style={{ backgroundColor: "black", color: "white", borderRadius: "5px" }}>ZAPISZ</Button>
-                <Button onClick={handleClose} variant="outlined" style={{ borderColor: "black", color: "black", borderRadius: "5px" }}>ANULUJ</Button>
+                <button onClick={handleSave} className="action-edit-button">ZAPISZ</button>
+                <button onClick={handleClose} className="action-edit-button">ANULUJ</button>
             </DialogActions>
         </Dialog>
     );

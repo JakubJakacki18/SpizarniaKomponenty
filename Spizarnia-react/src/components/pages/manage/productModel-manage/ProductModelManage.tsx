@@ -54,7 +54,7 @@ function ProductManage() {
 
     return (
         <div className="manage-content">
-            <div className="title-manage">Dodaj produkt</div>
+            <div className="title-manage">Dodaj produkt do katalogu</div>
             <form onSubmit={handleSubmit(onSubmit)} className="form-product-model-container">
                 <input
                     className="form-product-model-input"

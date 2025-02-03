@@ -5,6 +5,7 @@
     --background-color: #61463b;
     --font-color: #4e3d43;
     --font-color-hover: #ffffff;
+    --font-color-disabled: #d3d3d3;
 }
 
 html, body {

@@ -94,7 +94,7 @@ const AddProductForm = () => {
   return (
     <>
       <div className="manage-content">
-        <div className="title-manage">Dodaj produkt</div>
+        <div className="title-manage">Dodaj produkt do spiżarni</div>
         <Box className="form-product-container">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
@@ -174,7 +174,6 @@ const AddProductForm = () => {
             />
 
             <div className="form-product-model-row">
-              {/* Data zakupu */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   name="purchaseDate"
@@ -188,6 +187,13 @@ const AddProductForm = () => {
                       {...field}
                       label="Data zakupu"
                       value={field.value ? dayjs(field.value) : null}
+                       sx={{
+                              display: "flex",
+                              color: "var(--font-color)",
+                              backgroundColor: "var(--primary-color)",
+                              fontFamily:
+                                "'Poppins', 'Arial Black', sans-serif",
+                            }}
                       onChange={(newValue) =>
                         field.onChange(newValue?.format("YYYY-MM-DD"))
                       }
@@ -197,7 +203,6 @@ const AddProductForm = () => {
                 />
               </LocalizationProvider>
 
-              {/* Data ważności */}
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   name="expirationDate"
@@ -215,6 +220,13 @@ const AddProductForm = () => {
                       {...field}
                       label="Data ważności"
                       value={field.value ? dayjs(field.value) : null}
+                                             sx={{
+                              display: "flex",
+                              color: "var(--font-color)",
+                              backgroundColor: "var(--primary-color)",
+                              fontFamily:
+                                "'Poppins', 'Arial Black', sans-serif",
+                            }}
                       onChange={(newValue) =>
                         field.onChange(newValue?.format("YYYY-MM-DD"))
                       }
