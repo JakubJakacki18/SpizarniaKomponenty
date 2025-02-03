@@ -68,7 +68,7 @@ const AddProductForm = () => {
       const response = await AxiosApi.axiosProducts.post("", {
         purchaseDate: data.purchaseDate,
         expirationDate: data.expirationDate,
-        selectedProduct: selectedProductModel,
+        selectedProduct: [selectedProductModel],
       });
 
       dispatch(
@@ -78,7 +78,7 @@ const AddProductForm = () => {
             id: response.data.id,
             expirationDate: data.expirationDate,
             purchaseDate: data.purchaseDate,
-            productModels: [selectedProductModel],
+            productModel: [selectedProductModel],
           },
         ])
       );
@@ -113,7 +113,6 @@ const AddProductForm = () => {
                     sx={{
                       "& .MuiInputBase-root": {
                         marginBottom: 1,
-                        width: 550,
                         backgroundColor: "var(--primary-color)",
                       },
                       "& .MuiInputBase-input": {
@@ -166,7 +165,6 @@ const AddProductForm = () => {
                         }
                         sx={{
                           "& .MuiInputBase-root": {
-                            width: 270,
                             backgroundColor: "var(--primary-color)",
                           },
                           "& .MuiInputBase-input": {
@@ -199,7 +197,6 @@ const AddProductForm = () => {
                         }
                         sx={{
                           "& .MuiInputBase-root": {
-                            width: 270,
                             backgroundColor: "var(--primary-color)",
                           },
                           "& .MuiInputBase-input": {

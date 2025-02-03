@@ -6,17 +6,29 @@ import { AxiosResponse } from "axios";
 import ProductTable from "./ProductsTable.tsx";
 import { NavLink } from "react-router-dom";
 import StyleFunctions from "../../../shared/styleFunctions.ts";
+import { Product } from "../../../../../Spizarnia-backend/src/models/Product.ts";
 
 
 function AllProducts() {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
-    const products = useSelector(getAllProducts);
+    const products = useSelector(getAllProducts).map((product:Product) =>({
+        id: product.id,
+        purchaseDate: product.purchaseDate,
+        expirationDate: product.expirationDate,
+        name: product.productModel?.name ?? "",
+        type: product.productModel?.type ?? "",
+        price: product.productModel?.price ?? "",
+        quantity: (product.productModel?.quantity && product.productModel?.unit) 
+        ? (product.productModel.quantity +" "+ product.productModel.unit) 
+        : "",
+        categoryName: product.productModel?.category?.categoryName 
+    }));
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response: AxiosResponse = await AxiosApi.axiosProducts.get('');
+                const response: AxiosResponse = await AxiosApi.axiosProducts.get('/NoMap');
                 dispatch(addProducts(response.data));
                 console.log(response.data);
             } catch (error) {
@@ -25,6 +37,7 @@ function AllProducts() {
         };
         fetchProducts();
     }, [dispatch]);
+
 
     // Funkcja obsługująca wyszukiwanie
     function onSearch(): void {

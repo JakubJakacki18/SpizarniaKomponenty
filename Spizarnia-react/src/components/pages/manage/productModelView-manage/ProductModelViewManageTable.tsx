@@ -90,7 +90,7 @@ function ProductModelViewManageTable()
         />
     </div>
     ) : (
-    <div class="no-data">Brak produktów w spiżarni.</div>
+    <div className="no-data">Brak produktów w spiżarni.</div>
     );
 
     return (
