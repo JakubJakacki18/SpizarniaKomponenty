@@ -7,6 +7,8 @@ import ProductTable from "./ProductsTable.tsx";
 import { NavLink } from "react-router-dom";
 import StyleFunctions from "../../../shared/styleFunctions.ts";
 import { Product } from "../../../../../Spizarnia-backend/src/models/Product.ts";
+import { Notify } from "../../../shared/Notify.ts";
+
 
 
 function AllProducts() {
@@ -37,7 +39,16 @@ function AllProducts() {
         };
         fetchProducts();
     }, [dispatch]);
-
+    useEffect(()=>{
+        if(products.some((product)=>{
+            const currentDate = new Date();
+            const expirationDate = new Date(product.expirationDate);
+            const timeDifference = expirationDate.getTime() - currentDate.getTime();
+            const daysDifference = timeDifference / (1000 * 3600 * 24);
+            return daysDifference<=3
+            }))
+        Notify("Zbliża się termin przydatności produktów!")
+    },[products])
 
     // Funkcja obsługująca wyszukiwanie
     function onSearch(): void {
