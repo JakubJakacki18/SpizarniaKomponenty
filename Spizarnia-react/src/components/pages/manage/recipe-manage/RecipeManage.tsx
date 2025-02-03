@@ -126,7 +126,7 @@ const RecipeForm = () => {
     return (
         <>
             <div className="manage-content">
-            <div className="title-manage">Dodaj kategorię</div>
+            <div className="title-manage">Dodaj przepis</div>
             <div className="background-recipe-container">
 
         <Box className="form-recipe-container">

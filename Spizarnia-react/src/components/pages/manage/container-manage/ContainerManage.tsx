@@ -68,12 +68,6 @@ const ContainerManage = () => {
       headerClassName: "table-header",
     },
     {
-      field: "unit",
-      headerName: "Jednostka",
-      width: 50,
-      headerClassName: "table-header",
-    },
-    {
       field: "type",
       headerName: "Podkategoria",
       width: 150,
