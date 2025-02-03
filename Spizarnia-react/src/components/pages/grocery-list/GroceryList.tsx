@@ -29,8 +29,10 @@ function GroceryList() {
     const [openDeleteListDialog, setDeleteListDialog] = useState(false);
     const [openOutdatedProductsDialog, setOutdatedProductsDialog] = useState(false);
     const [hasDialogBeenOpened, setHasDialogBeenOpened] = useState(false);
+      const [totalPrice, setTotalPrice] = useState<number>(0);
 
     const currentDate = new Date();
+
     const expiredProducts = useSelector(getAllProducts).filter(product => {
         const expirationDate = new Date(product.expirationDate);
         return expirationDate.getTime() < currentDate.getTime();
@@ -65,6 +67,8 @@ function GroceryList() {
         const fetchListOfProductsToBuy = async () => {
             try {
                 const response: AxiosResponse = await AxiosApi.axiosListOfProductsToBuy.get('');
+                calculateTotalPrice(response.data);
+
                 dispatch(addListOfProductsToBuy(response.data));
             } catch (error) {
                 console.error('Error: ', error);
@@ -73,7 +77,12 @@ function GroceryList() {
         fetchListOfProductsToBuy();
     }, [dispatch]);
 
-
+    const calculateTotalPrice = (data) => {
+    const total = data.reduce((sum, product) => {
+      return sum + ((product.products?.price ?? 0) * product.quantity);
+    }, 0);
+    setTotalPrice(total);
+  };
 
     return (
         <>
@@ -93,6 +102,11 @@ function GroceryList() {
             </div>
             <div className="site-content">
                 <GroceryTable searchTerm={searchTerm} />
+                    <div className="summary-container">
+          <button className="total-button">
+            <strong>Suma:</strong> {totalPrice.toFixed(2)} PLN
+          </button>
+        </div>
             </div>
 
             <ConfirmationDialog
