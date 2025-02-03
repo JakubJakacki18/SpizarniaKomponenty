@@ -8,7 +8,7 @@ import  {Category} from "../../../../../Spizarnia-backend/src/models/Category.ts
 function HomeContainers() {
   const categories =useSelector(getAllCategories);
   const [rows, setRows] = useState<Category[][]>([]);
-  const numberOfContainerOnShelf = 5;
+  const numberOfContainerOnShelf = 6;
   const handleSetRows = () => {
     const newRows : Category[][] = [];
     for (let i = 0; i < categories.length; i += numberOfContainerOnShelf) {

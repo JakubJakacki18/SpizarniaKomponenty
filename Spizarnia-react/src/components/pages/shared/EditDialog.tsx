@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogActions, TextField, MenuItem, Button } from "@mui/material";
+ï»¿import { Dialog, DialogContent, DialogActions, TextField, MenuItem, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, fetchCategories } from "../../../features/category/categorySlice.ts";
@@ -61,81 +61,107 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
             unit: formData.unit,
         };
 
-        console.log("Sending update request with data:", updatedProduct); // Debugging log
+        console.log("Sending update request with data:", updatedProduct);
 
         await dispatch(updateProductModel(updatedProduct));
-        await dispatch(fetchProductModels()); 
+        await dispatch(fetchProductModels());
         setEditDialog(false);
     };
 
-
     return (
-        <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="sm">
+        <Dialog open={openEditDialog} onClose={handleClose} sx={{ "& .MuiPaper-root": { backgroundColor: "var(--primary-color)" } }}>
+            <h1 className="title-dialog">Edytuj produkt</h1>
+
             <DialogContent>
-                <h2 className="title-dialog">Edytuj produkt</h2>
-                <TextField
-                    label="Nazwa"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
-                <TextField
-                    label="Iloœæ"
-                    name="quantity"
-                    type="number"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
-                <TextField
-                    label="Cena"
-                    name="price"
-                    type="number"
-                    value={formData.price}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
-                <TextField
-                    select
-                    label="Kategoria"
-                    name="categoryId"
-                    value={formData.categoryId}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                >
-                    {categories.length > 0 ? (
-                        categories.map((category) => (
-                            <MenuItem key={category.id} value={category.id.toString()}>{category.categoryName}</MenuItem>
-                        ))
-                    ) : (
-                        <MenuItem disabled>Brak dostêpnych kategorii</MenuItem>
-                    )}
-                </TextField>
-                <TextField
-                    label="Typ"
-                    name="type"
-                    value={formData.type}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
-                <TextField
-                    label="Jednostka"
-                    name="unit"
-                    value={formData.unit}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                />
+                <div className="input-dialog-section">
+                    <TextField
+                        label="Nazwa"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        fullWidth
+                        margin="dense"
+                    />
+                </div>
+
+                <div className="input-dialog-section">
+                    <TextField
+                        label="IloÅ›Ä‡"
+                        name="quantity"
+                        type="number"
+                        value={formData.quantity}
+                        onChange={handleChange}
+                        fullWidth
+                        margin="dense"
+                    />
+                </div>
+
+                <div className="input-dialog-section">
+                    <TextField
+                        label="Cena"
+                        name="price"
+                        type="number"
+                        value={formData.price}
+                        onChange={handleChange}
+                        fullWidth
+                        margin="dense"
+                    />
+                </div>
+
+                <div className="input-dialog-section">
+                    <TextField
+                        select
+                        label="Kategoria"
+                        name="categoryId"
+                        value={formData.categoryId}
+                        onChange={handleChange}
+                        fullWidth
+                        margin="dense"
+                    >
+                        {categories.length > 0 ? (
+                            categories.map((category) => (
+                                <MenuItem key={category.id} value={category.id.toString()}>
+                                    {category.categoryName}
+                                </MenuItem>
+                            ))
+                        ) : (
+                            <MenuItem disabled>Brak dostÄ™pnych kategorii</MenuItem>
+                        )}
+                    </TextField>
+                </div>
+
+                <div className="input-dialog-section">
+                    <TextField
+                        label="Typ"
+                        name="type"
+                        value={formData.type}
+                        onChange={handleChange}
+                        fullWidth
+                        margin="dense"
+                    />
+                </div>
+
+                <div className="input-dialog-section">
+                    <TextField
+                        label="Jednostka"
+                        name="unit"
+                        value={formData.unit}
+                        onChange={handleChange}
+                        fullWidth
+                        margin="dense"
+                    />
+                </div>
             </DialogContent>
+
             <DialogActions>
-                <Button onClick={handleSave} variant="contained" color="primary">Zapisz</Button>
-                <Button onClick={handleClose} variant="outlined" color="secondary">Anuluj</Button>
+                <div className="button-dialog-section">
+                    <button onClick={handleSave} variant="contained" className="action-edit-button">
+                        Zapisz
+                    </button>
+                    <button onClick={handleClose} variant="outlined" className="action-edit-button">
+                        Anuluj
+                    </button>
+                </div>
             </DialogActions>
         </Dialog>
     );
