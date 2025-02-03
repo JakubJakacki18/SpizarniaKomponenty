@@ -8,6 +8,7 @@ import { AxiosResponse } from "axios";
 import AxiosApi from "../../../../api/axiosApi.ts";
 import ConfirmationDialog from "../../shared/ConfirmationDialog.tsx";
 import dayjs from "dayjs";
+import { Product } from "../../../../../../Spizarnia-backend/src/models/Product.ts";
 
 const ContainerManage = () => {
     const { categoryName } = useParams<{ categoryName: string }>();
@@ -19,7 +20,7 @@ const ContainerManage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response: AxiosResponse = await AxiosApi.axiosProducts.get("");
+                const response: AxiosResponse = await AxiosApi.axiosProducts.get("NoMap");
                 dispatch(addProducts(response.data));
             } catch (error) {
                 console.error("Błąd pobierania produktów:", error);
@@ -28,7 +29,18 @@ const ContainerManage = () => {
         fetchProducts();
     }, [dispatch]);
 
-    const products = useSelector(getAllProducts).filter((product) => product.categoryName === categoryName);
+    const products = useSelector(getAllProducts).filter((product) => product.productModel.category?.categoryName === categoryName).map((product:Product) =>({
+            id: product.id,
+            purchaseDate: product.purchaseDate,
+            expirationDate: product.expirationDate,
+            name: product.productModel?.name ?? "",
+            type: product.productModel?.type ?? "",
+            price: product.productModel?.price ?? "",
+            quantity: (product.productModel?.quantity && product.productModel?.unit) 
+            ? (product.productModel.quantity +" "+ product.productModel.unit) 
+            : "",
+            categoryName: product.productModel?.category?.categoryName 
+        }));
 
     const handleDelete = (productId: string) => {
         dispatch(deleteProduct(productId));
