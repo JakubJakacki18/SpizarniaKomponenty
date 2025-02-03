@@ -1,4 +1,4 @@
-﻿import { Dialog, DialogContent, DialogActions, TextField, MenuItem} from "@mui/material";
+﻿import { Dialog, DialogContent, DialogActions, TextField, MenuItem, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories, fetchCategories } from "../../../features/category/categorySlice.ts";
@@ -6,7 +6,7 @@ import { updateProductModel, fetchProductModels } from "../../../features/produc
 import { AppDispatch } from "../../../features/store.ts";
 
 export default function EditProductModelDialog({ openEditDialog, setEditDialog, selectedProduct }) {
-    const dispatch : AppDispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const categories = useSelector(getAllCategories);
 
     useEffect(() => {
@@ -24,6 +24,7 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
         categoryId: "",
         type: "",
         unit: "",
+        priceError: "", // Dodajemy pole na błąd ceny
     });
 
     useEffect(() => {
@@ -37,15 +38,31 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                 categoryId: selectedProduct.category?.id || "",
                 type: selectedProduct.type || "",
                 unit: selectedProduct.unit || "",
+                priceError: "", // Reset błędu ceny
             });
         }
     }, [selectedProduct]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Walidacja ceny
+        if (name === "price") {
+            const priceValue = parseFloat(value);
+            if (isNaN(priceValue) || priceValue < 0.01) {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    priceError: "Cena musi być większa niż 0.01",
+                    price: value, // Pozwala na edycję wartości w polu
+                }));
+                return;
+            }
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: name === "quantity" || name === "price" ? (value ? parseFloat(value).toString() : "") : value,
+            priceError: name === "price" ? "" : prevData.priceError, // Usunięcie błędu, jeśli cena poprawna
         }));
     };
 
@@ -63,6 +80,11 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
     };
 
     const handleSave = async () => {
+        if (formData.priceError) {
+            alert("Popraw błędy w formularzu przed zapisaniem.");
+            return;
+        }
+
         await dispatch(updateProductModel({
             id: formData.id,
             name: formData.name,
@@ -81,13 +103,15 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
     return (
         <Dialog open={openEditDialog} onClose={handleClose} fullWidth maxWidth="xs" PaperProps={{
             style: {
-                backgroundColor: "var(--primary-color)  ",
+                backgroundColor: "#F5D5C2",
                 borderRadius: "10px",
                 padding: "15px",
             }
         }}>
             <DialogContent>
-                <h2 className="title-dialog">EDYCJA PRODUKTU Z KATALOGU</h2>
+                <h2 style={{ textAlign: "center", fontWeight: "bold" }}>EDYCJA PRODUKTU Z KATALOGU</h2>
+                
+                {/* Pole ceny z walidacją */}
                 <TextField
                     label="Cena"
                     name="price"
@@ -96,8 +120,12 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px",  fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)"} }}
+                    error={!!formData.priceError} // Ustawienie błędu
+                    helperText={formData.priceError} // Komunikat walidacyjny
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 />
+
+                {/* Pole wyboru kategorii */}
                 <TextField
                     select
                     label="Kategoria"
@@ -106,17 +134,18 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleCategoryChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px",  fontFamily: "'Poppins', 'Arial Black', sans-serif", color:"var(--font-color)" } }}
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 >
                     {categories.length > 0 ? (
                         categories.map((category) => (
-                            <MenuItem key={category.id} value={category.categoryName} sx={{fontFamily: "'Poppins', 'Arial Black', sans-serif", color: "var(--font-color)"}}>{category.categoryName}
-                            </MenuItem>
+                            <MenuItem key={category.id} value={category.categoryName}>{category.categoryName}</MenuItem>
                         ))
                     ) : (
-                        <MenuItem disabled>Brak dost�pnych kategorii</MenuItem>
+                        <MenuItem disabled>Brak dostępnych kategorii</MenuItem>
                     )}
                 </TextField>
+
+                {/* Pole typu */}
                 <TextField
                     label="Typ"
                     name="type"
@@ -124,12 +153,13 @@ export default function EditProductModelDialog({ openEditDialog, setEditDialog, 
                     onChange={handleChange}
                     fullWidth
                     margin="dense"
-                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px", fontFamily: "'Poppins', 'Arial Black', sans-serif" , color:"var(--font-color)" } }}
+                    InputProps={{ style: { backgroundColor: "white", borderRadius: "5px" } }}
                 />
             </DialogContent>
+
             <DialogActions style={{ justifyContent: "center" }}>
-                <button onClick={handleSave} className="action-edit-button">ZAPISZ</button>
-                <button onClick={handleClose} className="action-edit-button">ANULUJ</button>
+                <Button onClick={handleSave} variant="contained" style={{ backgroundColor: "black", color: "white", borderRadius: "5px" }}>ZAPISZ</Button>
+                <Button onClick={handleClose} variant="outlined" style={{ borderColor: "black", color: "black", borderRadius: "5px" }}>ANULUJ</Button>
             </DialogActions>
         </Dialog>
     );
