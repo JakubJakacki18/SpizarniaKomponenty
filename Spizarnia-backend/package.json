@@ -1,7 +1,7 @@
 {
   "name": "spizarnia-backend",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "start": "cd src && nodemon server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

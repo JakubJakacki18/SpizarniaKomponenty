@@ -1,0 +1,55 @@
+services:
+  spizarnia-backend:
+    build:
+      context: ./Spizarnia-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - spizarnia-network
+    depends_on:
+      - spizarnia-db
+
+  spizarnia-angular:
+    build:
+      context: ./Spizarnia
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - spizarnia-backend
+    networks:
+      - spizarnia-network
+
+  spizarnia-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: pantry
+      MYSQL_PASSWORD: ""
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - spizarnia-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"    #this line maps your pc port to the container port
+    depends_on:
+      - spizarnia-db    #this line links this container to the db container
+    environment:
+      PMA_HOST: spizarnia-db
+      MYSQL_ROOT_PASSWORD: ""
+    networks:
+      - spizarnia-network
+  
+networks:
+  spizarnia-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

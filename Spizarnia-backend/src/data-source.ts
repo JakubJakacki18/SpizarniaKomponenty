@@ -7,9 +7,12 @@ import { Ingredient } from "./models/Ingredient"
 import { ProductModel } from "./models/ProductModel"
 import { Recipe } from "./models/Recipe"
 
+//host: localhost - podczas uruchamiania bez dockera lokalnie
+//host: spizarnia-db - podczas uruchamiania z dockerem
+
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: "localhost",
+    host: "spizarnia-db",
     port: 3306,
     username: "root",
     password: "",
