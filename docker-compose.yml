@@ -9,17 +9,22 @@ services:
       - spizarnia-network
     depends_on:
       - spizarnia-db
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+
 
   spizarnia-angular:
     build:
-      context: ./Spizarnia
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: ./Spizarnia/Dockerfile
     ports:
       - "4200:4200"
     depends_on:
       - spizarnia-backend
     networks:
       - spizarnia-network
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
 
   spizarnia-db:
     image: mysql:8.0
