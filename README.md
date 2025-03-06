@@ -1,9 +1,19 @@
-Link do worda z angulara:
-    https://docs.google.com/document/d/1PQtnNujRhSfH3LSQhTLAxBQcMIJUL5_taVXNk7fpemI/edit?fbclid=IwZXh0bgNhZW0CMTAAAR2TOGDTzKpHvpF5oNVgk1qcamSCQ4alTg792vPukTpBNABd4PnXF-em1ek_aem_eoPgrhrKBFx8Hy3Rdj01xw&pli=1&tab=t.0#heading=h.z30euqxf91w0
+# Spiżarnia
 
-Link do worda z js'a:
-    
+Spiżarnia to projekt stworzony w ramach przedmiotów **Programowanie aplikacji w języku JavaScript** oraz **Aplikacje internetowe oparte o komponenty**. Cały projekt jest napisany w języku **TypeScript**.
 
-Wymagane do działa projektu:
-    -serwer MySql (Polecam XAMPP) - domyślne ustawienia użytkownika, stworzona baza pantry,
+Rozwiązanie jest podzielone na katalogi z projektami wraz ze szczegółowym opisem każdego z nich:
+
+* [Spizarnia](/Spizarnia/README.md) (frontend napisany w Angularze)
+* [Spizarnia-react](/Spizarnia-react/README.md) (frontend napisany w Reactcie)
+* [Spizarnia-backend]((/Spizarnia-backend/README.md)) (backend wspólny dla obu projektów napisany w Expressie)
+
+
+## Wymagane do działania projektu
+* Linux lub WSL
+* Docker (wraz z Docker Compose)
+
+
+
+
     
