@@ -1,14 +1,22 @@
 FROM node:22.14.0 AS build
 
-WORKDIR /usr/src/app/Spizarnia
+WORKDIR /usr/src/app/Spizarnia-backend
 
-#COPY ../Spizarnia-backend/src/models ./Spizarnia-backend/src/models/
-COPY package.json package-lock.json ./
+COPY ../Spizarnia-backend/package.json ../Spizarnia-backend/package-lock.json ./
+
 RUN npm install
 
-COPY . .
-# RUN npm start
+COPY ../Spizarnia-backend/src/models/ ./src/models/
+
+WORKDIR /usr/src/app/Spizarnia
+
+COPY ../Spizarnia/package.json ../Spizarnia/package-lock.json ./
+
+RUN npm install
+
+COPY ../Spizarnia .
 
 EXPOSE 4200
 
 CMD ["npm", "start"]
+
