@@ -6,13 +6,23 @@ Rozwiązanie jest podzielone na katalogi z projektami wraz ze szczegółowym opi
 
 * [Spizarnia](/Spizarnia/README.md) (frontend napisany w Angularze)
 * [Spizarnia-react](/Spizarnia-react/README.md) (frontend napisany w Reactcie)
-* [Spizarnia-backend]((/Spizarnia-backend/README.md)) (backend wspólny dla obu projektów napisany w Expressie)
+* [Spizarnia-backend](/Spizarnia-backend/README.md) (backend wspólny dla obu projektów napisany w Expressie)
 
 
 ## Wymagane do działania projektu
 * Linux lub WSL
 * Docker (wraz z Docker Compose)
 
+## Uruchomienie projektu
+1. Pobierz repozytorium
+2. Przejdź do katalogu SpizarniaKomponenty
+3. Uruchom projekt za pomocą komendy ```docker-compose up --build```
+
+Od teraz możesz przejść do poszczególnych elementów projektu. 
+* Angular <localhost:4200>
+* React <localhost:3000>
+* Backend <localhost:5000>
+* PhpMyAdmin <localhost:8081> (do obsługi bazy danych)
 
 
 
