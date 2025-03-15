@@ -8,3 +8,7 @@ Aby aplikacja poprawnia działała musi być uruchomiona **spizarnia-backend** w
 
 ## Uruchomienie projektu
 
+1. Zainstaluj **Node.js** w wersji **22.14.0**.
+2. Sprawdź czy jest zainstalowany **npm** za pomocą `npm -v`
+3. Wpisz `npm install` aby zainstalować brakujące paczki.
+4. Uruchom aplikację za pomocą `npm start`

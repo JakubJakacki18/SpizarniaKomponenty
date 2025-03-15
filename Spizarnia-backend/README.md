@@ -1,13 +1,16 @@
 # Spizarnia-backend
 Spizarnia-backend to aplikacja służąca do obsługi bazy danych oraz do obsługi zapytań z części frontendowych. Dzięki wykorzystaniu **TypeORM** mogliśmy stworzyć tabele bazodanowe z relacjami za pomocą klas oraz atrybutów. Modele bazodanowe są wykorzystywane do przypisywania/sprawdzenia typów w projektach frontendowych co ułatwia utrzymanie spójności danych w całym projekcie.
 
-## Wykorzystane paczki oraz ich wersje
-
 ## Zależności wymagane do uruchomienia projektu
 
 Aby aplikacja działała poprawnie serwer MySql musi działać na porcie 3306 oraz posiadać domyślną konfigurację. Musi zostać stworzona baza danych o nazwie ``pantry``. 
 
 ## Uruchomienie projektu
+
+1. Zainstaluj **Node.js** w wersji **22.14.0**.
+2. Sprawdź czy jest zainstalowany **npm** za pomocą `npm -v`
+3. Wpisz `npm install` aby zainstalować brakujące paczki.
+4. Uruchom aplikację za pomocą `npm start` 
 
 ## Ścieżki do zapytań
 

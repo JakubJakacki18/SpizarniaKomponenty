@@ -8,3 +8,8 @@ Aby aplikacja poprawnia działała musi być uruchomiona **spizarnia-backend** w
 
 ## Uruchomienie projektu
 
+1. Zainstaluj **Node.js** w wersji **22.14.0**.
+2. Sprawdź czy jest zainstalowany **npm** za pomocą `npm -v`
+3. Zainstaluj Angular/cli za pomocą komendy `npm install -g @angular/cli@19.0.4`
+4. Wpisz `npm install` aby zainstalować brakujące paczki.
+5. Uruchom aplikację za pomocą `npm start` lub `ng serve`
