@@ -7,6 +7,8 @@ services:
       - "5000:5000"
     networks:
       - spizarnia-network
+    environment:
+      - SQL=spizarnia-db
     depends_on:
       - spizarnia-db
     # extra_hosts:
