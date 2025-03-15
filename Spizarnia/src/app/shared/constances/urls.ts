@@ -1,7 +1,7 @@
 import { environment } from "../../../../assets/env";
 
 //ścieżka do strony
-const BASE_URL = environment.apiUrl;
+const BASE_URL = environment.API_URL;
 
 //ścieżki do api
 export const PRODUCT_MODELS = BASE_URL + "/api/productModel/"

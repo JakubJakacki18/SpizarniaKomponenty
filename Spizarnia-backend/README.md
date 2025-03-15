@@ -1,7 +1,5 @@
 # Spizarnia-backend
-Spizarnia-backend to aplikacja służąca do obsługi bazy danych oraz do obsługi zapytań z części frontendowych. 
-
-
+Spizarnia-backend to aplikacja służąca do obsługi bazy danych oraz do obsługi zapytań z części frontendowych. Dzięki wykorzystaniu **TypeORM** mogliśmy stworzyć tabele bazodanowe z relacjami za pomocą klas oraz atrybutów. Modele bazodanowe są wykorzystywane do przypisywania/sprawdzenia typów w projektach frontendowych co ułatwia utrzymanie spójności danych w całym projekcie.
 
 ## Wykorzystane paczki oraz ich wersje
 

@@ -12,6 +12,7 @@ import { ProductService } from '../../../services/product.service';
 import { SnackBarService } from '../../../services/snack-bar.service';
 import { SnackBarResultType } from '../../../shared/constances/additional.types';
 import { DialogService } from '../../../services/dialog.service';
+import { environment } from '../../../../../assets/env';
 
 
 @Component({
@@ -169,7 +170,7 @@ export class AllProductsComponent implements OnInit {
   }
 
   searchProducts(name: string): Observable<any> {
-    return this.http.get<any[]>(`http://localhost:5000/api/product?name=${name}`);
+    return this.http.get<any[]>(`${environment.API_URL}/api/product?name=${name}`);
   }
 
   formatDate(date: Date): string {

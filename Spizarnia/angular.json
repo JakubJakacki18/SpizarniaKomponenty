@@ -35,7 +35,10 @@
             "ssr": {
               "entry": "src/server.ts"
             },
-            "serviceWorker": true
+            "serviceWorker": true,
+            "allowedCommonJsDependencies": [
+  "process"
+]
           },
           "configurations": {
             "production": {

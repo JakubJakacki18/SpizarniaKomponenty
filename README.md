@@ -4,9 +4,9 @@ Spiżarnia to rozwiązanie stworzone w ramach przedmiotów **Programowanie aplik
 
 Rozwiązanie jest podzielone na katalogi z projektami wraz ze szczegółowym opisem każdego z nich:
 
-* [Spizarnia](/Spizarnia/README.md) (frontend napisany w Angularze)
-* [Spizarnia-react](/Spizarnia-react/README.md) (frontend napisany w Reactcie)
-* [Spizarnia-backend](/Spizarnia-backend/README.md) (backend wspólny dla obu projektów frontend napisany w Expressie)
+* **Spizarnia** - frontend napisany w Angularze,
+* **Spizarnia-react** - frontend napisany w Reactcie,
+* **Spizarnia-backend** - backend wspólny dla obu projektów frontend napisany w Expressie,
 
 
 ## Wymagane do działania projektu
