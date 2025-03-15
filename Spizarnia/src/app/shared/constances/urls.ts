@@ -1,7 +1,7 @@
-import { environment } from "../../../../assets/env";
+import { environment } from "../../../assets/env";
 
 //ścieżka do strony
-const BASE_URL = environment.API_URL;
+const BASE_URL = environment.apiUrl==="$API_URL" ? "http://localhost:5000": environment.apiUrl;
 
 //ścieżki do api
 export const PRODUCT_MODELS = BASE_URL + "/api/productModel/"

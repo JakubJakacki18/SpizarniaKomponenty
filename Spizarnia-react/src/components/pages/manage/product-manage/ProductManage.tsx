@@ -36,7 +36,7 @@ const AddProductForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>({ mode: "onChange" });
+  } = useForm<FormData>({ mode: "onChange", defaultValues: {productId: ""}});
 
   useEffect(() => {
     const fetchCategories = async () => {

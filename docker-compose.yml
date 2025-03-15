@@ -22,7 +22,7 @@ services:
     ports:
       - "4200:4200"
     environment:
-      - API_URL=http://<spizarnia-backend>:5000
+      - API_URL=http://localhost:5000
     depends_on:
       - spizarnia-backend
     networks:

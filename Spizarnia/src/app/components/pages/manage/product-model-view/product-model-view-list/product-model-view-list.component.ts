@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { SnackBarService } from '../../../../../services/snack-bar.service';
 import { SnackBarResultType } from '../../../../../shared/constances/additional.types';
 import { DialogService } from '../../../../../services/dialog.service';
-import { environment } from '../../../../../../../assets/env';
+
 @Component({
   selector: 'app-product-model-view-list',
   standalone: true,
@@ -68,7 +68,7 @@ async deleteProduct(productId: number) {
   const dialogAnswer = await this.dialogService.openConfirmDialog(dataDialog);
 
   if (dialogAnswer) {
-    this.http.delete(`${environment.API_URL}/api/productModel/${productId}`).subscribe({
+    this.productModelService.deleteProductModelById(productId).subscribe({
       next: () => {
         this.dataSource.data = this.dataSource.data.filter(product => product.id !== productId);
         this.snackBarService.openSnackBar("Produkt został usunięty!",SnackBarResultType.Success);
@@ -83,7 +83,7 @@ async deleteProduct(productId: number) {
 }
 
 updateProduct(updatedProduct: any) {
-  this.http.put(`${environment.API_URL}/api/productModel/${updatedProduct.id}`, updatedProduct).subscribe({
+  this.productModelService.updateProductModel(updatedProduct).subscribe({
     next: (response) => {
       console.log('Produkt zaktualizowany:', response);
       this.snackBarService.openSnackBar("Produkt został zaktualizowany!",SnackBarResultType.Success);

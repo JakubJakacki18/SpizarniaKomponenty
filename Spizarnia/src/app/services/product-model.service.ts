@@ -26,5 +26,14 @@ export class ProductModelService {
   checkDuplicateProduct(product: any): Observable<any> {
     return this.http.post(PRODUCT_MODELS+`/checkDuplicate`, product);
   }
+  updateProductModel(updatedProduct : any): Observable<any>
+  {
+    return this.http.put(PRODUCT_MODELS+`/${updatedProduct.id}`, updatedProduct);
+  }
+  deleteProductModelById(productModelId : any): Observable<any>
+  {
+    return this.http.delete(PRODUCT_MODELS+`/${productModelId}`);
+  }
+
 
 }
