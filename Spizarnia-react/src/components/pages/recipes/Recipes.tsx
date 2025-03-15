@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AxiosApi from "../../../api/axiosApi.ts";
 import { fetchRecipesWithExecutionStatus, getAllRecipes } from "../../../features/recipes/recipeSlice.ts";
 import { NavLink } from "react-router-dom";
 import StyleFunctions from "../../../shared/styleFunctions.ts";
