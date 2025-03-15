@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from "axios";
 import { addListOfProductsToBuy, addOrUpdateGroceryEntry, deleteGroceryList } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
@@ -43,7 +43,7 @@ function GroceryList() {
             setOutdatedProductsDialog(true);
             setHasDialogBeenOpened(true);
         }
-    }, [expiredProducts.length]);
+    }, [expiredProducts.length, openOutdatedProductsDialog, hasDialogBeenOpened]);
 
 
     const handleDeleteExpiredProducts = () => {

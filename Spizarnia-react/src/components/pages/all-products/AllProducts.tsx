@@ -50,12 +50,6 @@ function AllProducts() {
         Notify("Zbliża się termin przydatności produktów!")
     },[products])
 
-    // Funkcja obsługująca wyszukiwanie
-    function onSearch(): void {
-        // Nic do zrobienia tutaj, bo wyszukiwanie jest realizowane w czasie rzeczywistym
-        // przez filtrację w komponencie ProductTable
-    }
-
     function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
         setSearchTerm(event.target.value);
     }

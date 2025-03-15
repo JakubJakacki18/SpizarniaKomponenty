@@ -22,13 +22,25 @@ services:
     ports:
       - "4200:4200"
     environment:
-      - API_URL : http://spizarnia-backend:5000
+      - API_URL=http://<spizarnia-backend>:5000
     depends_on:
       - spizarnia-backend
     networks:
       - spizarnia-network
     # extra_hosts:
     #   - "host.docker.internal:host-gateway"
+  spizarnia-react:
+    build:
+      context: ./
+      dockerfile: ./Spizarnia-react/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://<spizarnia-backend>:5000
+    depends_on:
+      - spizarnia-backend
+    networks:
+      - spizarnia-network
 
   spizarnia-db:
     image: mysql:8.0

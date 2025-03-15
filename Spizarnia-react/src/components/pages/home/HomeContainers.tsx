@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addCategories, getAllCategories } from "../../../features/category/categorySlice.ts";
+import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getAllCategories } from "../../../features/category/categorySlice.ts";
 import { Link } from "react-router-dom";
 import  {Category} from "../../../../../Spizarnia-backend/src/models/Category.ts";
 
@@ -9,16 +9,16 @@ function HomeContainers() {
   const categories =useSelector(getAllCategories);
   const [rows, setRows] = useState<Category[][]>([]);
   const numberOfContainerOnShelf = 6;
-  const handleSetRows = () => {
+  const handleSetRows = useCallback(() => {
     const newRows : Category[][] = [];
     for (let i = 0; i < categories.length; i += numberOfContainerOnShelf) {
       newRows.push(categories.slice(i, i + numberOfContainerOnShelf));
     }
     setRows(newRows);
-  };
+  }, [categories]);
   useEffect(() => {
     handleSetRows();
-  }, [categories]);
+  }, [categories, handleSetRows]);
   const renderContainers = rows.length > 0 ? 
   (
     rows.map((row, rowIndex) => (<>

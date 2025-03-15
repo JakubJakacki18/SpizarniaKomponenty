@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getAllProducts } from "../../../features/products/productSlice.ts";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../../../features/products/productSlice.ts";
 import { DataGrid } from "@mui/x-data-grid";
 import ConfirmationDialog from "../shared/ConfirmationDialog.tsx";
 import dayjs from 'dayjs';

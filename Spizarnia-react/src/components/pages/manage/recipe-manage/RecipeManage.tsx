@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Box,
     ListSubheader,
@@ -19,7 +19,6 @@ const RecipeForm = () => {
     const [ingredients, setIngredients] = useState([
         { id: 1, productModelId: "", quantity: 1 },
     ]);
-    const [productModels, setProductModels] = useState([]);
     const categories : Category[] = useSelector(getAllCategories)
     const recipes = useSelector(getAllRecipes)
     const dispatch = useDispatch();

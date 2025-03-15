@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Recipe } from "../../../../Spizarnia-backend/src/models/Recipe.ts";
-import { ProductState } from "../products/productSlice.ts";
 import AxiosApi from "../../api/axiosApi.ts";
 import { Ingredient } from "../../../../Spizarnia-backend/src/models/Ingredient.ts";
 import { Status } from "../../shared/constances/statusType.ts";
