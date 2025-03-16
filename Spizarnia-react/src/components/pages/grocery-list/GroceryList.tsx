@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from "axios";
-import { addListOfProductsToBuy, addOrUpdateGroceryEntry, deleteGroceryList } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
+import { addListOfProductsToBuy, addOrUpdateGroceryEntry, deleteGroceryList, getAllListOfProductsToBuy } from "../../../features/listOfProductsToBuy/listOfProductsToBuySlice.ts";
 import AxiosApi from "../../../api/axiosApi.ts";
 import { AppDispatch } from "../../../features/store.ts";
 import GroceryTable from "./GroceryTable.tsx";
@@ -29,7 +29,8 @@ function GroceryList() {
     const [openDeleteListDialog, setDeleteListDialog] = useState(false);
     const [openOutdatedProductsDialog, setOutdatedProductsDialog] = useState(false);
     const [hasDialogBeenOpened, setHasDialogBeenOpened] = useState(false);
-      const [totalPrice, setTotalPrice] = useState<number>(0);
+    const [totalPrice, setTotalPrice] = useState<number>(0);
+    const listOfProductsToBuy = useSelector(getAllListOfProductsToBuy);
 
     const currentDate = new Date();
 
@@ -44,6 +45,7 @@ function GroceryList() {
             setHasDialogBeenOpened(true);
         }
     }, [expiredProducts.length, openOutdatedProductsDialog, hasDialogBeenOpened]);
+
 
 
     const handleDeleteExpiredProducts = () => {
@@ -76,6 +78,10 @@ function GroceryList() {
         };
         fetchListOfProductsToBuy();
     }, [dispatch]);
+    useEffect(() => {
+        calculateTotalPrice(listOfProductsToBuy); 
+    }, [listOfProductsToBuy]);
+
 
     const calculateTotalPrice = (data) => {
     const total = data.reduce((sum, product) => {
@@ -103,9 +109,11 @@ function GroceryList() {
             <div className="site-content">
                 <GroceryTable searchTerm={searchTerm} />
                     <div className="summary-container">
-          <button className="total-button">
-            <strong>Suma:</strong> {totalPrice.toFixed(2)} PLN
-          </button>
+                    {totalPrice !== 0 && (
+  <button className="total-button">
+    <strong>Suma:</strong> {totalPrice.toFixed(2)} PLN
+  </button>
+)}               
         </div>
             </div>
 
